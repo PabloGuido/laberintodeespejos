@@ -10,11 +10,13 @@ local function clonar_nodo(self, que_nodo, que_hash, pos, que_tabla)
 end
 
 function init(self)
-	
+	self.ultima_casilla = nil
 	
 	self.mouse_sobre_casillas = false -- Registra si el mouse está sobre un casillero.
 	-- nodos -----------------------------------------
 	self.casilla = gui.get_node("casilla") -- casilla vacía
+	self.cruz = gui.get_node("cruz")
+	gui.set_enabled(self.cruz, false)
 	-- obj toolbar
 	self.espejo = gui.get_node("espejo")
 	self.izq = gui.get_node("izq")
@@ -83,7 +85,16 @@ function on_input(self, action_id, action)
 				datos.obj_en_mouse = nil
 			else
 				-- Suelta el objeto dejándolo en una casilla, la función de abajo se encarga de esto. Libera "obj_en_mouse".
-				datos.obj_en_mouse = nil
+				if self.casillas[self.ultima_casilla]["ocupado"] == true then
+					print("No podés dejar el obj en la casillero (" .. self.ultima_casilla .. ") " .. tostring(self.casillas[self.ultima_casilla ]["ocupado"]))
+					gui.delete_node(datos.obj_en_mouse)
+					datos.obj_en_mouse = nil
+					else
+					datos.obj_en_mouse = nil
+					self.casillas[self.ultima_casilla]["ocupado"] = true
+					print("Colocando obj en casillero número (" .. self.ultima_casilla .. ") " .. tostring(self.casillas[self.ultima_casilla ]["ocupado"]))
+				end
+				gui.set_enabled(self.cruz, false)
 			end
 		end
 	end
@@ -100,9 +111,25 @@ function on_input(self, action_id, action)
 					-- Si el mouse tiene un objeto y está sobre una casilla guarda la posición de esa casilla.
 					-- Además pone al obj_en_mouse en esa posición.
 					-- Así cuando el touch es released y se está sobre una casilla el objeto queda en esa posición.
+
 					local pos = gui.get_position(casillero[1][("casilla")])
 					gui.set_position(datos.obj_en_mouse, pos)
-					pprint(casillero[1]["casilla"] )--.. casillero["ocupado"])
+					self.ultima_casilla = _
+					if self.casillas[self.ultima_casilla]["ocupado"] == true then
+						print("esta casilla está ocupada")
+						gui.set_enabled(self.cruz, true)
+						gui.set_position(self.cruz, pos)
+						gui.move_above(self.cruz, casillero[self.ultima_casilla])
+					else
+						gui.set_enabled(self.cruz, false)
+					end
+						
+					--casillero[1]["ocupado"] = true
+					--pprint(casillero[1]["casilla"] )--.. casillero["ocupado"])
+					
+					--print(self.ultima_casilla)
+
+					
 				end
 				return -- Tope para que el mouse sobre cailla y el código de arriba funcione.
 			end
