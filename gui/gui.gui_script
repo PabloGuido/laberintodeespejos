@@ -10,6 +10,8 @@ local function clonar_nodo(self, que_nodo, que_hash, pos, que_tabla)
 end
 
 function init(self)
+	
+	
 	self.mouse_sobre_casillas = false -- Registra si el mouse está sobre un casillero.
 	-- nodos -----------------------------------------
 	self.casilla = gui.get_node("casilla") -- casilla vacía
@@ -34,7 +36,7 @@ function init(self)
 			local clon_casilla = nueva_casilla[hash("casilla")]	
 			gui.set_position(clon_casilla, self.pos)
 			self.pos.x = self.pos.x + dif_entre_casillas
-			table.insert(self.casillas, nueva_casilla)
+			table.insert(self.casillas, {nueva_casilla, ocupado = false})
 		end
 		self.pos.x = 440
 		self.pos.y = self.pos.y - dif_entre_casillas
@@ -92,14 +94,15 @@ function on_input(self, action_id, action)
 		
 		for _,casillero in pairs(self.casillas) do -- Repasa la tabla de self.casillas
 			
-			if gui.pick_node(casillero[("casilla")], action.x, action.y) then
+			if gui.pick_node(casillero[1][("casilla")], action.x, action.y) then
 				self.mouse_sobre_casillas = true
 				if datos.obj_en_mouse ~= nil then
 					-- Si el mouse tiene un objeto y está sobre una casilla guarda la posición de esa casilla.
 					-- Además pone al obj_en_mouse en esa posición.
 					-- Así cuando el touch es released y se está sobre una casilla el objeto queda en esa posición.
-					local pos = gui.get_position(casillero[("casilla")])
+					local pos = gui.get_position(casillero[1][("casilla")])
 					gui.set_position(datos.obj_en_mouse, pos)
+					pprint(casillero[1]["casilla"] )--.. casillero["ocupado"])
 				end
 				return -- Tope para que el mouse sobre cailla y el código de arriba funcione.
 			end
