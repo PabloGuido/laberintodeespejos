@@ -1,0 +1,67 @@
+local datos = require("main.datos")
+local rotacion = {0, 90, 180, 270, 360}
+local pos_rotacion = 1
+
+local direcciones = {{1,1},{-1,1},{-1,-1},{1,-1}}
+local pos_dirs = 1
+function init(self)
+	self.to = go.get_position()
+	self.direccion = direcciones[pos_dirs]
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("rayo") then
+		if message.grupo == hash("pared") then
+			return
+		else
+			if message.normal.x == -1 then
+				--print(self.direccion[2])
+				self.to.y = 1000 * self.direccion[2]
+				datos.disparar_rayo(self, self.to)
+			elseif message.normal.x == 1 then
+				--print(self.direccion[2])
+				self.to.y = 1000 * self.direccion[2]
+				datos.disparar_rayo(self, self.to)
+			elseif message.normal.y == -1 then
+				--print(self.direccion[1])
+				self.to.x = 1000 * self.direccion[1]
+				datos.disparar_rayo(self, self.to)
+			elseif message.normal.y == 1 then
+				--print(self.direccion[1])
+				self.to.x = 1000 * self.direccion[1]
+				datos.disparar_rayo(self, self.to)
+			end
+			--print(self.to)
+			self.to = go.get_position()
+		end
+	end
+	if message_id == hash("accion_gui") then
+		pos_rotacion = pos_rotacion + message.valor
+		if pos_rotacion > table.maxn(rotacion) then
+			pos_rotacion = 2
+		elseif pos_rotacion < 1 then
+			pos_rotacion = 4
+		end
+		go.set(go.get_id(), "euler.z", rotacion[pos_rotacion])
+
+		pos_dirs = pos_dirs + message.valor
+		if pos_dirs > table.maxn(direcciones) then
+			pos_dirs = 1
+		elseif pos_dirs < 1 then
+			pos_dirs = 4
+		end
+		self.direccion = direcciones[pos_dirs]
+	end
+end

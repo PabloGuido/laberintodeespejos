@@ -1,0 +1,16 @@
+key_trigger {
+  input: KEY_SPACE
+  action: "rotar"
+}
+key_trigger {
+  input: KEY_A
+  action: "ray"
+}
+key_trigger {
+  input: KEY_B
+  action: "ray2"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_1
+  action: "touch"
+}
