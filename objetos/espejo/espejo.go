@@ -14,26 +14,6 @@ components {
   }
 }
 embedded_components {
-  id: "sprite"
-  type: "sprite"
-  data: "tile_set: \"/objetos/objetos.atlas\"\n"
-  "default_animation: \"espejo\"\n"
-  "material: \"/builtins/materials/sprite.material\"\n"
-  "blend_mode: BLEND_MODE_ALPHA\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
   id: "pared"
   type: "collisionobject"
   data: "collision_shape: \"\"\n"
@@ -160,8 +140,8 @@ embedded_components {
   "  shapes {\n"
   "    shape_type: TYPE_SPHERE\n"
   "    position {\n"
-  "      x: -44.0\n"
-  "      y: -43.0\n"
+  "      x: -28.0\n"
+  "      y: -28.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
