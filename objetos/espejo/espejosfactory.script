@@ -18,7 +18,8 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("crear_espejo_en_mouse") then
+	if message_id == hash("crear_physics_obj") then
+		--print("hola")
 		factory.create("#factory", vmath.vector3(message.x,message.y,0))
 	end
 end
