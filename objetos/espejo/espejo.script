@@ -48,6 +48,7 @@ function on_message(self, message_id, message, sender)
 		end
 	end
 	if message_id == hash("accion_gui") then
+		-- hay que arreglar la rotacion.
 		pos_rotacion = pos_rotacion + message.valor
 		if pos_rotacion > table.maxn(rotacion) then
 			pos_rotacion = 2
