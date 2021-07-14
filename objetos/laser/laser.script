@@ -5,6 +5,7 @@ function init(self)
 	self.to.x = 1000
 	self.disparar = false
 	msg.post("", "acquire_input_focus")
+	self.datos_del_laser = {}
 end
 
 function final(self)
@@ -15,7 +16,9 @@ end
 
 function update(self, dt)
 	if self.disparar ~= false then
-		datos.disparar_rayo(self, self.to)
+		local datos_laser = datos.disparar_rayo(self, self.to)
+		msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser})
+		--pprint(datos_laser)
 	end
 end
 

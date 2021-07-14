@@ -56,6 +56,10 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("obj_seleccionado") then
 		self.obj_seleccionado = message.objeto
 		--(self.obj_seleccionado .. " <from> guiscript")
+	elseif message_id == hash("dibujar_laser") then
+		--print("dibujar laser")
+		print(message.datos.position)
+		--print(message[1])
 	end
 end
 
