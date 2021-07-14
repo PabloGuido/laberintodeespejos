@@ -1,12 +1,12 @@
 local datos = require("main.datos")
-local rotacion = {0, 90, 180, 270, 360}
-local pos_rotacion = 1
 
-local direcciones = {{1,1},{-1,1},{-1,-1},{1,-1}}
-local pos_dirs = 1
 function init(self)
 	self.to = go.get_position()
-	self.direccion = direcciones[pos_dirs]
+	self.pos_rotacion = 1
+	self.pos_dirs = 1
+	self.rotacion = {0, 90, 180, 270, 360}
+	self.direcciones = {{1,1},{-1,1},{-1,-1},{1,-1}}
+	self.direccion = self.direcciones[self.pos_dirs]
 end
 
 function final(self)
@@ -43,26 +43,26 @@ function on_message(self, message_id, message, sender)
 				self.to.x = 1000 * self.direccion[1]
 				datos.disparar_rayo(self, self.to)
 			end
-			--print(self.to)
 			self.to = go.get_position()
 		end
 	end
 	if message_id == hash("accion_gui") then
-		-- hay que arreglar la rotacion.
-		pos_rotacion = pos_rotacion + message.valor
-		if pos_rotacion > table.maxn(rotacion) then
-			pos_rotacion = 2
-		elseif pos_rotacion < 1 then
-			pos_rotacion = 4
+		self.pos_rotacion  = self.pos_rotacion  + message.valor
+		if self.pos_rotacion  > table.maxn(self.rotacion) then
+			self.pos_rotacion  = 2
+		elseif self.pos_rotacion  < 1 then
+			self.pos_rotacion  = 4
 		end
-		go.set(go.get_id(), "euler.z", rotacion[pos_rotacion])
 
-		pos_dirs = pos_dirs + message.valor
-		if pos_dirs > table.maxn(direcciones) then
-			pos_dirs = 1
-		elseif pos_dirs < 1 then
-			pos_dirs = 4
+		go.set(go.get_id(), "euler.z", self.rotacion[self.pos_rotacion ])
+
+		
+		self.pos_dirs = self.pos_dirs + message.valor
+		if self.pos_dirs > table.maxn(self.direcciones) then
+			self.pos_dirs = 1
+		elseif self.pos_dirs < 1 then
+			self.pos_dirs = 4
 		end
-		self.direccion = direcciones[pos_dirs]
+		self.direccion = self.direcciones[self.pos_dirs]
 	end
 end
