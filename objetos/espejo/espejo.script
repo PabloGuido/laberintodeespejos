@@ -1,5 +1,38 @@
 local datos = require("main.datos")
 
+local function disparar_raycast(self)
+	local datos_laser
+	if self.normal.x == -1 then
+		--print(self.direccion[2])
+		self.to.y = 1000 * self.direccion[2]
+		datos_laser = datos.disparar_rayo(self, self.to)
+	elseif self.normal.x == 1 then
+		--print(self.direccion[2])
+		self.to.y = 1000 * self.direccion[2]
+		datos_laser = datos.disparar_rayo(self, self.to)
+	elseif self.normal.y == -1 then
+		--print(self.direccion[1])
+		self.to.x = 1000 * self.direccion[1]
+		datos_laser = datos.disparar_rayo(self, self.to)
+	elseif self.normal.y == 1 then
+		--print(self.direccion[1])
+		self.to.x = 1000 * self.direccion[1]
+		datos_laser = datos.disparar_rayo(self, self.to)
+	end
+	return datos_laser
+end
+
+-- laser beam -------------------
+local function dist2d(x1, y1, x2, y2)
+	return ((x2-x1)^2+(y2-y1)^2)^0.5
+end
+
+local function angle_of_vector_between_two_points(x1,y1, x2,y2) 
+	return math.atan2(y2-y1, x2-x1) 
+end
+
+---------------------------------
+
 function init(self)
 	self.to = go.get_position()
 	self.pos_rotacion = 1
@@ -9,6 +42,8 @@ function init(self)
 	self.direccion = self.direcciones[self.pos_dirs]
 	self.datos_del_laser = {}
 	self.puede_disparar_laser = false
+	self.normal = 0
+	self.grupo_donde_llego_raycast = nil
 end
 
 function final(self)
@@ -24,7 +59,13 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+	--(message)
 	if message_id == hash("rayo") then
+		--pprint(message)
+		self.normal = message.normal
+		self.grupo_donde_llego_raycast = message.grupo
+		--print(self.normal)
+		--[[
 		if self.puede_disparar_laser ~= false then
 			if message.grupo == hash("pared") then
 				return
@@ -49,6 +90,18 @@ function on_message(self, message_id, message, sender)
 				self.to = go.get_position()
 			end
 		end
+		]]
+	elseif message_id == hash("disparar_ray") then
+		print("disparar ray")
+		
+		if self.grupo_donde_llego_raycast == hash("pared") then
+			return
+		else
+			
+			local datos_laser = disparar_raycast(self)
+			pprint(datos_laser)
+		end
+			--self.to = go.get_position() -- no se que haría esto acá, borrar si no pasa nada raro.
 	end
 	if message_id == hash("accion_gui") then
 		self.pos_rotacion  = self.pos_rotacion  + message.valor
@@ -57,9 +110,7 @@ function on_message(self, message_id, message, sender)
 		elseif self.pos_rotacion  < 1 then
 			self.pos_rotacion  = 4
 		end
-
 		go.set(go.get_id(), "euler.z", self.rotacion[self.pos_rotacion ])
-
 		
 		self.pos_dirs = self.pos_dirs + message.valor
 		if self.pos_dirs > table.maxn(self.direcciones) then
