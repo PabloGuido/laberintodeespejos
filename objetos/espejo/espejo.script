@@ -19,7 +19,10 @@ local function disparar_raycast(self)
 		self.to.x = 1000 * self.direccion[1]
 		datos_laser= datos.disparar_rayo(self, self.to)
 	end	
+	self.to = go.get_position(go.get_id())
+	--print(self.to)
 	return datos_laser
+	
 end
 
 -- laser beam -------------------
@@ -93,14 +96,15 @@ function on_message(self, message_id, message, sender)
 		end
 		]]
 	elseif message_id == hash("disparar_ray") then
-		print("disparar ray")
+		--print("disparar ray")
 		
 		if self.grupo_donde_llego_raycast == hash("pared") then
 			-- Esto es cuando llegó el ray/laser y pégó en un pared del espejo, no continua recorrido el laser.
-			print("pared")
+			--print("pared")
 			return
 		else
 			local datos_laser = disparar_raycast(self)
+			--pprint(datos_laser)
 			msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position()})
 		end
 			--self.to = go.get_position() -- no se que haría esto acá, borrar si no pasa nada raro.
