@@ -16,5 +16,5 @@ input_method = HiddenInputField
 title = crearProto1
 
 [physics]
-debug = 1
+debug = 0
 
