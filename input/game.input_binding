@@ -7,8 +7,8 @@ key_trigger {
   action: "ray"
 }
 key_trigger {
-  input: KEY_B
-  action: "ray2"
+  input: KEY_C
+  action: "fisicas"
 }
 mouse_trigger {
   input: MOUSE_BUTTON_1

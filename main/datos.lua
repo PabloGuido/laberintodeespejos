@@ -13,6 +13,7 @@ M.disparar_rayo = function (self, hacia_donde)
 		--pprint(result)
 	else
 		draw_line(from, to) -- <6>
+
 	end
 	return result
 end

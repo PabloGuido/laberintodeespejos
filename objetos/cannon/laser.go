@@ -1,6 +1,6 @@
 components {
   id: "laser"
-  component: "/objetos/laser/laser.script"
+  component: "/objetos/cannon/laser.script"
   position {
     x: 0.0
     y: 0.0
