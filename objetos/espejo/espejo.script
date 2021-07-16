@@ -48,6 +48,7 @@ function init(self)
 	self.normal = 0
 	self.grupo_donde_llego_raycast = nil
 	self.datos_laser = {}
+	--print(msg.url())
 end
 
 function final(self)
@@ -83,6 +84,7 @@ function on_message(self, message_id, message, sender)
 		end
 		--self.to = go.get_position() -- no se que haría esto acá, borrar si no pasa nada raro.
 	elseif message_id == hash("borrar_obj") then
+		print("borrar obj")
 		go.delete()
 	end
 	if message_id == hash("accion_gui") then

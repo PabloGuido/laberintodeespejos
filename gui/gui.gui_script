@@ -44,7 +44,7 @@ function init(self)
 	
 	-- obj toolbar
 	self.espejo = gui.get_node("espejo")
-
+	self.ui_objetos = false
 
 	-- tablas -----------------------------------------
 	self.casillas = {}
@@ -78,6 +78,7 @@ end
 --end
 
 function on_message(self, message_id, message, sender)
+	--pprint(message_id)
 	if message_id == hash("obj_seleccionado") then
 		self.obj_seleccionado = message.objeto
 		--(self.obj_seleccionado .. " <from> guiscript")
@@ -120,50 +121,62 @@ function on_message(self, message_id, message, sender)
 			table.remove(self.laser_tabla, i)
 		end
 	elseif message_id == hash("accion_ui_obj") then
+		--pprint(self.casillas)
+		--print(self.ultimo_obj_clickeado)
+		--[[ esto de no pasar nada raro hay que borrar
+		for k, v in pairs(self.casillas) do
+			if tostring(v[1][hash("casilla")]) == tostring(self.ultimo_obj_clickeado) then
+				--print("iguales")
+				--print(k, v)
+				self.ultima_casilla = k
+			end
+			--print(v[1][hash("casilla")])
+		end
+		print(self.ultima_casilla)
+		]]
 		if message.accion == "derecha" then
 			local rot = gui.get_rotation(self.ultimo_obj_clickeado)
 			gui.animate(self.ultimo_obj_clickeado, "rotation.z", rot.z - 90, gui.EASING_INBACK, 0.5, 0,
 			function()
-				msg.post(self.obj_seleccionado, "accion_gui", {accion= "rot_der", valor = -1})
+				--print(self.casillas[self.ultima_casilla][10])
+				msg.post(self.casillas[self.ultima_casilla][10], "accion_gui", {accion= "rot_der", valor = -1})
 				msg.post("/ui_objetos#ui_objetos", "restablecer_input")
 			end	)
 		elseif message.accion == "izquierda" then
 			local rot = gui.get_rotation(self.ultimo_obj_clickeado)
 			gui.animate(self.ultimo_obj_clickeado, "rotation.z", rot.z + 90, gui.EASING_INBACK, 0.5, 0,
 			function()
-				msg.post(self.obj_seleccionado, "accion_gui", {accion= "rot_izq", valor = 1})
+				msg.post(self.casillas[self.ultima_casilla][10], "accion_gui", {accion= "rot_izq", valor = 1})
 				msg.post("/ui_objetos#ui_objetos", "restablecer_input")
 			end	)
 		elseif message.accion == "aceptar" then
 			msg.post("", "acquire_input_focus")
 		elseif message.accion == "borrar_objeto" then
-
 			for i = table.maxn(self.espejos), 1, -1 do
 				if self.ultimo_obj_clickeado == self.espejos[i][hash("espejo")] then
+					-- borra nodo espejo
 					gui.delete_node(self.espejos[i][hash("espejo")])
 					table.remove(self.espejos, i)
 
 					for k, v in pairs(self.casillas) do
-						-- desocupa la casilla
+						-- desocupa la casilla y borra obj físico
 						if tostring(self.casillas[k][1][hash("casilla")]) == tostring(self.ultimo_obj_clickeado) then
 							self.casillas[k]["ocupado"] = false
-							print("pre " .. self.casillas[self.ultima_casilla][10])
-							self.casillas[self.ultima_casilla][10] = nil
-							print("after ")
-							print(self.casillas[self.ultima_casilla][10])
-							print(self.casillas[k]["ocupado"])
-							print(self.obj_seleccionado)
-							msg.post(self.obj_seleccionado, "borrar_obj")
+							msg.post(self.casillas[self.ultima_casilla][10], "borrar_obj")
+							self.casillas[self.ultima_casilla][10] = nil -- esta pos de table es la instancia del objeto físico.
+							
 						end
 					end
 				end
 			end
-		end
-
 			msg.post("", "acquire_input_focus")
+		end
+			
 	elseif message_id == hash("guardar_obj_fisico") then
 		--print(message)
 		--print(self.ultimo_obj_clickeado)
+		-- cambiar casillas por espejos
+		--pprint(self.espejos)
 		table.insert(self.casillas[self.ultima_casilla], 10, message.obj)
 	end
 
@@ -174,8 +187,22 @@ function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		for _,casillero in pairs(self.espejos) do -- Repasa la tabla de self.espejos
 			if gui.pick_node(casillero[("espejo")], action.x, action.y) then
-				msg.post("", "release_input_focus")
+				self.ui_objetos = true
+				-- arreglar que instancia fisica rota
+				--msg.post("", "release_input_focus")
+				--pprint(self.espejos)
 				self.ultimo_obj_clickeado = casillero[("espejo")]
+				-- esta parta kv es para girar las instancias fisicas
+				for k, v in pairs(self.casillas) do
+					if tostring(v[1][hash("casilla")]) == tostring(self.ultimo_obj_clickeado) then
+						--print("iguales")
+						--print(k, v)
+						self.ultima_casilla = k
+					end
+					--print(v[1][hash("casilla")])
+				end
+				print(self.ultima_casilla)
+				
 				local pos_obj = gui.get_position(self.ultimo_obj_clickeado)
 				local obj = self.ultimo_obj_clickeado
 				msg.post("/ui_objetos#ui_objetos", "activar_ui_objetos", {pos = pos_obj, obj = tostring(obj)})
@@ -183,16 +210,17 @@ function on_input(self, action_id, action)
 		end
 	end
 	
-	--print(action_id)
+
 	
 	if action_id == hash("touch") then -- crea objetos y los reja en una casilla o elimina, drag and drop.
 		
 		if action.pressed then
 			if gui.pick_node(self.espejo, action.x, action.y) then
 				--crear espejo para poner
-				self.ultimo_obj_clickeado = nil
-				clonar_nodo(self, self.espejo, hash("espejo"), vmath.vector3(action.x, action.y, 0), self.espejos, true)
-
+				if self.ui_objetos == false then
+					self.ultimo_obj_clickeado = nil
+					clonar_nodo(self, self.espejo, hash("espejo"), vmath.vector3(action.x, action.y, 0), self.espejos, true)
+				end
 			end			
 		elseif action.released then
 			if self.mouse_sobre_casillas == false and datos.obj_en_mouse ~= nil then
