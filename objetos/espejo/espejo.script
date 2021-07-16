@@ -68,33 +68,7 @@ function on_message(self, message_id, message, sender)
 		--pprint(message)
 		self.normal = message.normal
 		self.grupo_donde_llego_raycast = message.grupo
-		--print(self.normal)
-		--[[
-		if self.puede_disparar_laser ~= false then
-			if message.grupo == hash("pared") then
-				return
-			else
-				if message.normal.x == -1 then
-					--print(self.direccion[2])
-					self.to.y = 1000 * self.direccion[2]
-					datos.disparar_rayo(self, self.to,self.datos_del_laser)
-				elseif message.normal.x == 1 then
-					--print(self.direccion[2])
-					self.to.y = 1000 * self.direccion[2]
-					datos.disparar_rayo(self, self.to,self.datos_del_laser)
-				elseif message.normal.y == -1 then
-					--print(self.direccion[1])
-					self.to.x = 1000 * self.direccion[1]
-					datos.disparar_rayo(self, self.to,self.datos_del_laser)
-				elseif message.normal.y == 1 then
-					--print(self.direccion[1])
-					self.to.x = 1000 * self.direccion[1]
-					datos.disparar_rayo(self, self.to,self.datos_del_laser)
-				end
-				self.to = go.get_position()
-			end
-		end
-		]]
+
 	elseif message_id == hash("disparar_ray") then
 		--print("disparar ray")
 		
@@ -107,7 +81,9 @@ function on_message(self, message_id, message, sender)
 			--pprint(datos_laser)
 			msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position()})
 		end
-			--self.to = go.get_position() -- no se que haría esto acá, borrar si no pasa nada raro.
+		--self.to = go.get_position() -- no se que haría esto acá, borrar si no pasa nada raro.
+	elseif message_id == hash("borrar_obj") then
+		go.delete()
 	end
 	if message_id == hash("accion_gui") then
 		self.pos_rotacion  = self.pos_rotacion  + message.valor

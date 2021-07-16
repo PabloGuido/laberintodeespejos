@@ -19,8 +19,8 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("crear_physics_obj") then
-		--print("hola")
-		factory.create("#factory", vmath.vector3(message.x,message.y,0))
+		local obj_fisico = factory.create("#factory", vmath.vector3(message.x,message.y,0))
+		msg.post("/gui#gui", "guardar_obj_fisico", {obj = obj_fisico})
 	end
 end
 

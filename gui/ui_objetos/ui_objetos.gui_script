@@ -1,0 +1,68 @@
+function init(self)
+	-- ui objetos -------------------------------------
+	self.ui_objetos = gui.get_node("ui_objeto")
+	gui.set_enabled(self.ui_objetos, false)
+	self.izq = gui.get_node("izq")
+	self.der = gui.get_node("der")
+	self.aceptar = gui.get_node("aceptar")
+	self.borrar_objeto = gui.get_node("borrar_objeto")
+	self.adorno = gui.get_node("adorno")
+	self.ultimo_obj_clickeado = nil
+	self.posicion = vmath.vector3()
+
+	gui.animate(self.adorno, "rotation.z", 360, gui.EASING_LINEAR, 25, 0, nil, gui.PLAYBACK_LOOP_FORWARD)
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("activar_ui_objetos") then
+		--pprint(message)
+		self.ultimo_obj_clickeado = message.obj
+		self.posicion = message.pos
+		gui.set_position(self.ui_objetos, self.posicion)
+		gui.set_enabled(self.ui_objetos, true)
+		msg.post("", "acquire_input_focus")
+	elseif message_id == hash("restablecer_input") then
+		msg.post("", "acquire_input_focus")
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("touch") and action.pressed then
+		if gui.is_enabled(self.ui_objetos) then
+				if gui.pick_node(self.izq, action.x, action.y) then
+					msg.post("", "release_input_focus")
+					msg.post("/gui#gui", "accion_ui_obj", {accion = "izquierda"})
+				elseif gui.pick_node(self.der, action.x, action.y) then
+					msg.post("", "release_input_focus")
+					msg.post("/gui#gui", "accion_ui_obj", {accion = "derecha"})
+				elseif gui.pick_node(self.aceptar, action.x, action.y) then
+					msg.post("", "release_input_focus")
+					gui.set_enabled(self.ui_objetos, false)
+					msg.post("/gui#gui", "accion_ui_obj", {accion = "aceptar"})
+				elseif gui.pick_node(self.borrar_objeto, action.x, action.y) then
+					msg.post("", "release_input_focus")
+					gui.set_enabled(self.ui_objetos, false)
+					msg.post("/gui#gui", "accion_ui_obj", {accion = "borrar_objeto"})
+					
+				end
+			end
+		end
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end
