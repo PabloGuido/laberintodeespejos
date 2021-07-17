@@ -3,15 +3,15 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/objetos/cannon/laser.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/objetos/objetivo/objetivo.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
   image: "/objetos/cannon/cannon.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/objetos/objetivo/objetivo_off.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/objetos/objetivo/objetivo_on.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 margin: 0

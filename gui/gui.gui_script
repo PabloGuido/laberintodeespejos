@@ -1,4 +1,6 @@
 local datos = require("main.datos")
+local niveles = require("gui.niveles")
+
 local dif_entre_casillas = 96
 local function clonar_nodo(self, que_nodo, que_hash, pos, que_tabla, en_mouse)
 	local nuevo_nodo = gui.clone_tree(que_nodo)
@@ -24,6 +26,13 @@ end
 ---------------------------------
 
 function init(self)
+	-- niveles ----------------------------------------
+	self.nivel = 1
+	self.contador_para_leer_mapa_nivel = 1
+	
+	---------------------------------------------------
+
+	
 	self.ultima_casilla = 1
 	self.pos_casilla = vmath.vector3()
 	self.mouse_sobre_casillas = false -- Registra si el mouse está sobre un casillero.
@@ -32,6 +41,7 @@ function init(self)
 	self.casilla = gui.get_node("casilla") -- casilla vacía
 	self.cruz = gui.get_node("cruz")
 	gui.set_enabled(self.cruz, false)
+	self.objetivo = gui.get_node("objetivo")
 	-- laser beam -----------------------------------------
 	self.laser_beam = gui.get_node("laser_beam")
 	gui.is_enabled(self.laser_beam, false)
@@ -58,17 +68,31 @@ function init(self)
 
 	---------------------------------------------------
 	self.pos = vmath.vector3(440,600,0) -- posicion inicial para crear la grilla
-	for i = 1, 5 do	
-		for i = 1, 5 do	
+	for i = 1, niveles[1]["cuanto_por_cuanto"] do
+		for i = 1, niveles[1]["cuanto_por_cuanto"] do
+			--print(niveles[tostring(self.nivel)][self.contador_para_leer_mapa_nivel])
+			local constatador = niveles["1"][self.contador_para_leer_mapa_nivel]
+			local ocupado = false
+			--print(niveles["1"][self.contador_para_leer_mapa_nivel])
+			if constatador == 2 then -- Coloca el objetivo en lugar
+				-- Y esto debería enviar un mensaje para crear un objeto fisico del "objetivo"
+				gui.set_position(self.objetivo, self.pos)
+				msg.post("/objetivo", "mover_posicion", {pos = self.pos})
+				ocupado = true
+			end
 			local nueva_casilla = gui.clone_tree(self.casilla)
-			local clon_casilla = nueva_casilla[hash("casilla")]	
+			local clon_casilla = nueva_casilla[hash("casilla")]
 			gui.set_position(clon_casilla, self.pos)
 			self.pos.x = self.pos.x + dif_entre_casillas
-			table.insert(self.casillas, {nueva_casilla, ocupado = false})
+			table.insert(self.casillas, {nueva_casilla, ocupado = ocupado})
+			self.contador_para_leer_mapa_nivel = self.contador_para_leer_mapa_nivel + 1
+
 		end
 		self.pos.x = 440
 		self.pos.y = self.pos.y - dif_entre_casillas
 	end
+	
+	self.contador_para_leer_mapa_nivel = 1
 	gui.set_enabled(self.casilla, false) -- ver que esto no haga bardo dsp
 	---------------------------------------------------
 end
@@ -113,6 +137,7 @@ function on_message(self, message_id, message, sender)
 			local direction = angle_of_vector_between_two_points(message.pos_inicial_laser.x, message.pos_inicial_laser.y, 1000, message.pos_inicial_laser.y)
 			local rotation = vmath.quat_rotation_z(direction)
 			gui.set_rotation(nuevo_laser_beam, rotation)
+			
 		end
 	elseif message_id == hash("borrar_laser") then
 		for i = table.maxn(self.laser_tabla), 1, -1 do
@@ -120,6 +145,7 @@ function on_message(self, message_id, message, sender)
 			gui.delete_node(self.laser_tabla[i][hash("laser_beam")])
 			table.remove(self.laser_tabla, i)
 		end
+		gui.play_flipbook(self.objetivo, "objetivo_off") -- Esto después puede que haya que sacarlo, en teoría terminaría el nivel acá.
 	elseif message_id == hash("accion_ui_obj") then
 		--pprint(self.casillas)
 		--print(self.ultimo_obj_clickeado)
@@ -183,6 +209,9 @@ function on_message(self, message_id, message, sender)
 		-- cambiar casillas por espejos
 		--pprint(self.espejos)
 		table.insert(self.casillas[self.ultima_casilla], 10, message.obj)
+	elseif message_id == hash("objetivo_encontrado") then
+		gui.move_above(self.objetivo, self.laser)
+		gui.play_flipbook(self.objetivo, "objetivo_on")
 	end
 
 end
