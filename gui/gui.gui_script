@@ -48,6 +48,8 @@ function init(self)
 	self.position = gui.get_position(self.laser_beam )
 	self.target_position = gui.get_position(self.laser_beam )
 	self.scale = gui.get_scale(self.laser_beam )
+	self.play_stop = gui.get_node("play_stop")
+	self.laser_prendido = false
 	-- clonacion de beams
 	self.laser_tabla = {}
 	
@@ -145,7 +147,9 @@ function on_message(self, message_id, message, sender)
 			gui.delete_node(self.laser_tabla[i][hash("laser_beam")])
 			table.remove(self.laser_tabla, i)
 		end
+		gui.play_flipbook(self.play_stop, "boton_play")
 		gui.play_flipbook(self.objetivo, "objetivo_off") -- Esto después puede que haya que sacarlo, en teoría terminaría el nivel acá.
+		gui.animate(self.objetivo, "scale", 1, gui.EASING_LINEAR, 0)
 	elseif message_id == hash("accion_ui_obj") then
 		--pprint(self.casillas)
 		--print(self.ultimo_obj_clickeado)
@@ -212,6 +216,9 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("objetivo_encontrado") then
 		gui.move_above(self.objetivo, self.laser)
 		gui.play_flipbook(self.objetivo, "objetivo_on")
+		local pos = gui.get_position(self.objetivo)
+		pos.x = pos.x +10
+		gui.animate(self.objetivo, "scale",1.1, gui.EASING_INCIRC, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 	end
 
 end
@@ -252,8 +259,13 @@ function on_input(self, action_id, action)
 			if gui.pick_node(self.espejo, action.x, action.y) then
 				--crear espejo para poner
 				if self.ui_objetos == false then
-			self.ultimo_obj_clickeado = nil
-			self.ultimo_nodo_creado = clonar_nodo(self, self.espejo, hash("espejo"), vmath.vector3(action.x, action.y, 0), self.espejos, true)
+					self.ultimo_obj_clickeado = nil
+					self.ultimo_nodo_creado = clonar_nodo(self, self.espejo, hash("espejo"), vmath.vector3(action.x, action.y, 0), self.espejos, true)
+				end
+			elseif gui.pick_node(self.play_stop, action.x, action.y) then -- Enciende y apaga el laser.
+				if self.ui_objetos == false then
+					gui.play_flipbook(self.play_stop, "boton_stop")
+					msg.post("/laser#laser", "disparar_ray_cast")
 				end
 			end			
 		elseif action.released then
@@ -289,7 +301,8 @@ function on_input(self, action_id, action)
 					msg.post("/espejos#espejosfactory", "crear_physics_obj",{x = self.pos_casilla.x , y = self.pos_casilla.y})
 					print("Colocando obj en casillero número (" .. self.ultima_casilla .. ") " .. tostring(self.casillas[self.ultima_casilla ]["ocupado"]))
 				end
-			gui.set_enabled(self.cruz, false)
+				gui.set_enabled(self.cruz, false)
+
 		end
 	end
 	
@@ -341,11 +354,8 @@ function on_input(self, action_id, action)
 		end
 	end
 	
-	if action_id == hash("ray") and action.pressed then
-		if self.ui_objetos == false then
-			msg.post("/laser#laser", "disparar_ray_cast")
-		end
-	elseif action_id == hash("fisicas") and action.pressed then
+
+	if action_id == hash("fisicas") and action.pressed then
 		if datos.dibujar_linea == false then
 			datos.dibujar_linea = true
 		else
