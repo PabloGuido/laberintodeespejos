@@ -1,0 +1,2 @@
+prototype: "/objetos/obstaculo/obstaculo.go"
+load_dynamically: false

@@ -81,6 +81,10 @@ function init(self)
 				gui.set_position(self.objetivo, self.pos)
 				msg.post("/objetivo", "mover_posicion", {pos = self.pos})
 				ocupado = true
+			elseif constatador == 1 then
+				msg.post("/obstaculo_factory_obj#obstaculo_factory_scr", "crear_obstaculo", {pos = self.pos})
+				ocupado = true
+
 			end
 			local nueva_casilla = gui.clone_tree(self.casilla)
 			local clon_casilla = nueva_casilla[hash("casilla")]
