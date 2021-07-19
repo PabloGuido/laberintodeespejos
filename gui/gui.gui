@@ -402,7 +402,7 @@ nodes {
 }
 nodes {
   position {
-    x: 634.0
+    x: 633.0
     y: 105.0
     z: 0.0
     w: 1.0

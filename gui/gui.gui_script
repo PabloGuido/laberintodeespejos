@@ -72,10 +72,10 @@ function init(self)
 
 	---------------------------------------------------
 	self.pos = vmath.vector3(440,600,0) -- posicion inicial para crear la grilla
-	for i = 1, niveles[1]["cuanto_por_cuanto"] do
-		for i = 1, niveles[1]["cuanto_por_cuanto"] do
+	for i = 1, niveles[self.nivel]["cuanto_por_cuanto"] do
+		for i = 1, niveles[self.nivel]["cuanto_por_cuanto"] do
 			--print(niveles[tostring(self.nivel)][self.contador_para_leer_mapa_nivel])
-			local constatador = niveles["1"][self.contador_para_leer_mapa_nivel]
+			local constatador = niveles[tostring(self.nivel)][self.contador_para_leer_mapa_nivel]
 			local ocupado = false
 			--print(niveles["1"][self.contador_para_leer_mapa_nivel])
 			if constatador == 2 then -- Coloca el objetivo en lugar
