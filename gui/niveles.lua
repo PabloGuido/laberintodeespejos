@@ -14,6 +14,4 @@ M[1]["cuanto_por_cuanto"] = 5
 
 
 
-
-
 return M

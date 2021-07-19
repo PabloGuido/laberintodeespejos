@@ -42,6 +42,8 @@ function init(self)
 	self.cruz = gui.get_node("cruz")
 	gui.set_enabled(self.cruz, false)
 	self.objetivo = gui.get_node("objetivo")
+	self.obstaculo = gui.get_node("obstaculo")
+	
 	-- laser beam -----------------------------------------
 	self.laser_beam = gui.get_node("laser_beam")
 	gui.is_enabled(self.laser_beam, false)
@@ -84,7 +86,7 @@ function init(self)
 			elseif constatador == 1 then
 				msg.post("/obstaculo_factory_obj#obstaculo_factory_scr", "crear_obstaculo", {pos = self.pos})
 				ocupado = true
-
+				clonar_nodo(self, self.obstaculo, hash("obstaculo"), self.pos, {}, false)
 			end
 			local nueva_casilla = gui.clone_tree(self.casilla)
 			local clon_casilla = nueva_casilla[hash("casilla")]
