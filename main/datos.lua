@@ -6,10 +6,13 @@ local function draw_line(from, to)
 	end
 end
 
-M.disparar_rayo = function (self, hacia_donde)
+M.disparar_rayo = function (self, hacia_donde, desde_donde)
+	if desde_donde == nil then
+		desde_donde = go.get_position()
+	end
 	local from = go.get_position()
 	local to = hacia_donde
-	local result = physics.raycast(from, to, { hash("espejo"), hash("pared") }) -- <4>
+	local result = physics.raycast(desde_donde, to, { hash("espejo"), hash("pared") }) -- <4>
 	if result then
 		draw_line(from, result.position) -- <5>
 		msg.post(result.id, "rayo", {normal = result.normal, grupo = result.group})
