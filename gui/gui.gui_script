@@ -14,6 +14,23 @@ local function clonar_nodo(self, que_nodo, que_hash, pos, que_tabla, en_mouse)
 	return clon_nodo
 end
 
+-- switches ---------------------
+
+local function switch_activado(self)
+	self.cantidad_de_switches_activados = self.cantidad_de_switches_activados + 1
+
+	if self.cantidad_de_switches_activados == self.cantidad_de_switches_en_el_nivel and self.laser_en_barrera == false then
+		--print("Cantidad de switches alcanzada, desactivar barrera: " .. self.cantidad_de_switches_activados .. "/" .. self.cantidad_de_switches_en_el_nivel)
+		local function apagar_barrera(self)
+			gui.set_enabled(self.barrera, false)
+		end
+		timer.delay(0.25, false, apagar_barrera)
+		msg.post("/barrera#barrera", "desactivar_barrera")
+	else
+		--print("Switches activados: " .. self.cantidad_de_switches_activados .. "/" .. self.cantidad_de_switches_en_el_nivel)
+	end
+end
+
 -- laser beam -------------------
 local function dist2d(x1, y1, x2, y2)
 	return ((x2-x1)^2+(y2-y1)^2)^0.5
@@ -29,7 +46,9 @@ function init(self)
 	-- niveles ----------------------------------------
 	self.nivel = 1
 	self.contador_para_leer_mapa_nivel = 1
-	
+
+	self.cantidad_de_switches_en_el_nivel = niveles[self.nivel]["switches"]
+	self.cantidad_de_switches_activados = 0
 	---------------------------------------------------
 
 	
@@ -43,7 +62,9 @@ function init(self)
 	gui.set_enabled(self.cruz, false)
 	self.objetivo = gui.get_node("objetivo")
 	self.obstaculo = gui.get_node("obstaculo")
-	
+	self.barrera = gui.get_node("barrera")
+	self.laser_en_barrera = false
+	self.switch = gui.get_node("switch")
 	-- laser beam -----------------------------------------
 	self.laser_beam = gui.get_node("laser_beam")
 	gui.is_enabled(self.laser_beam, false)
@@ -82,12 +103,21 @@ function init(self)
 			if constatador == 2 then -- Coloca el objetivo en lugar
 				-- Y esto debería enviar un mensaje para crear un objeto fisico del "objetivo"
 				gui.set_position(self.objetivo, self.pos)
+				gui.set_position(self.barrera, self.pos)
 				msg.post("/objetivo", "mover_posicion", {pos = self.pos})
+				msg.post("barrera", "mover_posicion", {pos = self.pos})
 				ocupado = true
-			elseif constatador == 1 then
+			elseif constatador == 1 then -- Coloca obstáculos
 				msg.post("/obstaculo_factory_obj#obstaculo_factory_scr", "crear_obstaculo", {pos = self.pos})
 				ocupado = true
 				clonar_nodo(self, self.obstaculo, hash("obstaculo"), self.pos, {}, false)
+			elseif constatador == 3 then -- Coloca switches
+				
+				ocupado = true
+				local nuevo_switch = clonar_nodo(self, self.switch, hash("switch"), self.pos, {}, false)
+				table.insert(datos.switches, nuevo_switch)
+				--pprint(datos.switches)
+				msg.post("/switches#switchfactory", "crear_switch", {pos = self.pos, nodo = tostring(nuevo_switch)})
 			end
 			local nueva_casilla = gui.clone_tree(self.casilla)
 			local clon_casilla = nueva_casilla[hash("casilla")]
@@ -214,6 +244,18 @@ function on_message(self, message_id, message, sender)
 		local pos = gui.get_position(self.objetivo)
 		pos.x = pos.x +10
 		gui.animate(self.objetivo, "scale",1.1, gui.EASING_INCIRC, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+		print("Objetivo encontrado - nivel superado")
+	elseif message_id == hash("switch_encontrado") then
+		--pprint(datos.switches)
+		for i = 1, table.maxn(datos.switches) do
+			if message.nodo_switch == tostring(datos.switches[i]) then
+				gui.animate(datos.switches[i], "color", vmath.vector4(0,0.5,0.5,1), gui.EASING_INBACK, 0.15,0.20)
+				--gui.move_above(datos.switches[i], self.laser_beam) -- No se porque no funciona esto
+				switch_activado(self)
+			end
+		end
+	elseif message_id == hash("laser_en_barrera") then
+		self.laser_en_barrera = true -- chquea si llego el laser a la barrera antes de activar todos los switches
 	end
 
 end
@@ -263,11 +305,18 @@ function on_input(self, action_id, action)
 					self.ultimo_nodo_creado = clonar_nodo(self, self.espejo, hash("espejo"), vmath.vector3(action.x, action.y, 0), self.espejos, true)
 					gui.play_flipbook(self.ultimo_nodo_creado, "espejo_doble")
 			elseif gui.pick_node(self.play_stop, action.x, action.y) then -- Enciende y apaga el laser.
-				if self.ui_objetos == false then
+				if self.ui_objetos == false then -- play stop
 					gui.play_flipbook(self.play_stop, "boton_stop")
 					msg.post("/laser#laser", "disparar_ray_cast")
+					self.cantidad_de_switches_activados = 0
+					self.laser_en_barrera = false
+					gui.set_enabled(self.barrera, true)
+					msg.post("/barrera#barrera", "activar_barrera")
+					for i = 1, table.maxn(datos.switches) do
+						gui.animate(datos.switches[i], "color", vmath.vector4(0.5,0,0,1), gui.EASING_INBACK, 0.15)
+					end
 				end
-			end			
+			end	
 		elseif action.released then
 			if self.mouse_sobre_casillas == false and datos.obj_en_mouse ~= nil then
 				-- Suelta y elimina el objeto si se soltó por fuera de una casilla y libera "obj_en_mouse".
