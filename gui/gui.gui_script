@@ -313,7 +313,7 @@ function on_input(self, action_id, action)
 					gui.set_enabled(self.barrera, true)
 					msg.post("/barrera#barrera", "activar_barrera")
 					for i = 1, table.maxn(datos.switches) do
-						gui.animate(datos.switches[i], "color", vmath.vector4(0.5,0,0,1), gui.EASING_INBACK, 0.15)
+						gui.animate(datos.switches[i], "color", vmath.vector4(0.8,0.17,0.17,1), gui.EASING_INBACK, 0.15)
 					end
 				end
 			end	
