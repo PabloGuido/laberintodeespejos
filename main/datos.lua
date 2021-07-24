@@ -2,7 +2,7 @@ local M = {}
 M.dibujar_linea = false
 local function draw_line(from, to)
 	if M.dibujar_linea == true then
-		msg.post("@render:", "draw_line", { start_point = from, end_point = to, color = vmath.vector4(0,1,1,1), width = 4 })
+		msg.post("@render:", "draw_line", { start_point = from, end_point = to, color = vmath.vector4(0,0,0,1), width = 4 })
 	end
 end
 

@@ -1,5 +1,5 @@
 local datos = require("main.datos")
-local distancia_rayo = 1200
+local distancia_rayo = 1400
 local function disparar_raycast(self)
 	local datos_laser
 	if self.normal.x == -1 then

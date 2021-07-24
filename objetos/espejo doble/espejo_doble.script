@@ -1,22 +1,23 @@
 local datos = require("main.datos")
+local distancia_laser = 1400
 
 local function disparar_raycast(self)
 	local datos_laser
 	if self.normal.x == -1 then
 		--print(self.direccion[2])
-		self.to.y = 1000 * self.direccion[2]
+		self.to.y = distancia_laser * self.direccion[2]
 		datos_laser= datos.disparar_rayo(self, self.to)
 	elseif self.normal.x == 1 then
 		--print(self.direccion[2])
-		self.to.y = 1000 * self.direccion[2]
+		self.to.y = distancia_laser * self.direccion[2]
 		datos_laser = datos.disparar_rayo(self, self.to)
 	elseif self.normal.y == -1 then
 		--print(self.direccion[1])
-		self.to.x = 1000 * self.direccion[1]
+		self.to.x = distancia_laser * self.direccion[1]
 		datos_laser = datos.disparar_rayo(self, self.to)
 	elseif self.normal.y == 1 then
 		--print(self.direccion[1])
-		self.to.x = 1000 * self.direccion[1]
+		self.to.x = distancia_laser * self.direccion[1]
 		datos_laser= datos.disparar_rayo(self, self.to)
 	end	
 	self.to = go.get_position(go.get_id())
@@ -85,21 +86,25 @@ function on_message(self, message_id, message, sender)
 			local pos_inicial_laser2 = go.get_position()
 			self.to = go.get_position()
 			if self.normal.x == -1 then
-				self.to.x = 1000
+				self.to.x = distancia_laser
 				pos_inicial_laser2.x = pos_inicial_laser2.x + 48
 				datos_laser2 = datos.disparar_rayo(self, self.to, pos_inicial_laser2)
+				pos_inicial_laser2.x = pos_inicial_laser2.x - 68
 			elseif self.normal.x == 1 then
-				self.to.x = -1000
+				self.to.x = -distancia_laser
 				pos_inicial_laser2.x = pos_inicial_laser2.x -48
 				datos_laser2 = datos.disparar_rayo(self, self.to, pos_inicial_laser2)
+				pos_inicial_laser2.x = pos_inicial_laser2.x + 68
 			elseif self.normal.y == -1 then
-				self.to.y = 1000
+				self.to.y = distancia_laser
 				pos_inicial_laser2.y = pos_inicial_laser2.y + 48
 				datos_laser2 = datos.disparar_rayo(self, self.to, pos_inicial_laser2)
+				pos_inicial_laser2.y = pos_inicial_laser2.y - 68
 			elseif self.normal.y == 1 then
-				self.to.y = -1000
+				self.to.y = -distancia_laser
 				pos_inicial_laser2.y = pos_inicial_laser2.y - 48
 				datos_laser2 = datos.disparar_rayo(self, self.to, pos_inicial_laser2)
+				pos_inicial_laser2.y = pos_inicial_laser2.y + 68
 			end	
 			msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser2, pos_inicial_laser = pos_inicial_laser2})
 		end

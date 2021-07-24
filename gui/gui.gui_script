@@ -44,7 +44,7 @@ end
 
 function init(self)
 	--msg.post("@render:", "clear_color", { color = vmath.vector4(0.15, 0.25, 0.15, 0) } )
-	msg.post("@render:", "clear_color", { color = vmath.vector4(1, 1, 1, 0) } )
+	--msg.post("@render:", "clear_color", { color = vmath.vector4(1, 1, 1, 0) } )
 	-- niveles ----------------------------------------
 	self.nivel = 1
 	self.contador_para_leer_mapa_nivel = 1
