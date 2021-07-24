@@ -299,8 +299,8 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: 626.0
-    y: 653.0
+    x: 711.0
+    y: 717.0
     z: 0.0
   }
   rotation {
@@ -310,7 +310,7 @@ embedded_instances {
     w: 1.0
   }
   scale3 {
-    x: 0.622
+    x: 1.016
     y: 1.0
     z: 1.0
   }
@@ -366,8 +366,8 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: 633.0
-    y: 161.0
+    x: 726.0
+    y: 12.0
     z: 0.0
   }
   rotation {
@@ -377,8 +377,8 @@ embedded_instances {
     w: 1.0
   }
   scale3 {
-    x: 0.63
-    y: 0.94
+    x: 1.246
+    y: 0.841
     z: 0.94
   }
 }
@@ -433,8 +433,8 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: 872.0
-    y: 408.0
+    x: 1097.0
+    y: 355.0
     z: 0.0
   }
   rotation {
@@ -444,7 +444,7 @@ embedded_instances {
     w: 0.70710677
   }
   scale3 {
-    x: 0.63
+    x: 0.984
     y: 0.94
     z: 0.94
   }
@@ -643,6 +643,46 @@ embedded_instances {
   position {
     x: 0.0
     y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "fondo"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"tile_set: \\\"/gui/fondos.atlas\\\"\\n"
+  "default_animation: \\\"fondo_rosa\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "blend_mode: BLEND_MODE_ALPHA\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 640.0
+    y: 380.0
     z: 0.0
   }
   rotation {

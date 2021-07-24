@@ -1,22 +1,22 @@
 local datos = require("main.datos")
-
+local distancia_rayo = 1200
 local function disparar_raycast(self)
 	local datos_laser
 	if self.normal.x == -1 then
 		--print(self.direccion[2])
-		self.to.y = 1000 * self.direccion[2]
+		self.to.y = distancia_rayo * self.direccion[2]
 		datos_laser= datos.disparar_rayo(self, self.to)
 	elseif self.normal.x == 1 then
 		--print(self.direccion[2])
-		self.to.y = 1000 * self.direccion[2]
+		self.to.y = distancia_rayo * self.direccion[2]
 		datos_laser = datos.disparar_rayo(self, self.to)
 	elseif self.normal.y == -1 then
 		--print(self.direccion[1])
-		self.to.x = 1000 * self.direccion[1]
+		self.to.x = distancia_rayo * self.direccion[1]
 		datos_laser = datos.disparar_rayo(self, self.to)
 	elseif self.normal.y == 1 then
 		--print(self.direccion[1])
-		self.to.x = 1000 * self.direccion[1]
+		self.to.x = distancia_rayo * self.direccion[1]
 		datos_laser= datos.disparar_rayo(self, self.to)
 	end	
 	self.to = go.get_position(go.get_id())

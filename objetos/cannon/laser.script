@@ -1,8 +1,8 @@
 local datos = require("main.datos")
-
+local distancia_rayo = 1200
 function init(self)
 	self.to = go.get_position()
-	self.to.x = 1000
+	self.to.x = distancia_rayo
 	self.disparar = false
 	--msg.post("", "acquire_input_focus")
 	self.datos_del_laser = {}
