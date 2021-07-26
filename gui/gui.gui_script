@@ -51,8 +51,10 @@ function init(self)
 
 	self.cantidad_de_switches_en_el_nivel = niveles[self.nivel]["switches"]
 	self.cantidad_de_switches_activados = 0
-	---------------------------------------------------
-
+	--------------------------------------------------	-	
+	self.moviendo_obj = false
+	self.ultima_pos = vmath.vector3()
+	self.delta_pos = vmath.vector3()
 	
 	self.ultima_casilla = 1
 	self.pos_casilla = vmath.vector3()
@@ -287,6 +289,19 @@ function on_input(self, action_id, action)
 				local obj = self.ultimo_obj_clickeado
 				--print("enviando mensaje al ui")
 				msg.post("/ui_objetos#ui_objetos", "activar_ui_objetos", {pos = pos_obj, obj = tostring(obj)})
+				self.delta_pos = pos_obj
+				self.moviendo_obj = true
+				datos.obj_en_mouse = self.ultimo_obj_clickeado
+				
+				for k, v in pairs(self.casillas) do
+					-- desocupa la casilla y borra obj físico
+					if tostring(self.casillas[k][1][hash("casilla")]) == tostring(self.ultimo_obj_clickeado) then
+						self.casillas[k]["ocupado"] = false
+						--msg.post(self.casillas[self.ultima_casilla][10], "borrar_obj")
+						--self.casillas[self.ultima_casilla][10] = nil -- esta pos de table es la instancia del objeto físico.
+
+					end
+				end
 			end
 		end
 	end	
@@ -300,6 +315,7 @@ function on_input(self, action_id, action)
 				--if self.ui_objetos == false then -- esto puede que no haga falta
 					self.ultimo_obj_clickeado = nil
 					self.ultimo_nodo_creado = clonar_nodo(self, self.espejo, hash("espejo"), vmath.vector3(action.x, action.y, 0), self.espejos, true)
+					self.ultimo_obj_clickeado = self.ultimo_nodo_creado
 					--gui.play_flipbook(self.ultimo_nodo_creado, "obstaculo")
 				--end
 			elseif gui.pick_node(self.espejo_doble, action.x, action.y) then
@@ -328,26 +344,40 @@ function on_input(self, action_id, action)
 						if datos.obj_en_mouse == self.espejos[i][hash("espejo")] then
 							gui.delete_node(self.espejos[i][hash("espejo")])
 							table.remove(self.espejos, i)
-							print("borrando nodo")
+							print("borrando nodo 1")
 						end
 					end
 					datos.obj_en_mouse = nil
-					
+					self.moviendo_obj = false
 			elseif self.casillas[self.ultima_casilla]["ocupado"] == true and datos.obj_en_mouse ~= nil then
 				-- Suelta el objeto dejándolo en una casilla, la función de abajo se encarga de esto. Libera "obj_en_mouse".
 					print("No podés dejar el obj en la casillero (" .. self.ultima_casilla .. ") " .. tostring(self.casillas[self.ultima_casilla ]["ocupado"]))
 					for i = table.maxn(self.espejos), 1, -1 do
-						if datos.obj_en_mouse == self.espejos[i][hash("espejo")] then
+
+						if self.ultimo_obj_clickeado == self.espejos[i][hash("espejo")] and self.moviendo_obj == false then
 							gui.delete_node(self.espejos[i][hash("espejo")])
 							table.remove(self.espejos, i)
-							print("borrando nodo")
+							print("borrando nodo 2")
+						elseif self.ultimo_obj_clickeado == self.espejos[i][hash("espejo")] and self.moviendo_obj == true then
+							for k, v in pairs(self.espejos) do
+								gui.set_position(self.ultimo_obj_clickeado, self.delta_pos)
+								print(self.ultimo_obj_clickeado)
+								pprint(self.ultima_pos)
+							end
+							--gui.set_position(self.ultimo_obj_clickeado, self.ultima_pos)
+							print("restablecer pos")
 						end
 					end
-					datos.obj_en_mouse = nil
+
+
 					
+					datos.obj_en_mouse = nil
+					self.moviendo_obj = false
 				elseif self.casillas[self.ultima_casilla]["ocupado"] == false and datos.obj_en_mouse ~= nil then
 					datos.obj_en_mouse = nil
 					self.casillas[self.ultima_casilla]["ocupado"] = true
+
+					--self.ultimo_obj_clickeado = self.ultimo_nodo_creado -- esto?
 					-- crear physics obj
 
 					if gui.get_flipbook(self.ultimo_nodo_creado) == hash("espejo") then
@@ -376,6 +406,7 @@ function on_input(self, action_id, action)
 					-- Así cuando el touch es released y se está sobre una casilla el objeto queda en esa posición.
 
 					self.pos_casilla = gui.get_position(casillero[1][("casilla")])
+					
 					gui.set_position(datos.obj_en_mouse, self.pos_casilla)
 					self.ultima_casilla = _
 					if self.casillas[self.ultima_casilla]["ocupado"] == true then
@@ -399,6 +430,13 @@ function on_input(self, action_id, action)
 
 					
 				end
+				if self.ultima_pos ~= self.pos_casilla then
+					--self.delta_pos = self.ultima_pos
+					--self.ultima_pos = self.pos_casilla
+					--print(self.delta_pos)
+					--print(self.ultima_pos)
+				end
+				
 				return -- Tope para que el mouse sobre cailla y el código de arriba funcione.
 			end
 			self.mouse_sobre_casillas = false -- resetea el mouse sobre casillas para que no se cuelgue.
