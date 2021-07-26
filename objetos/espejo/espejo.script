@@ -86,6 +86,10 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("borrar_obj") then
 		print("borrar obj")
 		go.delete()
+	elseif message_id == hash("mover_obj") then
+		print("mover obj fisico: " .. go.get_id())
+		go.set_position(message.pos, "")
+		self.to = go.get_position()
 	end
 	if message_id == hash("accion_gui") then
 		self.pos_rotacion  = self.pos_rotacion  + message.valor
