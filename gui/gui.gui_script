@@ -207,7 +207,7 @@ function on_message(self, message_id, message, sender)
 			gui.animate(self.ultimo_obj_clickeado, "rotation.z", rot.z - 90, gui.EASING_INBACK, 0.5, 0,
 			function()
 
-				msg.post(self.casillas[self.ultima_casilla][10], "accion_gui", {accion= "rot_der", valor = -1})
+				msg.post(self.casillas[self.ultima_casilla]["instancia"], "accion_gui", {accion= "rot_der", valor = -1})
 				msg.post("/ui_objetos#ui_objetos", "restablecer_input")
 				msg.post("", "acquire_input_focus")
 	
@@ -217,7 +217,7 @@ function on_message(self, message_id, message, sender)
 			gui.animate(self.ultimo_obj_clickeado, "rotation.z", rot.z + 90, gui.EASING_INBACK, 0.5, 0,
 			function()
 
-				msg.post(self.casillas[self.ultima_casilla][10], "accion_gui", {accion= "rot_izq", valor = 1})
+				msg.post(self.casillas[self.ultima_casilla]["instancia"], "accion_gui", {accion= "rot_izq", valor = 1})
 				msg.post("/ui_objetos#ui_objetos", "restablecer_input")
 				msg.post("", "acquire_input_focus")
 			end	)
@@ -236,9 +236,13 @@ function on_message(self, message_id, message, sender)
 						-- desocupa la casilla y borra obj físico
 						if tostring(self.casillas[k][1][hash("casilla")]) == tostring(self.ultimo_obj_clickeado) then
 							self.casillas[k]["ocupado"] = false
-							msg.post(self.casillas[self.ultima_casilla][10], "borrar_obj")
-							--msg.post(self.casillas[self.casilla_delta][10], "borrar_obj")
-							self.casillas[self.ultima_casilla][10] = nil -- esta pos de table es la instancia del objeto físico.
+							if self.casillas[self.ultima_casilla]["instancia"] == nil then
+								msg.post(self.casillas[self.casilla_delta]["instancia"], "borrar_obj")
+							else
+								msg.post(self.casillas[self.ultima_casilla]["instancia"], "borrar_obj")
+							end
+							
+							self.casillas[self.ultima_casilla]["instancia"] = nil -- esta pos de table es la instancia del objeto físico.
 							
 						end
 					end
@@ -253,7 +257,8 @@ function on_message(self, message_id, message, sender)
 		--print(self.ultimo_obj_clickeado)
 		-- cambiar casillas por espejos
 		--pprint(self.espejos)
-		table.insert(self.casillas[self.ultima_casilla], 10, message.obj)
+		--table.insert(self.casillas[self.ultima_casilla], 10, message.obj)
+		self.casillas[self.ultima_casilla]["instancia"] =  message.obj
 	elseif message_id == hash("objetivo_encontrado") then
 		gui.move_above(self.objetivo, self.laser)
 		gui.play_flipbook(self.objetivo, "objetivo_on")
@@ -315,8 +320,8 @@ function on_input(self, action_id, action)
 						self.casillas[k]["ocupado"] = false
 						print("guardando casilla delta")
 						self.casilla_delta = k
-						--msg.post(self.casillas[self.ultima_casilla][10], "borrar_obj")
-						--self.casillas[self.ultima_casilla][10] = nil -- esta pos de table es la instancia del objeto físico.
+						
+
 
 					end
 				end
@@ -365,8 +370,8 @@ function on_input(self, action_id, action)
 							print("borrando nodo 1")
 							--datos.obj_en_mouse = nil
 							if self.moviendo_obj == true then
-								msg.post(self.casillas[self.casilla_delta][10], "borrar_obj")
-								self.casillas[self.casilla_delta][10] = nil -- esta pos de table es la instancia del objeto físico.
+								msg.post(self.casillas[self.casilla_delta]["instancia"], "borrar_obj")
+								self.casillas[self.casilla_delta]["instancia"] = nil -- esta pos de table es la instancia del objeto físico.
 								
 							end
 						end
@@ -417,11 +422,11 @@ function on_input(self, action_id, action)
 					--print(self.ultima_casilla)
 
 						if self.casilla_delta ~= self.ultima_casilla and self.mouse_sobre_casillas == true then
-							print(self.casillas[self.casilla_delta][10])
+							print(self.casillas[self.casilla_delta]["instancia"])
 							
-							self.casillas[self.ultima_casilla][10] = self.casillas[self.casilla_delta][10]
-							msg.post(self.casillas[self.ultima_casilla][10], "mover_obj", {pos = self.pos_casilla})	
-							self.casillas[self.casilla_delta][10] = nil 
+							self.casillas[self.ultima_casilla]["instancia"] = self.casillas[self.casilla_delta]["instancia"]
+							msg.post(self.casillas[self.ultima_casilla]["instancia"], "mover_obj", {pos = self.pos_casilla})	
+							self.casillas[self.casilla_delta]["instancia"] = nil 
 							
 							print("mover obj fisico // gui")
 						elseif self.mouse_sobre_casillas == false then
