@@ -237,6 +237,7 @@ function on_message(self, message_id, message, sender)
 						if tostring(self.casillas[k][1][hash("casilla")]) == tostring(self.ultimo_obj_clickeado) then
 							self.casillas[k]["ocupado"] = false
 							msg.post(self.casillas[self.ultima_casilla][10], "borrar_obj")
+							--msg.post(self.casillas[self.casilla_delta][10], "borrar_obj")
 							self.casillas[self.ultima_casilla][10] = nil -- esta pos de table es la instancia del objeto físico.
 							
 						end
@@ -295,8 +296,7 @@ function on_input(self, action_id, action)
 						--print(k, v)
 						self.ultima_casilla = k
 						print(self.ultima_casilla)
-					end
-					
+					end	
 					--print(v[1][hash("casilla")])
 				end
 				--print(self.ultima_casilla)
@@ -413,28 +413,35 @@ function on_input(self, action_id, action)
 
 					--self.ultimo_obj_clickeado = self.ultimo_nodo_creado -- esto?
 					-- crear physics obj
-					
-					if gui.get_flipbook(self.ultimo_nodo_creado) == hash("espejo") and self.moviendo_obj == false then
-						msg.post("/espejos#espejosfactory", "crear_physics_obj",{x = self.pos_casilla.x , y = self.pos_casilla.y})
-					elseif gui.get_flipbook(self.ultimo_nodo_creado) == hash("espejo_doble") and self.moviendo_obj == false then
-						msg.post("/espejos_dobles#espejosdoblesfactory", "crear_physics_obj",{x = self.pos_casilla.x , y = self.pos_casilla.y})
-					elseif self.moviendo_obj == true then
-						--print(self.ultima_casilla)
-						
+					if self.moviendo_obj == true then
+					--print(self.ultima_casilla)
+
 						if self.casilla_delta ~= self.ultima_casilla and self.mouse_sobre_casillas == true then
 							print(self.casillas[self.casilla_delta][10])
+							
 							self.casillas[self.ultima_casilla][10] = self.casillas[self.casilla_delta][10]
 							msg.post(self.casillas[self.ultima_casilla][10], "mover_obj", {pos = self.pos_casilla})	
 							self.casillas[self.casilla_delta][10] = nil 
+							
 							print("mover obj fisico // gui")
 						elseif self.mouse_sobre_casillas == false then
-							print("restablecer pos desde afuera")
+							print("restablecer pos desde afuera") --??
+							
 							gui.set_position(self.ultimo_obj_clickeado, self.delta_pos)
 							self.casillas[self.ultima_casilla]["ocupado"] = false
+							self.casillas[self.casilla_delta]["ocupado"] = true
+							--self.casillas[self.ultima_casilla][10] = self.casillas[self.casilla_delta][10]
+							
 						end
+						mensaje_para_ui (self)
+						return
+					elseif gui.get_flipbook(self.ultimo_nodo_creado) == hash("espejo") and self.moviendo_obj == false then
+						msg.post("/espejos#espejosfactory", "crear_physics_obj",{x = self.pos_casilla.x , y = self.pos_casilla.y})
+					elseif gui.get_flipbook(self.ultimo_nodo_creado) == hash("espejo_doble") and self.moviendo_obj == false then
+						msg.post("/espejos_dobles#espejosdoblesfactory", "crear_physics_obj",{x = self.pos_casilla.x , y = self.pos_casilla.y})
+	
 					end
 					self.moviendo_obj = false
-					
 					mensaje_para_ui (self)
 					print("Colocando obj en casillero número (" .. self.ultima_casilla .. ") " .. tostring(self.casillas[self.ultima_casilla ]["ocupado"]))
 				end
@@ -485,7 +492,7 @@ function on_input(self, action_id, action)
 						--gui.set_enabled(self.cruz, false)
 					end
 					if self.moviendo_obj == true then
-						mensaje_para_ui (self)
+						--mensaje_para_ui (self)
 					end
 					--pprint(casillero[1]["casilla"] )--.. casillero["ocupado"])
 					--print(self.ultima_casilla)
@@ -517,7 +524,7 @@ function on_input(self, action_id, action)
 			-- Esto hace que el objeto en mouse siga al mouse cuando no está sobre una casilla.
 			gui.set_position(datos.obj_en_mouse, datos.pos_del_mouse)
 			if self.moviendo_obj == true then
-				mensaje_para_ui (self)
+				--mensaje_para_ui (self)
 			end
 		end
 	end
