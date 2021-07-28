@@ -3,7 +3,7 @@ local distancia_rayo = 1200
 function init(self)
 	self.to = go.get_position()
 	self.to.x = distancia_rayo
-	self.disparar = false
+	self.disparar = true
 	--msg.post("", "acquire_input_focus")
 	self.datos_del_laser = {}
 end
@@ -15,14 +15,15 @@ function final(self)
 end
 
 function update(self, dt)
-	datos.disparar_rayo(self, self.to)
+	--datos.disparar_rayo(self, self.to)
 	if self.disparar ~= false then
-		--local datos_laser = datos.disparar_rayo(self, self.to)
-		--msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser})
+		local datos_laser = datos.disparar_rayo(self, self.to)
+		msg.post("/gui#gui", "dibujar_laser_inicial", {datos = datos_laser, pos_inicial_laser = go.get_position()})
 	end
 end
 
 function on_message(self, message_id, message, sender)
+	--[[
 	if message_id == hash("disparar_ray_cast") then
 		if self.disparar == true then
 			self.disparar = false
@@ -30,9 +31,10 @@ function on_message(self, message_id, message, sender)
 		else 
 			self.disparar = true
 			local datos_laser = datos.disparar_rayo(self, self.to)
-			msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position()})
+			msg.post("/gui#gui", "dibujar_laser_inicial", {datos = datos_laser, pos_inicial_laser = go.get_position()})
 		end
 	end
+	]]
 end
 
 function on_input(self, action_id, action)

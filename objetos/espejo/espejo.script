@@ -60,28 +60,30 @@ function final(self)
 end
 
 function update(self, dt)
-	--if self.disparar_rayo == true then
-		--local datos_laser = disparar_raycast(self)
-		--msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position()})
-	--end
+	if self.disparar_rayo == false then
+		msg.post("/gui#gui", "borrar_laser")
+
+	end
 	-- Add update code here
 	-- Learn more: https://defold.com/manuals/script/
 	-- Remove this function if not needed
 end
 
 function on_message(self, message_id, message, sender)
-	--(message)
+
 	if message_id == hash("rayo") then
-		--pprint(message)
-		--print("rayo")
 		self.normal = message.normal
 		self.grupo_donde_llego_raycast = message.grupo
 		if self.grupo_donde_llego_raycast ~= hash("pared") then
 			self.disparar_rayo = true
 			local datos_laser = disparar_raycast(self)
+			-- Acá hay que mandar el mensaje de dibujar el laser
+			msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position(), instancia = go.get_id()})
 		else
-			self.disparar_rayo = false
+			--self.disparar_rayo = false
+			--msg.post("/gui#gui", "borrar_laser")
 			--print(self.disparar_rayo)
+			--Acá el dibujo del laser se apagaría
 		end
 
 		--self.to = go.get_position()
@@ -124,4 +126,5 @@ function on_message(self, message_id, message, sender)
 		end
 		self.direccion = self.direcciones[self.pos_dirs]
 	end
+	self.disparar_rayo = false
 end
