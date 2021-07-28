@@ -13,14 +13,15 @@ function final(self)
 	-- Learn more: https://defold.com/manuals/script/
 	-- Remove this function if not needed
 end
---[[
+
 function update(self, dt)
+	datos.disparar_rayo(self, self.to)
 	if self.disparar ~= false then
 		--local datos_laser = datos.disparar_rayo(self, self.to)
 		--msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser})
 	end
 end
-]]
+
 function on_message(self, message_id, message, sender)
 	if message_id == hash("disparar_ray_cast") then
 		if self.disparar == true then

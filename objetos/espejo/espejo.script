@@ -49,6 +49,8 @@ function init(self)
 	self.grupo_donde_llego_raycast = nil
 	self.datos_laser = {}
 	--print(msg.url())
+
+	self.disparar_rayo = false
 end
 
 function final(self)
@@ -58,6 +60,10 @@ function final(self)
 end
 
 function update(self, dt)
+	--if self.disparar_rayo == true then
+		--local datos_laser = disparar_raycast(self)
+		--msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position()})
+	--end
 	-- Add update code here
 	-- Learn more: https://defold.com/manuals/script/
 	-- Remove this function if not needed
@@ -67,27 +73,37 @@ function on_message(self, message_id, message, sender)
 	--(message)
 	if message_id == hash("rayo") then
 		--pprint(message)
+		--print("rayo")
 		self.normal = message.normal
 		self.grupo_donde_llego_raycast = message.grupo
+		if self.grupo_donde_llego_raycast ~= hash("pared") then
+			self.disparar_rayo = true
+			local datos_laser = disparar_raycast(self)
+		else
+			self.disparar_rayo = false
+			--print(self.disparar_rayo)
+		end
 
+		--self.to = go.get_position()
 	elseif message_id == hash("disparar_ray") then
 		--print("disparar ray")
-		
+		--pprint(message)
 		if self.grupo_donde_llego_raycast == hash("pared") then
 			-- Esto es cuando llegó el ray/laser y pégó en un pared del espejo, no continua recorrido el laser.
 			--print("pared")
 			return
 		else
-			local datos_laser = disparar_raycast(self)
-			--pprint(datos_laser)
-			msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position()})
+			--self.disparar_rayo = true
+			--local datos_laser = disparar_raycast(self)
+				--pprint(datos_laser)
+			--msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position()})
 		end
 		--self.to = go.get_position() -- no se que haría esto acá, borrar si no pasa nada raro.
 	elseif message_id == hash("borrar_obj") then
 		print("borrar obj")
 		go.delete()
 	elseif message_id == hash("mover_obj") then
-		print("mover obj fisico: " .. go.get_id())
+		--print("mover obj fisico: " .. go.get_id())
 		go.set_position(message.pos, "")
 		self.to = go.get_position()
 	end

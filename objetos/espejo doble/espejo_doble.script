@@ -68,8 +68,43 @@ function on_message(self, message_id, message, sender)
 	--(message)
 	if message_id == hash("rayo") then
 		--pprint(message)
+		--print("rayo doble")
 		self.normal = message.normal
 		self.grupo_donde_llego_raycast = message.grupo
+
+		if self.grupo_donde_llego_raycast ~= hash("pared") then
+			self.disparar_rayo = true
+			local datos_laser = disparar_raycast(self)
+
+			local datos_laser2
+			local pos_inicial_laser2 = go.get_position()
+			self.to = go.get_position()
+			if self.normal.x == -1 then
+				self.to.x = distancia_laser
+				pos_inicial_laser2.x = pos_inicial_laser2.x + 48
+				datos_laser2 = datos.disparar_rayo(self, self.to, pos_inicial_laser2)
+				pos_inicial_laser2.x = pos_inicial_laser2.x - 68
+			elseif self.normal.x == 1 then
+				self.to.x = -distancia_laser
+				pos_inicial_laser2.x = pos_inicial_laser2.x -48
+				datos_laser2 = datos.disparar_rayo(self, self.to, pos_inicial_laser2)
+				pos_inicial_laser2.x = pos_inicial_laser2.x + 68
+			elseif self.normal.y == -1 then
+				self.to.y = distancia_laser
+				pos_inicial_laser2.y = pos_inicial_laser2.y + 48
+				datos_laser2 = datos.disparar_rayo(self, self.to, pos_inicial_laser2)
+				pos_inicial_laser2.y = pos_inicial_laser2.y - 68
+			elseif self.normal.y == 1 then
+				self.to.y = -distancia_laser
+				pos_inicial_laser2.y = pos_inicial_laser2.y - 48
+				datos_laser2 = datos.disparar_rayo(self, self.to, pos_inicial_laser2)
+				pos_inicial_laser2.y = pos_inicial_laser2.y + 68
+			end	
+			self.to = go.get_position() -- no se que haría esto acá, borrar si no pasa nada raro.
+		else
+			self.disparar_rayo = false
+			--print(self.disparar_rayo)
+		end
 
 	elseif message_id == hash("disparar_ray") then
 		--print("disparar ray")
@@ -115,7 +150,7 @@ function on_message(self, message_id, message, sender)
 		print("borrar obj")
 		go.delete()
 	elseif message_id == hash("mover_obj") then
-		print("mover obj fisico: " .. go.get_id())
+		--print("mover obj fisico: " .. go.get_id())
 		go.set_position(message.pos, "")
 		self.to = go.get_position()
 	end
