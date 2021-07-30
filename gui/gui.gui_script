@@ -34,9 +34,15 @@ end
 
 local function mover_tacho(self, posicion, nodo)
 	local pos = posicion
-	pos.y = pos.y - 128
+	pos.y = pos.y - 140
 	gui.set_position(self.tacho, pos)
 	gui.move_above(self.tacho, nodo)
+	if nodo ~=nil then
+
+		local rot = gui.get_rotation(nodo)
+		print(rot)
+	end
+
 
 end
 -- switches ---------------------
@@ -100,6 +106,7 @@ function init(self)
 	self.tacho = gui.get_node("tacho")
 	self.tacho_pos_inical = vmath.vector3(-600, 300, 0)
 	gui.animate(self.tacho, "rotation.z", -5, go.EASING_LINEAR, 1, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+
 	--gui.ani
 	-- laser beam -----------------------------------------
 	self.laser_beam = gui.get_node("laser_beam")
