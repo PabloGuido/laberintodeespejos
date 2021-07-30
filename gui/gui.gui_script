@@ -31,6 +31,14 @@ local function mover_relevo(self, posicion)
 	--print(gui.get_position(self.laser_relevo, posicion))
 	--print(posicion)
 end
+
+local function mover_tacho(self, posicion, nodo)
+	local pos = posicion
+	pos.y = pos.y - 100
+	gui.set_position(self.tacho, pos)
+	gui.move_above(self.tacho, nodo)
+
+end
 -- switches ---------------------
 
 local function switch_activado(self)
@@ -88,6 +96,8 @@ function init(self)
 	self.barrera = gui.get_node("barrera")
 	self.laser_en_barrera = false
 	self.switch = gui.get_node("switch")
+	self.tacho = gui.get_node("tacho")
+	self.tacho_pos_inical = vmath.vector3(-600, 300, 0)
 	-- laser beam -----------------------------------------
 	self.laser_beam = gui.get_node("laser_beam")
 	self.laser_relevo = gui.get_node("laser_relevo")
@@ -489,7 +499,7 @@ function on_input(self, action_id, action)
 							
 							--print("mover obj fisico // gui")
 						elseif self.mouse_sobre_casillas == false then
-							print("restablecer pos desde afuera") -- Restablece la pos del objeto físico si está fuera de las casillas.
+							print("borrar obj desde afuera") -- Restablece la pos del objeto físico si está fuera de las casillas.
 							local pos_de_restablecimiento = gui.get_position(self.casillas[self.casilla_delta][1][hash("casilla")])
 							msg.post(self.casillas[self.casilla_delta]["instancia"], "mover_obj", {pos = pos_de_restablecimiento})
 							gui.set_position(self.casillas[self.casilla_delta]["laser"], pos_de_restablecimiento)
@@ -500,6 +510,7 @@ function on_input(self, action_id, action)
 
 							msg.post("/gui#gui", "accion_ui_obj", {accion = "borrar_objeto"})
 							msg.post("/ui_objetos#ui_objetos", "desactivar_ui_objetos")
+							mover_tacho(self, self.tacho_pos_inical, nil)
 							return
 						end
 						mensaje_para_ui (self)
@@ -533,6 +544,7 @@ function on_input(self, action_id, action)
 			
 			if gui.pick_node(casillero[1][("casilla")], action.x, action.y) then
 				self.mouse_sobre_casillas = true
+				mover_tacho(self, self.tacho_pos_inical, nil)
 				if datos.obj_en_mouse ~= nil then
 					-- Si el mouse tiene un objeto y está sobre una casilla guarda la posición de esa casilla.
 					-- Además pone al obj_en_mouse en esa posición.
@@ -591,9 +603,11 @@ function on_input(self, action_id, action)
 				-- Hace que el obj físico siga el espejo mientras se está moviendo fuera de las casillas
 				msg.post(self.casillas[self.casilla_delta]["instancia"], "mover_obj", {pos = datos.pos_del_mouse})
 				gui.set_position(self.casillas[self.casilla_delta]["laser"], datos.pos_del_mouse)
-				--mensaje_para_ui (self)
+				mover_tacho(self, datos.pos_del_mouse, datos.obj_en_mouse)
+
 			elseif self.moviendo_obj == false then
 				mover_relevo(self, vmath.vector3())
+				mover_tacho(self, self.tacho_pos_inical, nil)
 			end
 		end
 	end
