@@ -289,7 +289,7 @@ function on_message(self, message_id, message, sender)
 								msg.post(self.casillas[self.ultima_casilla]["instancia"], "borrar_obj")
 							--	pprint(self.casillas[self.ultima_casilla])
 								gui.delete_node(self.casillas[self.ultima_casilla]["laser"])
-								self.casillas[self.ultima_casilla]["laser"] = nil
+								self.casillas[self.casilla_delta]["laser"] = nil
 								
 								
 							end
@@ -449,6 +449,7 @@ function on_input(self, action_id, action)
 
 							end
 							if self.mouse_sobre_casillas == false then
+								
 								msg.post("/gui#gui", "accion_ui_obj", {accion = "borrar_objeto"})
 								msg.post("/ui_objetos#ui_objetos", "desactivar_ui_objetos")
 							else
@@ -496,6 +497,7 @@ function on_input(self, action_id, action)
 							gui.set_position(self.ultimo_obj_clickeado, self.delta_pos)
 							self.casillas[self.ultima_casilla]["ocupado"] = false
 							self.casillas[self.casilla_delta]["ocupado"] = true
+
 							msg.post("/gui#gui", "accion_ui_obj", {accion = "borrar_objeto"})
 							msg.post("/ui_objetos#ui_objetos", "desactivar_ui_objetos")
 							return
