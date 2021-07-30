@@ -61,8 +61,8 @@ end
 
 function update(self, dt)
 	if self.disparar_rayo == false then
-		msg.post("/gui#gui", "borrar_laser", {instancia = go.get_id()})
-
+		--msg.post("/gui#gui", "borrar_laser")
+		msg.post("/gui#gui", "desactivar_laser_relevo")
 	end
 	-- Add update code here
 	-- Learn more: https://defold.com/manuals/script/
@@ -78,7 +78,7 @@ function on_message(self, message_id, message, sender)
 			self.disparar_rayo = true
 			local datos_laser = disparar_raycast(self)
 			-- Acá hay que mandar el mensaje de dibujar el laser
-			msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position(), instancia = go.get_id()})
+			msg.post("/gui#gui", "dibujar_laser_relevo", {datos = datos_laser, pos_inicial_laser = go.get_position(), instancia = go.get_id()})
 		else
 			--self.disparar_rayo = false
 			--msg.post("/gui#gui", "borrar_laser")
@@ -104,10 +104,11 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("borrar_obj") then
 		print("borrar obj")
 		go.delete()
-	elseif message_id == hash("mover_obj") then
+	elseif message_id == hash("mover_relevo") then
 		--print("mover obj fisico: " .. go.get_id())
 		go.set_position(message.pos, "")
 		self.to = go.get_position()
+		--print(go.get_position())
 	end
 	if message_id == hash("accion_gui") then
 		self.pos_rotacion  = self.pos_rotacion  + message.valor
