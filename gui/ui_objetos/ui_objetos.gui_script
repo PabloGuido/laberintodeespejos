@@ -37,6 +37,13 @@ function on_message(self, message_id, message, sender)
 		msg.post("", "acquire_input_focus")
 	elseif message_id == hash("restablecer_input") then
 		msg.post("", "acquire_input_focus")
+	elseif message_id == hash("desactivar_ui_objetos") then
+
+		msg.post("", "release_input_focus")
+		gui.set_enabled(self.ui_objetos, false)
+		gui.set_enabled(self.adorno, false)
+		msg.post("/gui#gui", "accion_ui_obj", {accion = "aceptar"})
+
 	end
 end
 

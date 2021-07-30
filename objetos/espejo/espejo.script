@@ -51,6 +51,7 @@ function init(self)
 	--print(msg.url())
 
 	self.disparar_rayo = false
+	self.borrando = false
 end
 
 function final(self)
@@ -60,7 +61,7 @@ function final(self)
 end
 
 function update(self, dt)
-	if self.disparar_rayo == false then
+	if self.disparar_rayo == false and self.borrando == false then
 		msg.post("/gui#gui", "borrar_laser", {instancia = go.get_id()})
 
 	end
@@ -102,6 +103,7 @@ function on_message(self, message_id, message, sender)
 		end
 		--self.to = go.get_position() -- no se que haría esto acá, borrar si no pasa nada raro.
 	elseif message_id == hash("borrar_obj") then
+		self.borrando = true
 		print("borrar obj")
 		go.delete()
 	elseif message_id == hash("mover_obj") then

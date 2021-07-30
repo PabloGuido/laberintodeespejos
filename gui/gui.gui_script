@@ -234,13 +234,11 @@ function on_message(self, message_id, message, sender)
 		for i = 1, table.maxn(self.casillas) do
 			if self.casillas[i]["instancia"] == message.instancia then
 				
-				--if self.casillas[i]["laser"] ~= nil then -- borrar?
+				if self.casillas[i]["laser"] ~= nil then 
 				gui.set_scale(self.casillas[i]["laser"], vmath.vector3(1,1,0))
-			--	self.scale.x = 1
-			--	gui.animate(self.casillas[i]["laser"], "scale.x", self.scale, gui.EASING_LINEAR, 0, 0,
-			--	function()
 
-			--	end) -- borrar?
+
+				end
 			end
 			
 		end
@@ -450,12 +448,19 @@ function on_input(self, action_id, action)
 								end
 
 							end
-							print("restablecer pos") -- Restablece la pos del objeto físico si está dentro de las casillas.
-							--pprint(gui.get_position(self.casillas[self.casilla_delta][1][hash("casilla")]))
-							local pos_de_restablecimiento = gui.get_position(self.casillas[self.casilla_delta][1][hash("casilla")])
-							msg.post(self.casillas[self.casilla_delta]["instancia"], "mover_obj", {pos = pos_de_restablecimiento})
-							gui.set_position(self.casillas[self.casilla_delta]["laser"], pos_de_restablecimiento)
-							mensaje_para_ui (self)
+							if self.mouse_sobre_casillas == false then
+								msg.post("/gui#gui", "accion_ui_obj", {accion = "borrar_objeto"})
+								msg.post("/ui_objetos#ui_objetos", "desactivar_ui_objetos")
+							else
+								print(self.mouse_sobre_casillas)
+								print("restablecer pos") -- Restablece la pos del objeto físico si está dentro de las casillas.
+								--pprint(gui.get_position(self.casillas[self.casilla_delta][1][hash("casilla")]))
+								local pos_de_restablecimiento = gui.get_position(self.casillas[self.casilla_delta][1][hash("casilla")])
+								msg.post(self.casillas[self.casilla_delta]["instancia"], "mover_obj", {pos = pos_de_restablecimiento})
+								gui.set_position(self.casillas[self.casilla_delta]["laser"], pos_de_restablecimiento)
+								mensaje_para_ui (self)
+							end
+
 						end
 					end	
 					datos.obj_en_mouse = nil
@@ -491,7 +496,9 @@ function on_input(self, action_id, action)
 							gui.set_position(self.ultimo_obj_clickeado, self.delta_pos)
 							self.casillas[self.ultima_casilla]["ocupado"] = false
 							self.casillas[self.casilla_delta]["ocupado"] = true
-
+							msg.post("/gui#gui", "accion_ui_obj", {accion = "borrar_objeto"})
+							msg.post("/ui_objetos#ui_objetos", "desactivar_ui_objetos")
+							return
 						end
 						mensaje_para_ui (self)
 						return
