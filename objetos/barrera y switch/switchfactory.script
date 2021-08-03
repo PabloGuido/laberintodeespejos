@@ -22,7 +22,6 @@ function on_message(self, message_id, message, sender)
 		msg.post(nuevo_switch, "nodo", {nodo = message.nodo})
 		msg.post("/gui#gui", "guardar_obj_fisico_nodo", {obj = nuevo_switch, pos_en_tabla = message.pos_en_tabla})
 		--pprint(message)
-		
 	end
 end
 

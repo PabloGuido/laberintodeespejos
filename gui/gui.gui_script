@@ -334,15 +334,10 @@ function on_message(self, message_id, message, sender)
 			
 	elseif message_id == hash("guardar_obj_fisico") then
 		--print(message)
-		--print(self.ultimo_obj_clickeado)
 		self.casillas[self.ultima_casilla]["instancia"] =  message.obj
-		pprint(self.casillas[self.ultima_casilla])
 	elseif message_id == hash("guardar_obj_fisico_nodo") then
 		--pprint(message)
-		--print(self.ultimo_obj_clickeado)
 		self.casillas[message.pos_en_tabla]["instancia"] =  message.obj
-		--pprint(self.casillas[self.ultima_casilla])
-		--pprint(self.casillas)
 	elseif message_id == hash("objetivo_encontrado") then
 		gui.move_above(self.objetivo, self.laser)
 		gui.play_flipbook(self.objetivo, "objetivo_on")
