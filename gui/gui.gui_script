@@ -104,6 +104,7 @@ function init(self)
 	self.barrera = gui.get_node("barrera")
 	self.laser_en_barrera = false
 	self.switch = gui.get_node("switch")
+	
 	-- tacho ----------------------------------------------
 	self.tacho = gui.get_node("tacho")
 	self.tacho_pos_inical = vmath.vector3(-600, 300, 0)
@@ -132,6 +133,8 @@ function init(self)
 	self.casillas = {}
 	self.casillas["obj_fisico"] = nil
 	self.espejos = {}
+	self.switches = {}
+	self.switches_activados = {}
 	---------------------------------------------------
 	
 	self.obj_seleccionado = ""
@@ -162,7 +165,7 @@ function init(self)
 				
 				ocupado = true
 				nuevo_switch = clonar_nodo(self, self.switch, hash("switch"), self.pos, {}, false)
-				table.insert(datos.switches, nuevo_switch)
+				table.insert(self.switches, nuevo_switch)
 				--pprint(datos.switches)
 				msg.post("/switches#switchfactory", "crear_switch", {pos = self.pos, nodo = tostring(nuevo_switch), pos_en_tabla = self.contador_para_leer_mapa_nivel})
 
@@ -178,7 +181,7 @@ function init(self)
 				self.ultima_casilla = self.contador_para_leer_mapa_nivel
 				local nuevo_laser_beam = clonar_nodo(self, self.laser_beam, hash("laser_beam"), self.pos, self.laser_tabla, false)
 				self.casillas[self.ultima_casilla]["laser"] = nuevo_laser_beam
-				gui.set_scale(nuevo_laser_beam, vmath.vector3(1,2,0))
+				gui.set_scale(nuevo_laser_beam, vmath.vector3(1,1,0))
 				gui.move_below(nuevo_laser_beam, nuevo_switch)
 				--print("cuantos laser en switches")
 
@@ -351,15 +354,32 @@ function on_message(self, message_id, message, sender)
 		pos.x = pos.x +10
 		gui.animate(self.objetivo, "scale",1.1, gui.EASING_INCIRC, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 		print("Objetivo encontrado - nivel superado")
-	elseif message_id == hash("switch_encontrado") then
+	elseif message_id == hash("switch_activado") then
 		--pprint(datos.switches)
-		for i = 1, table.maxn(datos.switches) do
-			if message.nodo_switch == tostring(datos.switches[i]) then
-				gui.animate(datos.switches[i], "color", vmath.vector4(0,0.5,0.5,1), gui.EASING_INBACK, 0.15,0.20)
-				--gui.move_above(datos.switches[i], self.laser_beam) -- No se porque no funciona esto
-				switch_activado(self)
+		--pprint(self.switches)
+		--pprint(message)
+		table.insert(self.switches_activados, message.switch, message.nodo )
+		print("algo2!")
+		--for i = 1, table.maxn(self.switches_activados) do
+		--	if self.switches_activados[i] 
+		--[[
+		for i = 1, table.maxn(self.switches_activados) do
+			if self.switches_activados[i] ~= message.nodo then
+				table.insert(self.switches_activados, message.nodo)
+				print("algos")
 			end
 		end
+				
+		for i = 1, table.maxn(self.switches) do
+			if message.nodo == tostring(self.switches[i]) then
+				--print("algo")
+				table.insert(self.switches_activados, message.nodo)
+				gui.animate(self.switches[i], "color", vmath.vector4(0,0.5,0.5,1), gui.EASING_INBACK, 0.15,0.20)
+				--gui.move_above(datos.switches[i], self.laser_beam) -- No se porque no funciona esto
+				--switch_activado(self)
+			end
+		end
+		]]
 	elseif message_id == hash("laser_en_barrera") then
 		self.laser_en_barrera = true -- chquea si llego el laser a la barrera antes de activar todos los switches
 	end

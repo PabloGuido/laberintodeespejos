@@ -17,9 +17,9 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("crear_switch") then
-		local nuevo_switch = factory.create("#factory", message.pos)
+		local nuevo_switch = factory.create("#factory", message.pos, nil, {pos_en_tabla_casillas = message.pos_en_tabla})
 		table.insert(self.switches, nuevo_switch)
-		msg.post(nuevo_switch, "nodo", {nodo = message.nodo})
+		msg.post(nuevo_switch, "nodo", {nodo = message.nodo}) -- esto no hace nada creo
 		msg.post("/gui#gui", "guardar_obj_fisico_nodo", {obj = nuevo_switch, pos_en_tabla = message.pos_en_tabla})
 		--pprint(message)
 	end

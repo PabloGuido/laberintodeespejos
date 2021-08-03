@@ -1,5 +1,6 @@
 local datos = require("main.datos")
 local distancia_rayo = 1400
+go.property("pos_en_tabla_casillas", 0)
 
 local function disparar_raycast(self)
 	local datos_laser2
@@ -26,7 +27,7 @@ local function disparar_raycast(self)
 		datos_laser2 = datos.disparar_rayo(self, self.to, pos_inicial_laser2)
 		pos_inicial_laser2.y = pos_inicial_laser2.y + 68
 	end	
-	self.to = go.get_position() -- no se que haría esto acá, borrar si no pasa nada raro.
+	self.to = go.get_position() -- 
 	return datos_laser2
 
 end
@@ -36,7 +37,9 @@ function init(self)
 	self.borrando = false
 	self.normal = 0
 	self.to = vmath.vector3()
+	self.switch_activo = false
 
+	self.cuenta = 0
 	--msg.post("/gui#gui", "guardar_obj_fisico_nodo", {obj = go.get_id()}) -- esto lo está resolviendo el swtich factory
 end
 
@@ -48,16 +51,25 @@ end
 
 function update(self, dt)
 	if self.disparar_rayo == false then
-		msg.post("/gui#gui", "borrar_laser", {instancia = go.get_id()})
+		self.cuenta = self.cuenta + 1
+		if self.cuenta >= 8 then
+			--print("desactivar")
+			self.switch_activo = false
+			msg.post("/gui#gui", "borrar_laser", {instancia = go.get_id()})
+			msg.post("/gui#gui", "switch_desactivado", {switch = self.pos_en_tabla_casillas, nodo = self.nodo})
+		end
 
 	end
 end
 
 function on_message(self, message_id, message, sender)
 
-	if message_id == hash("rayo") then
-		--	msg.post("/gui#gui", "switch_encontrado", {nodo_switch = self.nodo})
+	if message_id == hash("nodo") then
+		self.nodo = message.nodo -- esto no hace nada creo
 		
+	elseif message_id == hash("rayo") then
+
+
 		self.normal = message.normal
 		self.grupo_donde_llego_raycast = message.grupo
 		self.disparar_rayo = true
@@ -65,8 +77,12 @@ function on_message(self, message_id, message, sender)
 		-- Acá hay que mandar el mensaje de dibujar el laser
 		msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position(), instancia = go.get_id()})
 		
-	elseif message_id == hash("nodo") then
-		self.nodo = message.nodo
+		if self.switch_activo == false then
+			msg.post("/gui#gui", "switch_activado", {switch = self.pos_en_tabla_casillas, nodo = self.nodo})
+			self.switch_activo = true
+		end
+		self.cuenta = 0
 	end
+	
 	self.disparar_rayo = false
 end
