@@ -161,13 +161,24 @@ function init(self)
 				local nuevo_switch = clonar_nodo(self, self.switch, hash("switch"), self.pos, {}, false)
 				table.insert(datos.switches, nuevo_switch)
 				--pprint(datos.switches)
-				msg.post("/switches#switchfactory", "crear_switch", {pos = self.pos, nodo = tostring(nuevo_switch)})
+				msg.post("/switches#switchfactory", "crear_switch", {pos = self.pos, nodo = tostring(nuevo_switch), pos_en_tabla = self.contador_para_leer_mapa_nivel})
+
+
+				
 			end
 			local nueva_casilla = gui.clone_tree(self.casilla)
 			local clon_casilla = nueva_casilla[hash("casilla")]
 			gui.set_position(clon_casilla, self.pos)
-			self.pos.x = self.pos.x + dif_entre_casillas
 			table.insert(self.casillas, {nueva_casilla, ocupado = ocupado})
+			
+			if constatador == 3 then  -- esto es para poner el laser en los switches
+				self.ultima_casilla = self.contador_para_leer_mapa_nivel
+				local nuevo_laser_beam = clonar_nodo(self, self.laser_beam, hash("laser_beam"), self.pos, self.laser_tabla, false)
+				self.casillas[self.ultima_casilla]["laser"] = nuevo_laser_beam
+				gui.set_scale(nuevo_laser_beam, vmath.vector3(1,2,0))
+				--print("cuantos laser en switches")
+			end
+			self.pos.x = self.pos.x + dif_entre_casillas
 			self.contador_para_leer_mapa_nivel = self.contador_para_leer_mapa_nivel + 1
 
 		end
@@ -196,11 +207,7 @@ function on_message(self, message_id, message, sender)
 		self.scale.x = distance
 
 		gui.set_scale(self.laser_beam, self.scale)
-		--gui.animate(self.laser_beam, "scale.x", self.scale, gui.EASING_LINEAR, 0, 0,
-		--function()
-			--msg.post("", "acquire_input_focus")
-			--msg.post(message.datos.id, "disparar_ray")
-		--end)
+
 
 		local direction = angle_of_vector_between_two_points(message.pos_inicial_laser.x, message.pos_inicial_laser.y, message.datos.position.x, message.datos.position.y)
 		local rotation = vmath.quat_rotation_z(direction)
@@ -222,11 +229,11 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("desactivar_laser_relevo") then
 		gui.set_scale(self.laser_relevo, vmath.vector3(1,1,0))
 	elseif message_id == hash("dibujar_laser") then
-		--pprint(message)
 		if message.datos then
 			--pprint(message)
+			--print(message.instancia)
 			for i = 1, table.maxn(self.casillas) do
-				--print(self.casillas[i]["instancia"])
+				--print(message.instancia)
 				if self.casillas[i]["instancia"] == message.instancia then
 					--print("misma instancia " ..  message.instancia)
 					local distance = dist2d(message.pos_inicial_laser.x, message.pos_inicial_laser.y, message.datos.position.x, message.datos.position.y)
@@ -329,6 +336,13 @@ function on_message(self, message_id, message, sender)
 		--print(message)
 		--print(self.ultimo_obj_clickeado)
 		self.casillas[self.ultima_casilla]["instancia"] =  message.obj
+		pprint(self.casillas[self.ultima_casilla])
+	elseif message_id == hash("guardar_obj_fisico_nodo") then
+		--pprint(message)
+		--print(self.ultimo_obj_clickeado)
+		self.casillas[message.pos_en_tabla]["instancia"] =  message.obj
+		--pprint(self.casillas[self.ultima_casilla])
+		--pprint(self.casillas)
 	elseif message_id == hash("objetivo_encontrado") then
 		gui.move_above(self.objetivo, self.laser)
 		gui.play_flipbook(self.objetivo, "objetivo_on")

@@ -1,5 +1,43 @@
+local datos = require("main.datos")
+local distancia_rayo = 1400
+
+local function disparar_raycast(self)
+	local datos_laser2
+	local pos_inicial_laser2 = go.get_position()
+	self.to = go.get_position()
+	if self.normal.x == -1 then
+		self.to.x = distancia_rayo
+		pos_inicial_laser2.x = pos_inicial_laser2.x + 48
+		datos_laser2 = datos.disparar_rayo(self, self.to, pos_inicial_laser2)
+		pos_inicial_laser2.x = pos_inicial_laser2.x - 68
+	elseif self.normal.x == 1 then
+		self.to.x = -distancia_rayo
+		pos_inicial_laser2.x = pos_inicial_laser2.x -48
+		datos_laser2 = datos.disparar_rayo(self, self.to, pos_inicial_laser2)
+		pos_inicial_laser2.x = pos_inicial_laser2.x + 68
+	elseif self.normal.y == -1 then
+		self.to.y = distancia_rayo
+		pos_inicial_laser2.y = pos_inicial_laser2.y + 48
+		datos_laser2 = datos.disparar_rayo(self, self.to, pos_inicial_laser2)
+		pos_inicial_laser2.y = pos_inicial_laser2.y - 68
+	elseif self.normal.y == 1 then
+		self.to.y = -distancia_rayo
+		pos_inicial_laser2.y = pos_inicial_laser2.y - 48
+		datos_laser2 = datos.disparar_rayo(self, self.to, pos_inicial_laser2)
+		pos_inicial_laser2.y = pos_inicial_laser2.y + 68
+	end	
+	self.to = go.get_position() -- no se que haría esto acá, borrar si no pasa nada raro.
+	return datos_laser2
+
+end
 function init(self)
 	self.nodo = ""
+	self.disparar_rayo = false
+	self.borrando = false
+	self.normal = 0
+	self.to = vmath.vector3()
+	--print(go.get_id())
+	--msg.post("/gui#gui", "guardar_obj_fisico_nodo", {obj = go.get_id()})
 end
 
 function final(self)
@@ -9,18 +47,28 @@ function final(self)
 end
 
 function update(self, dt)
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+	if self.disparar_rayo == false then
+		msg.post("/gui#gui", "borrar_laser", {instancia = go.get_id()})
+
+	end
 end
 
 function on_message(self, message_id, message, sender)
-	--print(message_id)
+
 	if message_id == hash("rayo") then
-		msg.post("/gui#gui", "switch_encontrado", {nodo_switch = self.nodo})
+		--	msg.post("/gui#gui", "switch_encontrado", {nodo_switch = self.nodo})
+		
+		self.normal = message.normal
+		self.grupo_donde_llego_raycast = message.grupo
+		self.disparar_rayo = true
+		local datos_laser = disparar_raycast(self)
+		-- Acá hay que mandar el mensaje de dibujar el laser
+		msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position(), instancia = go.get_id()})
+		
 	elseif message_id == hash("nodo") then
 		self.nodo = message.nodo
 	end
+	self.disparar_rayo = false
 end
 
 function on_input(self, action_id, action)
