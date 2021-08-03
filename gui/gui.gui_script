@@ -82,6 +82,8 @@ function init(self)
 
 	self.cantidad_de_switches_en_el_nivel = niveles[self.nivel]["switches"]
 	self.cantidad_de_switches_activados = 0
+
+	
 	--------------------------------------------------	-	
 	self.moviendo_obj = false
 	self.ultima_pos = vmath.vector3()
@@ -120,7 +122,7 @@ function init(self)
 	-- clonacion de beams
 	self.laser_tabla = {}
 	
-	
+
 	-- obj toolbar
 	self.espejo = gui.get_node("espejo")
 	self.espejo_doble = gui.get_node("espejo_doble")
@@ -143,6 +145,7 @@ function init(self)
 			--print(niveles[tostring(self.nivel)][self.contador_para_leer_mapa_nivel])
 			local constatador = niveles[tostring(self.nivel)][self.contador_para_leer_mapa_nivel]
 			local ocupado = false
+			local nuevo_switch
 			--print(niveles["1"][self.contador_para_leer_mapa_nivel])
 			if constatador == 2 then -- Coloca el objetivo en lugar
 				-- Y esto debería enviar un mensaje para crear un objeto fisico del "objetivo"
@@ -158,7 +161,7 @@ function init(self)
 			elseif constatador == 3 then -- Coloca switches
 				
 				ocupado = true
-				local nuevo_switch = clonar_nodo(self, self.switch, hash("switch"), self.pos, {}, false)
+				nuevo_switch = clonar_nodo(self, self.switch, hash("switch"), self.pos, {}, false)
 				table.insert(datos.switches, nuevo_switch)
 				--pprint(datos.switches)
 				msg.post("/switches#switchfactory", "crear_switch", {pos = self.pos, nodo = tostring(nuevo_switch), pos_en_tabla = self.contador_para_leer_mapa_nivel})
@@ -176,7 +179,9 @@ function init(self)
 				local nuevo_laser_beam = clonar_nodo(self, self.laser_beam, hash("laser_beam"), self.pos, self.laser_tabla, false)
 				self.casillas[self.ultima_casilla]["laser"] = nuevo_laser_beam
 				gui.set_scale(nuevo_laser_beam, vmath.vector3(1,2,0))
+				gui.move_below(nuevo_laser_beam, nuevo_switch)
 				--print("cuantos laser en switches")
+
 			end
 			self.pos.x = self.pos.x + dif_entre_casillas
 			self.contador_para_leer_mapa_nivel = self.contador_para_leer_mapa_nivel + 1
@@ -236,6 +241,7 @@ function on_message(self, message_id, message, sender)
 				--print(message.instancia)
 				if self.casillas[i]["instancia"] == message.instancia then
 					--print("misma instancia " ..  message.instancia)
+					
 					local distance = dist2d(message.pos_inicial_laser.x, message.pos_inicial_laser.y, message.datos.position.x, message.datos.position.y)
 					self.scale.x = distance
 
@@ -248,7 +254,7 @@ function on_message(self, message_id, message, sender)
 					local direction = angle_of_vector_between_two_points(message.pos_inicial_laser.x, message.pos_inicial_laser.y, message.datos.position.x, message.datos.position.y)
 					local rotation = vmath.quat_rotation_z(direction)
 					gui.set_rotation(self.casillas[i]["laser"], rotation)
-
+					gui.move_below(self.laser_beam, self.espejo)
 					
 				end
 
@@ -541,15 +547,18 @@ function on_input(self, action_id, action)
 						local nuevo_laser_beam = clonar_nodo(self, self.laser_beam, hash("laser_beam"), self.pos_casilla, self.laser_tabla, false)
 						self.casillas[self.ultima_casilla]["laser"] = nuevo_laser_beam
 						gui.set_scale(nuevo_laser_beam, vmath.vector3(1,1,0))
+						gui.move_below(nuevo_laser_beam, self.ultimo_nodo_creado)
+						
 						--pprint(self.casillas[self.ultima_casilla])
 					elseif gui.get_flipbook(self.ultimo_nodo_creado) == hash("espejo_doble") and self.moviendo_obj == false then
 						msg.post("/espejos_dobles#espejosdoblesfactory", "crear_physics_obj",{x = self.pos_casilla.x , y = self.pos_casilla.y})
-	
+						
 					end
 					self.moviendo_obj = false
 					mover_relevo(self, vmath.vector3())
 					mensaje_para_ui (self)
 					print("Colocando obj en casillero número (" .. self.ultima_casilla .. ") " .. tostring(self.casillas[self.ultima_casilla ]["ocupado"]))
+
 				end
 				gui.set_enabled(self.cruz, false)
 				datos.obj_en_mouse = nil
