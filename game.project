@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /main/main.collectionc
+main_collection = /escenas/loader/loader.collectionc
 render = /main/render2/default2.renderc
 
 [script]
