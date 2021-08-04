@@ -275,6 +275,7 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("accion_ui_obj") then
 
 		msg.post("", "release_input_focus")
+		self.mouse_sobre_casillas = true
 		if message.accion == "derecha" then
 			local rot = gui.get_rotation(self.ultimo_obj_clickeado)
 			gui.animate(self.ultimo_obj_clickeado, "rotation.z", rot.z - 90, gui.EASING_INBACK, 0.65, 0,
@@ -565,6 +566,7 @@ function on_input(self, action_id, action)
 							
 							--print("mover obj fisico // gui")
 						elseif self.mouse_sobre_casillas == false then
+							
 							print("borrar obj desde afuera") -- Restablece la pos del objeto físico si está fuera de las casillas.
 							local pos_de_restablecimiento = gui.get_position(self.casillas[self.casilla_delta][1][hash("casilla")])
 							msg.post(self.casillas[self.casilla_delta]["instancia"], "mover_obj", {pos = pos_de_restablecimiento})
@@ -613,12 +615,13 @@ function on_input(self, action_id, action)
 			
 			if gui.pick_node(casillero[1][("casilla")], action.x, action.y) then
 				self.mouse_sobre_casillas = true
+				
 				mover_tacho(self, self.tacho_pos_inical, nil)
 				if datos.obj_en_mouse ~= nil then
 					-- Si el mouse tiene un objeto y está sobre una casilla guarda la posición de esa casilla.
 					-- Además pone al obj_en_mouse en esa posición.
 					-- Así cuando el touch es released y se está sobre una casilla el objeto queda en esa posición.
-
+					
 					self.pos_casilla = gui.get_position(casillero[1][("casilla")])
 					
 					gui.set_position(datos.obj_en_mouse, self.pos_casilla)

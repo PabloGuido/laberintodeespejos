@@ -104,7 +104,7 @@ function on_message(self, message_id, message, sender)
 		--self.to = go.get_position() -- no se que haría esto acá, borrar si no pasa nada raro.
 	elseif message_id == hash("borrar_obj") then
 		self.borrando = true
-		print("borrar obj")
+		--print("borrar obj físico")
 		go.delete()
 	elseif message_id == hash("mover_obj") then
 		--print("mover obj fisico: " .. go.get_id())
