@@ -26,5 +26,6 @@ end
 M.pos_del_mouse = vmath.vector3() -- trackea la pos del mouse
 M.obj_en_mouse = nil -- cheque si se agarró algún objeto con drag and drop y cuál es.
 M.switches = {}
+M.nivel_completado = false
 
 return M

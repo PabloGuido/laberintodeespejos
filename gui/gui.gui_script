@@ -1,7 +1,7 @@
 local datos = require("main.datos")
 local niveles = require("gui.niveles")
-
 local dif_entre_casillas = 142
+
 local function clonar_nodo(self, que_nodo, que_hash, pos, que_tabla, en_mouse)
 	local nuevo_nodo = gui.clone_tree(que_nodo)
 	local clon_nodo = nuevo_nodo[que_hash]
@@ -21,9 +21,6 @@ local function mensaje_para_ui (self)
 	msg.post("/ui_objetos#ui_objetos", "activar_ui_objetos", {pos = pos_obj, obj = tostring(obj)})
 end
 
-local function scale_laser(self, que_laser, escala)
-
-end
 
 local function mover_relevo(self, posicion)
 	msg.post("/espejo_relevo#espejo_relevo", "mover_relevo", {pos = posicion})
@@ -47,19 +44,16 @@ local function mover_tacho(self, posicion, nodo)
 end
 -- switches ---------------------
 
-local function switch_activado(self)
-	self.cantidad_de_switches_activados = self.cantidad_de_switches_activados + 1
-
-	if self.cantidad_de_switches_activados == self.cantidad_de_switches_en_el_nivel and self.laser_en_barrera == false then
-		--print("Cantidad de switches alcanzada, desactivar barrera: " .. self.cantidad_de_switches_activados .. "/" .. self.cantidad_de_switches_en_el_nivel)
-		local function apagar_barrera(self)
-			gui.set_enabled(self.barrera, false)
-		end
-		timer.delay(0.25, false, apagar_barrera)
+local function desactivar_activar_barrera(self)
+	if self.cantidad_de_switches_activados == self.cantidad_de_switches_en_el_nivel then
+		gui.set_enabled(self.barrera, false)
 		msg.post("/barrera#barrera", "desactivar_barrera")
 	else
-		--print("Switches activados: " .. self.cantidad_de_switches_activados .. "/" .. self.cantidad_de_switches_en_el_nivel)
+		print("anda?")
+		gui.set_enabled(self.barrera, true)
+		msg.post("/barrera#barrera", "activar_barrera")
 	end
+	
 end
 
 -- laser beam -------------------
@@ -83,7 +77,7 @@ function init(self)
 	self.cantidad_de_switches_en_el_nivel = niveles[self.nivel]["switches"]
 	self.cantidad_de_switches_activados = 0
 
-	
+	datos.nivel_completado = false
 	--------------------------------------------------	-	
 	self.moviendo_obj = false
 	self.ultima_pos = vmath.vector3()
@@ -301,7 +295,7 @@ function on_message(self, message_id, message, sender)
 				msg.post("/ui_objetos#ui_objetos", "restablecer_input")
 				msg.post("", "acquire_input_focus")
 			end	)
-		elseif message.accion == "aceptar" then
+		elseif message.accion == "aceptar" and datos.nivel_completado == false then
 			self.ui_objetos = false
 			msg.post("", "acquire_input_focus")
 
@@ -348,6 +342,9 @@ function on_message(self, message_id, message, sender)
 		--pprint(message)
 		self.casillas[message.pos_en_tabla]["instancia"] =  message.obj
 	elseif message_id == hash("objetivo_encontrado") then
+		msg.post("/ui_objetos#ui_objetos", "nivel_completado")
+		msg.post("", "release_input_focus")
+		datos.nivel_completado = true
 		gui.move_above(self.objetivo, self.laser)
 		gui.play_flipbook(self.objetivo, "objetivo_on")
 		local pos = gui.get_position(self.objetivo)
@@ -355,11 +352,16 @@ function on_message(self, message_id, message, sender)
 		gui.animate(self.objetivo, "scale",1.1, gui.EASING_INCIRC, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 		print("Objetivo encontrado - nivel superado")
 	elseif message_id == hash("switch_activado") then
-		--pprint(datos.switches)
-		--pprint(self.switches)
-		--pprint(message)
-		table.insert(self.switches_activados, message.switch, message.nodo )
-		print("algo2!")
+
+		self.cantidad_de_switches_activados = self.cantidad_de_switches_activados + 1
+		print("activando " .. self.cantidad_de_switches_activados)
+		if self.cantidad_de_switches_activados == self.cantidad_de_switches_en_el_nivel then
+			print("cantidad de switches necesaria activada")
+			desactivar_activar_barrera(self)
+		end
+
+		
+	--	print("algo2!")
 		--for i = 1, table.maxn(self.switches_activados) do
 		--	if self.switches_activados[i] 
 		--[[
@@ -380,6 +382,11 @@ function on_message(self, message_id, message, sender)
 			end
 		end
 		]]
+	elseif message_id == hash("switch_desactivado") then
+		self.cantidad_de_switches_activados = self.cantidad_de_switches_activados - 1
+		desactivar_activar_barrera(self)
+		msg.post("/objetivo#objetivo", "desactivar_objetivo")
+		print("desactivando " .. self.cantidad_de_switches_activados)
 	elseif message_id == hash("laser_en_barrera") then
 		self.laser_en_barrera = true -- chquea si llego el laser a la barrera antes de activar todos los switches
 	end
@@ -577,7 +584,7 @@ function on_input(self, action_id, action)
 					self.moviendo_obj = false
 					mover_relevo(self, vmath.vector3())
 					mensaje_para_ui (self)
-					print("Colocando obj en casillero número (" .. self.ultima_casilla .. ") " .. tostring(self.casillas[self.ultima_casilla ]["ocupado"]))
+					--print("Colocando obj en casillero número (" .. self.ultima_casilla .. ") " .. tostring(self.casillas[self.ultima_casilla ]["ocupado"]))
 
 				end
 				gui.set_enabled(self.cruz, false)

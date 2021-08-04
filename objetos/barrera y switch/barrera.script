@@ -23,6 +23,8 @@ function on_message(self, message_id, message, sender)
 		msg.post("barrera#collisionobject", "disable")
 	elseif message_id == hash("activar_barrera") then
 		msg.post("barrera#collisionobject", "enable")
+	elseif message_id == hash("activar_barrera") then
+		msg.post("barrera#collisionobject", "enable")
 	elseif message_id == hash("rayo") then
 		msg.post("/gui#gui", "laser_en_barrera")
 	end

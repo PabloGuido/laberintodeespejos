@@ -1,7 +1,8 @@
+local datos = require("main.datos")
+
 function init(self)
-	-- Add initialization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+	self.cuenta = 0
+	self.objetivo_encontrado = false
 end
 
 function final(self)
@@ -11,17 +12,22 @@ function final(self)
 end
 
 function update(self, dt)
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+
 end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("mover_posicion") then
 		go.set_position(message.pos, "")
 	elseif message_id == hash("disparar_ray") then
-		msg.post("/gui#gui", "objetivo_encontrado")
-	end	
+		--self.cuenta = self.cuenta + 1
+		--if self.cuenta >= 1 and self.objetivo_encontrado == false then
+		if self.objetivo_encontrado == false then	
+			msg.post("/gui#gui", "objetivo_encontrado")
+			self.objetivo_encontrado = true
+		end
+	elseif message_id == hash("desactivar_objetivo") then
+		print("objetivo desactivado")
+	end
 end
 
 function on_input(self, action_id, action)
