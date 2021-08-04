@@ -54,7 +54,6 @@ function update(self, dt)
 		self.cuenta = self.cuenta + 1
 		if self.cuenta >= 8 then
 			--print("desactivar")
-			
 			msg.post("/gui#gui", "borrar_laser", {instancia = go.get_id()})
 			if self.switch_activo == true then
 				msg.post("/gui#gui", "switch_desactivado", {switch = self.pos_en_tabla_casillas, nodo = self.nodo})
