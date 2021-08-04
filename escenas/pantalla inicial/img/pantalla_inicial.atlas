@@ -1,0 +1,19 @@
+images {
+  image: "/escenas/pantalla inicial/img/boton_play.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/escenas/pantalla inicial/img/fondo inicio.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/escenas/pantalla inicial/img/laser_text.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/escenas/pantalla inicial/img/proto.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+margin: 0
+extrude_borders: 2
+inner_padding: 0

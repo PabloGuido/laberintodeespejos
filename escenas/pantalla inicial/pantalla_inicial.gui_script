@@ -1,8 +1,13 @@
 function init(self)
 	-- nodos
 	self.play = gui.get_node("play")
-
+	self.proto = gui.get_node("proto")
+	self.laser = gui.get_node("laser")
 	msg.post("", "acquire_input_focus")
+
+	gui.animate(self.play, "scale", 1.035, gui.EASING_INBOUNCE, 5, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+	gui.animate(self.proto, "rotation.z", -2, gui.EASING_LINEAR, 8, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+	gui.animate(self.laser, "rotation.z", 2, gui.EASING_LINEAR, 8, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 end
 
 function final(self)
