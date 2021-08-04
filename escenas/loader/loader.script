@@ -1,6 +1,10 @@
 function init(self)
 	msg.post("", "acquire_input_focus")
-	msg.post("#pantalla_inicial", "load")
+	
+	self.colecciones = {"#pantalla_inicial", "#seleccion_de_nivel", "#gameplay"}
+	self.contador = 1
+	msg.post(self.colecciones[self.contador], "load")
+
 end
 
 function final(self)
@@ -21,9 +25,12 @@ function on_message(self, message_id, message, sender)
 		msg.post(sender, "init")
 		msg.post(sender, "enable")
 		--
-	elseif message_id == hash("pasar_a_seleccion_de_nivel") then
+	elseif message_id == hash("avanzar_escena") then
 		print("Loader acá: pasar a selección de nivel")
-		msg.post("#pantalla_inicial", "unload")
+		msg.post(self.colecciones[self.contador], "unload")
+		self.contador = self.contador + 1
+	elseif message_id == hash("proxy_unloaded") then
+		msg.post(self.colecciones[self.contador], "load")
 	end
 end
 
