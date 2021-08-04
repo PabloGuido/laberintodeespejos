@@ -26,9 +26,13 @@ function on_message(self, message_id, message, sender)
 		msg.post(sender, "enable")
 		--
 	elseif message_id == hash("avanzar_escena") then
-		print("Loader acá: pasar a selección de nivel")
+		print("Loader: avanzar escena.")
 		msg.post(self.colecciones[self.contador], "unload")
 		self.contador = self.contador + 1
+	elseif message_id == hash("retroceder_escena") then
+		print("Loader: retroceder escena.")
+		msg.post(self.colecciones[self.contador], "unload")
+		self.contador = self.contador - 1
 	elseif message_id == hash("proxy_unloaded") then
 		msg.post(self.colecciones[self.contador], "load")
 	end

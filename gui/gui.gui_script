@@ -97,7 +97,7 @@ function init(self)
 	self.barrera = gui.get_node("barrera")
 	self.laser_en_barrera = false
 	self.switch = gui.get_node("switch")
-	
+
 	-- tacho ----------------------------------------------
 	self.tacho = gui.get_node("tacho")
 	self.tacho_pos_inical = vmath.vector3(-600, 300, 0)
@@ -121,7 +121,7 @@ function init(self)
 	self.espejo = gui.get_node("espejo")
 	self.espejo_doble = gui.get_node("espejo_doble")
 	self.ui_objetos = false
-
+	self.retroceder = gui.get_node("retroceder")
 	-- tablas -----------------------------------------
 	self.casillas = {}
 	self.casillas["obj_fisico"] = nil
@@ -475,6 +475,9 @@ function on_input(self, action_id, action)
 						gui.animate(datos.switches[i], "color", vmath.vector4(0.8,0.17,0.17,1), gui.EASING_INBACK, 0.15)
 					end
 				end
+			elseif gui.pick_node(self.retroceder, action.x, action.y) then
+				msg.post("", "release_input_focus")
+				msg.post("loader:/loader#loader", "retroceder_escena")
 			end	
 		elseif action.released then
 			if self.mouse_sobre_casillas == false and datos.obj_en_mouse ~= nil and self.moviendo_obj == false then
