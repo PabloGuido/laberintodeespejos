@@ -26,7 +26,7 @@ end
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		if gui.pick_node(self.play, action.x, action.y) then
-			print("play, pasar de escena") -- Estar atento si es necesario sacar el input.
+			--print("play, pasar de escena") -- Estar atento si es necesario sacar el input.
 			msg.post("loader:/loader#loader", "avanzar_escena")
 		end
 	end
