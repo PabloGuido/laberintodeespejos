@@ -5,6 +5,8 @@ function init(self)
 	self.contador = 1
 	msg.post(self.colecciones[self.contador], "load")
 
+	--fondo
+	go.animate("#sprite", "scale", go.PLAYBACK_LOOP_PINGPONG, 1.1, go.EASING_LINEAR, 20)
 end
 
 function final(self)

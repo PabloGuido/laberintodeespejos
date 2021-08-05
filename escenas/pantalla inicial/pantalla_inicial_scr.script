@@ -58,13 +58,13 @@ primera_anim = function (self)
 	go.animate("/delta", "position.y", go.PLAYBACK_ONCE_FORWARD, -75, go.EASING_INBOUNCE, 1, 0.25, function()
 		spine.play_anim("/delta#delta", "idle_1_salida", go.PLAYBACK_ONCE_FORWARD)
 		respiracion(self, 0, 10, 2, 0, go.PLAYBACK_LOOP_PINGPONG, nil)
-		timer.delay(1.5, false, bajarYaparecerPorLaDerecha)
+		timer.delay(7, false, bajarYaparecerPorLaDerecha)
 	end)
 	
 end
 function init(self)
 
-	go.animate("#sprite", "scale", go.PLAYBACK_LOOP_PINGPONG, 1.1, go.EASING_LINEAR, 20)
+	
 	go.animate("/delta", "position.y", go.PLAYBACK_ONCE_FORWARD, -75, go.EASING_INBOUNCE, 1, 0.25, function()
 		respiracion(self, 0, 10, 2, 0, go.PLAYBACK_LOOP_PINGPONG, nil)
 		
