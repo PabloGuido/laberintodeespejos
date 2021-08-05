@@ -1,3 +1,74 @@
+math.randomseed(os.clock())
+
+local bajarYaparecerPorLaDerecha
+local primera_anim
+
+
+local function respiracion(self, x, y, tiempo, delay, playback, func)
+	local pos = go.get_position("delta")
+	local pos2 = pos + vmath.vector3(x, y, 0.1)
+	go.animate("/delta", "position", playback, pos2, go.EASING_LINEAR, tiempo, delay, func)
+end
+
+local function salirPorLaDerechaYaparecerTopo(self)
+	local pos = go.get_position("delta")
+	pos.x = pos.x + 400
+	go.animate("/delta", "position", go.PLAYBACK_ONCE_FORWARD, pos, go.EASING_INBACK, 0.5, 0, 
+	function()
+		go.set("delta", "euler.z", 0)
+		go.set_position(vmath.vector3(math.random(1000,1200),-520,0.1), "delta")
+		respiracion(self, 0, 300, 1, 0, go.PLAYBACK_ONCE_PINGPONG, 
+		function()
+			go.set("delta", "euler.z", -90)
+			go.set_position(vmath.vector3(-515,math.random(100, 500),0.1), "delta")
+			respiracion(self, 200, 0, 1, 0, go.PLAYBACK_ONCE_PINGPONG, 
+			function()
+				primera_anim(self)
+			--go.animate("/delta", "position.y", go.PLAYBACK_ONCE_FORWARD, -75, go.EASING_INBOUNCE, 1, 0.25, function()
+			--	respiracion(self, 0, 10, 2, 0, go.PLAYBACK_LOOP_PINGPONG, nil)
+			--	timer.delay(1.5, false, primera_anim)
+			--end)
+		end) end)
+	end)
+end
+
+bajarYaparecerPorLaDerecha = function (self)
+	local pos = go.get_position("delta")
+	pos.y = pos.y - 500
+	
+	go.animate("/delta", "position", go.PLAYBACK_ONCE_FORWARD, pos, go.EASING_INBACK, 1, 0,
+	function()
+		spine.play_anim("/delta#delta", "saludo", go.PLAYBACK_LOOP_FORWARD)
+		go.set_position(vmath.vector3(1790, math.random(200, 500), 0.1), "delta")
+		go.set("delta", "euler.z", 90)
+		--go.set_rotation(90, "delta")
+		local pos = go.get_position("delta")
+		local pos = pos - vmath.vector3(350, 0, 0)
+		go.animate("/delta", "position", go.PLAYBACK_ONCE_FORWARD, pos, go.EASING_INBOUNCE, 1, 0,
+		function()
+			timer.delay(1.5, false, salirPorLaDerechaYaparecerTopo)
+		end)
+	end)
+end
+
+primera_anim = function (self)
+	go.set("delta", "euler.z", 0)
+	go.set_position(vmath.vector3(206,-525,0.1), "delta")
+	spine.play_anim("/delta#delta", "idle_1", go.PLAYBACK_ONCE_FORWARD)
+	go.animate("/delta", "position.y", go.PLAYBACK_ONCE_FORWARD, -75, go.EASING_INBOUNCE, 1, 0.25, function()
+		spine.play_anim("/delta#delta", "idle_1_salida", go.PLAYBACK_ONCE_FORWARD)
+		respiracion(self, 0, 10, 2, 0, go.PLAYBACK_LOOP_PINGPONG, nil)
+		timer.delay(1.5, false, bajarYaparecerPorLaDerecha)
+	end)
+	
+end
 function init(self)
+
 	go.animate("#sprite", "scale", go.PLAYBACK_LOOP_PINGPONG, 1.1, go.EASING_LINEAR, 20)
+	go.animate("/delta", "position.y", go.PLAYBACK_ONCE_FORWARD, -75, go.EASING_INBOUNCE, 1, 0.25, function()
+		respiracion(self, 0, 10, 2, 0, go.PLAYBACK_LOOP_PINGPONG, nil)
+		
+		timer.delay(1.5, false, bajarYaparecerPorLaDerecha)
+	end)
+
 end
