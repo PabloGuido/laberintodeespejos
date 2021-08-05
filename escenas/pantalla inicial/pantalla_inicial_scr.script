@@ -39,25 +39,28 @@ local function salirPorLaDerechaYaparecerTopo(self)
 end
 
 bajarYaparecerPorLaDerecha = function (self)
-	local pos = go.get_position("delta")
-	pos.y = pos.y - 500
+	if self.saliendo_de_escena == false then
 
+		local pos = go.get_position("delta")
+		pos.y = pos.y - 500	
 		go.animate("/delta", "position", go.PLAYBACK_ONCE_FORWARD, pos, go.EASING_INBACK, 1, 0,
 		function()
-			spine.play_anim("/delta#delta", "saludo", go.PLAYBACK_LOOP_FORWARD)
-			go.set_position(vmath.vector3(1790, math.random(200, 500), 0.1), "delta")
-			go.set("delta", "euler.z", 90)
-			--go.set_rotation(90, "delta")
-			local pos = go.get_position("delta")
-			local pos = pos - vmath.vector3(350, 0, 0)
-			go.animate("/delta", "position", go.PLAYBACK_ONCE_FORWARD, pos, go.EASING_INBOUNCE, 1, 0,
-			function()
-				if self.saliendo_de_escena == false then
-					timer.delay(1.5, false, salirPorLaDerechaYaparecerTopo)
-				end
-			end)
+			if self.saliendo_de_escena == false then
+				spine.play_anim("/delta#delta", "saludo", go.PLAYBACK_LOOP_FORWARD)
+				go.set_position(vmath.vector3(1790, math.random(200, 500), 0.1), "delta")
+				go.set("delta", "euler.z", 90)
+				--go.set_rotation(90, "delta")
+				local pos = go.get_position("delta")
+				local pos = pos - vmath.vector3(350, 0, 0)
+				go.animate("/delta", "position", go.PLAYBACK_ONCE_FORWARD, pos, go.EASING_INBOUNCE, 1, 0,
+				function()
+					if self.saliendo_de_escena == false then
+						timer.delay(1.5, false, salirPorLaDerechaYaparecerTopo)
+					end
+				end)
+			end
 		end)
-
+	end
 end
 
 primera_anim = function (self)
@@ -68,7 +71,8 @@ primera_anim = function (self)
 	go.animate("/delta", "position.y", go.PLAYBACK_ONCE_FORWARD, -75, go.EASING_INBOUNCE, 1, 0.25, function()
 		spine.play_anim("/delta#delta", "idle_1_salida", go.PLAYBACK_ONCE_FORWARD)
 		respiracion(self, 0, 10, 2, 0, go.PLAYBACK_LOOP_PINGPONG, nil)
-		timer.delay(7, false, bajarYaparecerPorLaDerecha)
+		timer.delay(6, false, bajarYaparecerPorLaDerecha)
+
 	end)
 end
 end
