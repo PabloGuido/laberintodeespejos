@@ -3,7 +3,14 @@ function init(self)
 	self.play = gui.get_node("play")
 	self.proto = gui.get_node("proto")
 	self.laser = gui.get_node("laser")
-	msg.post("", "acquire_input_focus")
+
+	gui.set_color(self.play, vmath.vector4(1,1,1,0))
+	gui.set_color(self.proto, vmath.vector4(1,1,1,0))
+	gui.set_color(self.laser, vmath.vector4(1,1,1,0))
+	gui.animate(self.play, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 0.5)
+	gui.animate(self.proto, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 0.5)
+	gui.animate(self.laser, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 0.5, 0, function() msg.post("", "acquire_input_focus") end)
+
 
 	gui.animate(self.play, "scale", 1.035, gui.EASING_INBOUNCE, 5, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 	gui.animate(self.proto, "rotation.z", -2, gui.EASING_LINEAR, 8, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
@@ -23,16 +30,20 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
+	
 end
 
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		if gui.pick_node(self.play, action.x, action.y) then
 			--print("play, pasar de escena") -- Estar atento si es necesario sacar el input.
-			msg.post("loader:/loader#loader", "avanzar_escena")
+			msg.post("", "release_input_focus")
+			msg.post("/fondo", "sacar_delta")
+			gui.animate(self.proto, "position.y", 900, gui.EASING_INBACK, 1)
+			gui.animate(self.laser, "position.y", 900, gui.EASING_INBACK, 1)
+			gui.animate(self.play, "position.y", -250, gui.EASING_INBACK, 1, 0,
+			function() msg.post("loader:/loader#loader", "avanzar_escena") end)
+
 		end
 	end
 end

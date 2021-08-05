@@ -1,7 +1,7 @@
 name: "pantalla_inicial"
 scale_along_z: 0
 embedded_instances {
-  id: "go"
+  id: "gui"
   data: "components {\n"
   "  id: \"pantalla_inicial\"\n"
   "  component: \"/escenas/pantalla inicial/pantalla_inicial.gui\"\n"
