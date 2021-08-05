@@ -96,7 +96,8 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Niveles"
+  text: "Niveles\n"
+  "Click para continuar"
   font: "system_font"
   id: "text"
   xanchor: XANCHOR_NONE
