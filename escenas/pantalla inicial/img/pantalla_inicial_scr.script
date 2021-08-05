@@ -54,7 +54,7 @@ end
 primera_anim = function (self)
 	go.set("delta", "euler.z", 0)
 	go.set_position(vmath.vector3(206,-525,0.1), "delta")
-	spine.play_anim("/delta#delta", "idle_1", go.PLAYBACK_ONCE_FORWARD)
+	spine.play_anim("/delta#delta", "idle_1", go.PLAYBACK_LOOP_FORWARD)
 	go.animate("/delta", "position.y", go.PLAYBACK_ONCE_FORWARD, -75, go.EASING_INBOUNCE, 1, 0.25, function()
 		spine.play_anim("/delta#delta", "idle_1_salida", go.PLAYBACK_ONCE_FORWARD)
 		respiracion(self, 0, 10, 2, 0, go.PLAYBACK_LOOP_PINGPONG, nil)
