@@ -1,4 +1,6 @@
-math.randomseed(os.clock())
+math.randomseed(os.clock()*100000)
+local datos = require("main.datos")
+
 
 local bajarYaparecerPorLaDerecha
 local primera_anim
@@ -19,6 +21,7 @@ local function salirPorLaDerechaYaparecerTopo(self)
 		
 		go.animate("/delta", "position", go.PLAYBACK_ONCE_FORWARD, pos, go.EASING_INBACK, 0.5, 0, 
 		function()
+			spine.set_skin("/delta#delta", datos.skins_delta[math.random(1, 4)])
 			go.set("delta", "euler.z", 0)
 			go.set_position(vmath.vector3(math.random(1000,1200),-520,0.1), "delta")
 			respiracion(self, 0, 300, 1, 0, go.PLAYBACK_ONCE_PINGPONG, 
@@ -26,6 +29,7 @@ local function salirPorLaDerechaYaparecerTopo(self)
 				if self.saliendo_de_escena == false then
 					go.set("delta", "euler.z", -90)
 					go.set_position(vmath.vector3(-515,math.random(100, 500),0.1), "delta")
+					spine.set_skin("/delta#delta", datos.skins_delta[math.random(1, 4)])
 					respiracion(self, 200, 0, 1, 0, go.PLAYBACK_ONCE_PINGPONG, 
 					function()
 						if self.saliendo_de_escena == false then
@@ -40,13 +44,14 @@ end
 
 bajarYaparecerPorLaDerecha = function (self)
 	if self.saliendo_de_escena == false then
-
+		
 		local pos = go.get_position("delta")
 		pos.y = pos.y - 500	
 		go.animate("/delta", "position", go.PLAYBACK_ONCE_FORWARD, pos, go.EASING_INBACK, 1, 0,
 		function()
 			if self.saliendo_de_escena == false then
 				spine.play_anim("/delta#delta", "saludo", go.PLAYBACK_LOOP_FORWARD)
+				spine.set_skin("/delta#delta", datos.skins_delta[math.random(2, 4)])
 				go.set_position(vmath.vector3(1790, math.random(200, 500), 0.1), "delta")
 				go.set("delta", "euler.z", 90)
 				--go.set_rotation(90, "delta")
@@ -65,6 +70,7 @@ end
 
 primera_anim = function (self)
 	if self.saliendo_de_escena == false then
+		spine.set_skin("/delta#delta", datos.skins_delta[math.random(1, 2)])
 	go.set("delta", "euler.z", 0)
 	go.set_position(vmath.vector3(206,-525,0.1), "delta")
 	spine.play_anim("/delta#delta", "idle_1", go.PLAYBACK_LOOP_FORWARD)

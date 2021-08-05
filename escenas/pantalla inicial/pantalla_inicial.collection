@@ -97,7 +97,7 @@ embedded_instances {
   "  type: \"spinemodel\"\n"
   "  data: \"spine_scene: \\\"/delta/delta.spinescene\\\"\\n"
   "default_animation: \\\"saludo\\\"\\n"
-  "skin: \\\"\\\"\\n"
+  "skin: \\\"cara nomal\\\"\\n"
   "blend_mode: BLEND_MODE_ALPHA\\n"
   "material: \\\"/builtins/materials/spine.material\\\"\\n"
   "\"\n"

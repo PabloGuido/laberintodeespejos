@@ -1,4 +1,24 @@
 images {
+  image: "/delta/img/cara normal.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/delta/img/cara o.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/delta/img/cara sonrisa 2.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/delta/img/cara sonrisa.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/delta/img/cara w.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
   image: "/delta/img/Layer 1.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
