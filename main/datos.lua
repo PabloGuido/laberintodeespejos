@@ -31,5 +31,6 @@ M.skins_delta = {"cara nomal", "cara sonrisa",  "cara o", "cara sonrisa 2", "car
 
 -- Cosas generales
 M.primera_vez_que_abre_el_juego = true
+M.jugar_nivel = 1
 
 return M

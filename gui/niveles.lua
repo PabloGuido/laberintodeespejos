@@ -18,6 +18,7 @@ M["1"] = {
 M[1] = {}
 M[1]["cuanto_por_cuanto"] = 5
 M[1]["switches"] = 3
+M[1]["habilitado"] = true
 
 --2
 M["2"] = {
@@ -29,6 +30,8 @@ M["2"] = {
 }
 M[2] = {}
 M[2]["cuanto_por_cuanto"] = 5
+M[2]["switches"] = 0
+M[2]["habilitado"] = true
 
 --3
 M["3"] = {
