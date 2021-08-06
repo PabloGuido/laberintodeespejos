@@ -69,6 +69,11 @@ end
 function init(self)
 	--msg.post("@render:", "clear_color", { color = vmath.vector4(0.15, 0.25, 0.15, 0) } )
 	--msg.post("@render:", "clear_color", { color = vmath.vector4(1, 1, 1, 0) } )
+	-- Valores para inicios ---------------------------
+	datos.primera_vez_que_abre_gameplay = false
+
+
+	
 	-- niveles ----------------------------------------
 	self.nivel = datos.jugar_nivel
 	self.contador_para_leer_mapa_nivel = 1
@@ -76,8 +81,8 @@ function init(self)
 	self.cantidad_de_switches_en_el_nivel = niveles[self.nivel]["switches"]
 	self.cantidad_de_switches_activados = 0
 
-	datos.nivel_completado = false
-	--------------------------------------------------	-	
+	datos.nivel_completado = false -- esto no va después creo.
+	---------------------------------------------------
 	self.moviendo_obj = false
 	self.ultima_pos = vmath.vector3()
 	self.delta_pos = vmath.vector3()
@@ -455,6 +460,11 @@ function on_input(self, action_id, action)
 					end
 				end
 			elseif gui.pick_node(self.retroceder, action.x, action.y) then
+				if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultimo_nivel_desbloqueado < 11 then
+					datos.jugar_nivel = datos.jugar_nivel + 1
+					datos.ultimo_nivel_desbloqueado = datos.ultimo_nivel_desbloqueado + 1
+					print(datos.ultimo_nivel_desbloqueado)
+				end
 				msg.post("", "release_input_focus")
 				msg.post("loader:/loader#loader", "retroceder_escena")
 			end	

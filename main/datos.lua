@@ -26,11 +26,13 @@ end
 M.pos_del_mouse = vmath.vector3() -- trackea la pos del mouse
 M.obj_en_mouse = nil -- cheque si se agarró algún objeto con drag and drop y cuál es.
 M.switches = {}
-M.nivel_completado = false
+M.nivel_completado = false -- esto no va después creo.
 M.skins_delta = {"cara nomal", "cara sonrisa",  "cara o", "cara sonrisa 2", "cara w" }
 
 -- Cosas generales
-M.primera_vez_que_abre_el_juego = true
-M.jugar_nivel = 1
+M.primera_vez_que_abre_gameplay = true -- esto hay que dejarlo en true después.
+M.jugar_nivel = 1 -- esto tiene que ser 1
+M.ultimo_nivel_desbloqueado = 1 -- esto tiene que ser 1
+M.ultima_escena = ""
 
 return M
