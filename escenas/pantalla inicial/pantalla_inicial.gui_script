@@ -1,3 +1,5 @@
+local datos = require("main.datos")
+
 function init(self)
 	-- nodos
 	self.play = gui.get_node("play")

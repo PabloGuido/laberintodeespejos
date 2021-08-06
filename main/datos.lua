@@ -29,4 +29,7 @@ M.switches = {}
 M.nivel_completado = false
 M.skins_delta = {"cara nomal", "cara sonrisa",  "cara o", "cara sonrisa 2", "cara w" }
 
+-- Cosas generales
+M.primera_vez_que_abre_el_juego = true
+
 return M
