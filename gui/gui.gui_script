@@ -348,7 +348,7 @@ function on_message(self, message_id, message, sender)
 		self.casillas[message.pos_en_tabla]["instancia"] =  message.obj
 	elseif message_id == hash("objetivo_encontrado") then
 		msg.post("/ui_objetos#ui_objetos", "nivel_completado")
-		msg.post("", "release_input_focus")
+		--msg.post("", "release_input_focus")
 		datos.nivel_completado = true
 		gui.move_above(self.objetivo, self.laser)
 		gui.play_flipbook(self.objetivo, "objetivo_on")
