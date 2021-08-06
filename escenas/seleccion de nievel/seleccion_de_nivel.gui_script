@@ -5,9 +5,13 @@ function init(self)
 	self.aro = gui.get_node("aro")
 	self.cuerpo = gui.get_node("cuerpo")
 	self.numero_de_nivel = gui.get_node("numero_de_nivel")
+	self.pantalla_negra = gui.get_node("pantalla_negra")
+	gui.set_color(self.pantalla_negra, vmath.vector4(1,1,1,0))
+	gui.set_enabled(self.pantalla_negra, false)
 	
 	self.tabla_de_botones = {}
 	self.pos_inicial_botones = vmath.vector3(-400, 40, 0)
+	self.pos_test = vmath.vector3(241, 380, 0)
 	self.dif_entre_botones = 200
 	self.dif_de_bajada = 200
 
@@ -29,10 +33,19 @@ function init(self)
 
 	--pprint(self.tabla_botones)
 	gui.set_enabled(self.boton_celeste, false)
-	gui.animate(self.cuadro_azul, "position.x", 640, gui.EASING_OUTCUBIC, 1)
 	gui.animate(self.boton_volver, "position.y", 656, gui.EASING_OUTCUBIC, 1)
+	gui.animate(self.cuadro_azul, "position.x", 640, gui.EASING_OUTCUBIC, 1, 0,
+	function()
+		gui.set_enabled(self.pantalla_negra, true)
+		gui.set_position(self.pantalla_negra, self.pos_test)
+		gui.animate(self.pantalla_negra, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1, 0,
+		function()
+			msg.post("", "acquire_input_focus")
+		end)
+	end)
 
-	msg.post("", "acquire_input_focus")
+	
+	--msg.post("", "acquire_input_focus")
 end
 
 function final(self)
@@ -59,7 +72,7 @@ function on_input(self, action_id, action)
 			if gui.pick_node(boton[hash("boton_celeste")], action.x, action.y) then
 				
 				gui.animate(boton[hash("aro")], "rotation.z", 20, gui.EASING_INBOUNCE, 0.5)
-				--sound.play("#candado_abierto")
+				sound.play("#candado_abierto")
 				gui.animate(boton[hash("cuerpo")], "rotation.z", -10, gui.EASING_INBOUNCE, 0.5, 0,
 				function()
 					gui.animate(boton[hash("aro")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 0.25)
@@ -67,9 +80,16 @@ function on_input(self, action_id, action)
 					function()
 						gui.set_enabled(boton[hash("aro")], false)
 						gui.set_enabled(boton[hash("cuerpo")], false)
-						--sound.play("#nivel_desbloqueado")
+						sound.play("#nivel_desbloqueado")
 						gui.set_enabled(boton[hash("numero_de_nivel")], true)
 						gui.set_text(boton[hash("numero_de_nivel")], k)
+						if k == 1 then
+							local numero_pos = gui.get_position(boton[hash("numero_de_nivel")])
+							numero_pos.x = numero_pos.x - 6
+							gui.set_position(boton[hash("numero_de_nivel")], numero_pos)
+						end
+						gui.set_color(self.pantalla_negra, vmath.vector4(1,1,1,0))
+						gui.set_enabled(self.pantalla_negra, false)
 					end)
 				end)
 				print(k)
