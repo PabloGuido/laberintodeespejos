@@ -4,7 +4,7 @@ instances {
   prototype: "/objetos/cannon/laser.go"
   position {
     x: 406.0
-    y: 222.0
+    y: 234.0
     z: 0.0
   }
   rotation {
