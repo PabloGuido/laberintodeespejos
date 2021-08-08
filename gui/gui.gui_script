@@ -140,8 +140,8 @@ function init(self)
 	msg.post("", "acquire_input_focus")
 
 	---------------------------------------------------
-	
-	self.pos = vmath.vector3(380,660,0) -- posicion inicial para crear la grilla
+	self.pos_x_casillas = 400
+	self.pos = vmath.vector3(self.pos_x_casillas,660,0) -- posicion inicial para crear la grilla
 	for i = 1, niveles[self.nivel]["cuanto_por_cuanto"] do
 		for i = 1, niveles[self.nivel]["cuanto_por_cuanto"] do
 			--print(niveles[tostring(self.nivel)][self.contador_para_leer_mapa_nivel])
@@ -189,7 +189,7 @@ function init(self)
 			self.contador_para_leer_mapa_nivel = self.contador_para_leer_mapa_nivel + 1
 
 		end
-		self.pos.x = 380
+		self.pos.x = self.pos_x_casillas
 		self.pos.y = self.pos.y - dif_entre_casillas
 	end
 	
