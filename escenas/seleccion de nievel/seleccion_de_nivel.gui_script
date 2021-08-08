@@ -162,8 +162,8 @@ function on_input(self, action_id, action)
 		
 		if gui.pick_node(self.boton_volver, action.x, action.y) then
 			msg.post("", "release_input_focus")
-			gui.animate(self.cuadro_azul, "position.x", 1790, gui.EASING_INBACK, 0.8)
-			gui.animate(self.boton_volver, "position.y", 867, gui.EASING_INBACK, 0.8, 0,
+			gui.animate(self.cuadro_azul, "position.x", 1790, gui.EASING_INBACK, 1)
+			gui.animate(self.boton_volver, "position.y", 867, gui.EASING_INBACK, 1, 0,
 			function()
 				msg.post("loader:/loader#loader", "retroceder_escena")
 			end)
