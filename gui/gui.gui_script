@@ -2,6 +2,10 @@ local datos = require("main.datos")
 local niveles = require("gui.niveles")
 local dif_entre_casillas = 142
 
+local function mover_bajo_adorno(self, nodo)
+	gui.move_below(nodo, self.adorno)
+end
+
 local function clonar_nodo(self, que_nodo, que_hash, pos, que_tabla, en_mouse)
 	local nuevo_nodo = gui.clone_tree(que_nodo)
 	local clon_nodo = nuevo_nodo[que_hash]
@@ -102,7 +106,9 @@ function init(self)
 	self.barrera = gui.get_node("barrera")
 	self.laser_en_barrera = false
 	self.switch = gui.get_node("switch")
-
+	self.adorno = gui.get_node("adorno")
+	gui.animate(self.adorno, "rotation.z", 360, gui.EASING_LINEAR, 25, 0, nil, gui.PLAYBACK_LOOP_FORWARD)
+	
 	-- tacho ----------------------------------------------
 	self.tacho = gui.get_node("tacho")
 	self.tacho_pos_inical = vmath.vector3(-600, 300, 0)
@@ -159,7 +165,8 @@ function init(self)
 			elseif constatador == 1 then -- Coloca obstáculos
 				msg.post("/obstaculo_factory_obj#obstaculo_factory_scr", "crear_obstaculo", {pos = self.pos})
 				ocupado = true
-				clonar_nodo(self, self.obstaculo, hash("obstaculo"), self.pos, {}, false)
+				local nuevo_obs = clonar_nodo(self, self.obstaculo, hash("obstaculo"), self.pos, {}, false)
+				
 			elseif constatador == 3 then -- Coloca switches
 				
 				ocupado = true
@@ -175,6 +182,7 @@ function init(self)
 			local clon_casilla = nueva_casilla[hash("casilla")]
 			gui.set_position(clon_casilla, self.pos)
 			table.insert(self.casillas, {nueva_casilla, ocupado = ocupado})
+			mover_bajo_adorno(self, clon_casilla)
 			
 			if constatador == 3 then  -- esto es para poner el laser en los switches
 				self.ultima_casilla = self.contador_para_leer_mapa_nivel
@@ -304,7 +312,7 @@ function on_message(self, message_id, message, sender)
 		elseif message.accion == "aceptar" and datos.nivel_completado == false then
 			self.ui_objetos = false
 			msg.post("", "acquire_input_focus")
-
+			gui.set_enabled(self.adorno, false)
 		elseif message.accion == "borrar_objeto" then
 			for i = table.maxn(self.espejos), 1, -1 do
 				if self.ultimo_obj_clickeado == self.espejos[i][hash("espejo")] then
@@ -387,6 +395,11 @@ function on_message(self, message_id, message, sender)
 		--print("desactivando " .. self.cantidad_de_switches_activados)
 	elseif message_id == hash("laser_en_barrera") then
 		self.laser_en_barrera = true -- chquea si llego el laser a la barrera antes de activar todos los switches
+	elseif message_id == hash("mover_adorno") then
+		gui.set_enabled(self.adorno, true)
+		gui.set_position(self.adorno, message.pos)
+	elseif message_id == hash("sacar_adorno") then
+		gui.set_enabled(self.adorno, false)
 	end
 
 end
@@ -440,6 +453,7 @@ function on_input(self, action_id, action)
 				--crear espejo para poner
 					self.ultimo_obj_clickeado = nil
 					self.ultimo_nodo_creado = clonar_nodo(self, self.espejo, hash("espejo"), vmath.vector3(action.x, action.y, 0), self.espejos, true)
+					mover_bajo_adorno(self, self.ultimo_nodo_creado)
 					self.ultimo_obj_clickeado = self.ultimo_nodo_creado
 					self.moviendo_obj = false
 			elseif gui.pick_node(self.espejo_doble, action.x, action.y) then

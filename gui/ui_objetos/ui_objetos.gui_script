@@ -38,6 +38,7 @@ function on_message(self, message_id, message, sender)
 		gui.set_enabled(self.ui_objetos, true)
 		gui.set_enabled(self.adorno, true)
 		msg.post("", "acquire_input_focus")
+		msg.post("/gui#gui", "mover_adorno", {pos = self.posicion})
 	elseif message_id == hash("restablecer_input") then
 		msg.post("", "acquire_input_focus")
 	elseif message_id == hash("desactivar_ui_objetos") then
