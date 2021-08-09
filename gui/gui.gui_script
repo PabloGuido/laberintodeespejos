@@ -2,6 +2,28 @@ local datos = require("main.datos")
 local niveles = require("gui.niveles")
 local dif_entre_casillas = 142
 
+local function inicializacion_objetos_alpha(self)
+	for c = 1, table.maxn(self.casillas) do
+		local anim_casilla = self.casillas[c][1][hash("casilla")]
+		--pprint(self.casillas[c][1][hash("casilla")])
+		gui.animate(anim_casilla, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
+		--pprint(self.obstaculos_tabla)
+	end
+	for o = 1 ,table.maxn(self.obstaculos_tabla) do
+		local anim_obs = self.obstaculos_tabla[o][hash("obstaculo")]
+		gui.animate(anim_obs, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
+	end
+	for s = 1 ,table.maxn(self.switches) do
+		--local anim_obs = self.obstaculos_tabla[o][hash("obstaculo")]
+		gui.animate(self.switches[s], "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
+	end
+	for l = 1,table.maxn(self.laser_tabla) do
+		--pprint()
+		gui.animate(self.laser_tabla[l][hash("laser_beam")], "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
+	end
+	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
+end
+
 local function on_off_sonido(self, sonido)
 	if datos.sound == true then
 		sound.play(sonido)
@@ -122,6 +144,7 @@ function init(self)
 		gui.play_flipbook(self.sonido_nodo, "sonido off")
 	end
 	self.lupa = gui.get_node("lupa")
+	self.fondo_gris = gui.get_node("fondo_gris")
 	-- tacho ----------------------------------------------
 	self.tacho = gui.get_node("tacho")
 	self.tacho_pos_inical = vmath.vector3(-600, 300, 0)
@@ -130,6 +153,7 @@ function init(self)
 	--gui.ani
 	-- laser beam -----------------------------------------
 	self.laser_beam = gui.get_node("laser_beam")
+	gui.set_color(self.laser_beam , vmath.vector4(1,1,1,0))
 	self.laser_relevo = gui.get_node("laser_relevo")
 	gui.is_enabled(self.laser_beam, false)
 	self.position = gui.get_position(self.laser_beam )
@@ -153,6 +177,7 @@ function init(self)
 	self.espejos = {}
 	self.switches = {}
 	self.switches_activados = {}
+	self.obstaculos_tabla = {}
 	---------------------------------------------------
 	
 	self.obj_seleccionado = ""
@@ -179,13 +204,14 @@ function init(self)
 			elseif constatador == 1 then -- Coloca obstáculos
 				msg.post("/obstaculo_factory_obj#obstaculo_factory_scr", "crear_obstaculo", {pos = self.pos})
 				ocupado = true
-				local nuevo_obs = clonar_nodo(self, self.obstaculo, hash("obstaculo"), self.pos, {}, false)
-				
+				local nuevo_obs = clonar_nodo(self, self.obstaculo, hash("obstaculo"), self.pos, self.obstaculos_tabla, false)
+				gui.set_color(nuevo_obs, vmath.vector4(1,1,1,0))
 			elseif constatador == 3 then -- Coloca switches
 				
 				ocupado = true
 				nuevo_switch = clonar_nodo(self, self.switch, hash("switch"), self.pos, {}, false)
 				table.insert(self.switches, nuevo_switch)
+				gui.set_color(nuevo_switch, vmath.vector4(1,1,1,0))
 				--pprint(datos.switches)
 				msg.post("/switches#switchfactory", "crear_switch", {pos = self.pos, nodo = tostring(nuevo_switch), pos_en_tabla = self.contador_para_leer_mapa_nivel})
 
@@ -197,10 +223,12 @@ function init(self)
 			gui.set_position(clon_casilla, self.pos)
 			table.insert(self.casillas, {nueva_casilla, ocupado = ocupado})
 			mover_bajo_adorno(self, clon_casilla)
+			gui.set_color(clon_casilla, vmath.vector4(1,1,1,0))
 			
 			if constatador == 3 then  -- esto es para poner el laser en los switches
 				self.ultima_casilla = self.contador_para_leer_mapa_nivel
 				local nuevo_laser_beam = clonar_nodo(self, self.laser_beam, hash("laser_beam"), self.pos, self.laser_tabla, false)
+				gui.set_color(nuevo_laser_beam, vmath.vector4(1,1,1,0))
 				self.casillas[self.ultima_casilla]["laser"] = nuevo_laser_beam
 				gui.set_scale(nuevo_laser_beam, vmath.vector3(1,1,0))
 				gui.move_below(nuevo_laser_beam, nuevo_switch)
@@ -218,6 +246,16 @@ function init(self)
 	self.contador_para_leer_mapa_nivel = 1
 	gui.set_enabled(self.casilla, false) -- ver que esto no haga bardo dsp
 	---------------------------------------------------
+	-- Inicialización --
+	gui.animate(self.fondo_gris, "position.y", 376, gui.EASING_OUTCUBIC, 1, 0,
+	function()
+		inicializacion_objetos_alpha(self)
+	end)
+	gui.animate(self.retroceder, "position.y", 699, gui.EASING_OUTCUBIC, 1)
+	gui.animate(self.sonido_nodo, "position.x", 1218, gui.EASING_OUTCUBIC, 1)
+	gui.animate(self.lupa, "position.x", 1173, gui.EASING_OUTCUBIC, 1)
+	gui.animate(self.espejo, "position.x", 155, gui.EASING_OUTCUBIC, 1)
+	gui.animate(self.toolbar, "position.x", 155, gui.EASING_OUTCUBIC, 1)
 end
 
 --function update(self, dt)
