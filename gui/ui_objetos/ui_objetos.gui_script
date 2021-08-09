@@ -7,14 +7,10 @@ function init(self)
 	gui.set_enabled(self.ui_objetos, false)
 	self.izq = gui.get_node("izq")
 	self.der = gui.get_node("der")
-	self.aceptar = gui.get_node("aceptar")
-	self.borrar_objeto = gui.get_node("borrar_objeto")
-	self.adorno = gui.get_node("adorno")
-	gui.set_enabled(self.adorno, false)
+
 	self.ultimo_obj_clickeado = nil
 	self.posicion = vmath.vector3()
 
-	gui.animate(self.adorno, "rotation.z", 360, gui.EASING_LINEAR, 25, 0, nil, gui.PLAYBACK_LOOP_FORWARD)
 end
 
 function final(self)
@@ -34,18 +30,14 @@ function on_message(self, message_id, message, sender)
 		--pprint(message)
 		self.ultimo_obj_clickeado = message.obj
 		self.posicion = message.pos
-		gui.set_position(self.adorno, self.posicion)
 		gui.set_enabled(self.ui_objetos, true)
-		gui.set_enabled(self.adorno, true)
 		msg.post("", "acquire_input_focus")
 		msg.post("/gui#gui", "mover_adorno", {pos = self.posicion})
 	elseif message_id == hash("restablecer_input") then
 		msg.post("", "acquire_input_focus")
 	elseif message_id == hash("desactivar_ui_objetos") then
-
 		msg.post("", "release_input_focus")
 		gui.set_enabled(self.ui_objetos, false)
-		gui.set_enabled(self.adorno, false)
 		msg.post("/gui#gui", "accion_ui_obj", {accion = "aceptar"})
 	elseif message_id == hash("nivel_completado") then
 		msg.post("", "release_input_focus")
@@ -62,16 +54,7 @@ function on_input(self, action_id, action)
 				elseif gui.pick_node(self.der, action.x, action.y) then
 					msg.post("", "release_input_focus")
 					msg.post("/gui#gui", "accion_ui_obj", {accion = "derecha"})
-				elseif gui.pick_node(self.aceptar, action.x, action.y) then
-					msg.post("", "release_input_focus")
-					gui.set_enabled(self.ui_objetos, false)
-					gui.set_enabled(self.adorno, false)
-					msg.post("/gui#gui", "accion_ui_obj", {accion = "aceptar"})
-				elseif gui.pick_node(self.borrar_objeto, action.x, action.y) then
-					msg.post("", "release_input_focus")
-					gui.set_enabled(self.ui_objetos, false)
-					gui.set_enabled(self.adorno, false)
-					msg.post("/gui#gui", "accion_ui_obj", {accion = "borrar_objeto"})
+
 				else
 					-- Esto es para que cierre la ui_objetos cuando se toca por fuera.
 					-- Lo que está pasando cuando tocás un objeto es que se cierra y se vuelve a abrir por orden del objeto.
@@ -79,7 +62,6 @@ function on_input(self, action_id, action)
 					--print("ui cerrando")
 					msg.post("", "release_input_focus")
 					gui.set_enabled(self.ui_objetos, false)
-					gui.set_enabled(self.adorno, false)
 					msg.post("/gui#gui", "accion_ui_obj", {accion = "aceptar"})
 					
 				end

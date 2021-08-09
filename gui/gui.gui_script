@@ -108,7 +108,7 @@ function init(self)
 	self.switch = gui.get_node("switch")
 	self.adorno = gui.get_node("adorno")
 	gui.animate(self.adorno, "rotation.z", 360, gui.EASING_LINEAR, 25, 0, nil, gui.PLAYBACK_LOOP_FORWARD)
-	
+	gui.set_enabled(self.adorno, false)
 	-- tacho ----------------------------------------------
 	self.tacho = gui.get_node("tacho")
 	self.tacho_pos_inical = vmath.vector3(-600, 300, 0)
