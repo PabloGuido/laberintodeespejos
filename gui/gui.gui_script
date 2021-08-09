@@ -2,7 +2,41 @@ local datos = require("main.datos")
 local niveles = require("gui.niveles")
 local dif_entre_casillas = 142
 
-local function inicializacion_objetos_alpha(self)
+local function terminar_escena_volver_atras(self)
+	for c = 1, table.maxn(self.casillas) do
+		local anim_casilla = self.casillas[c][1][hash("casilla")]
+		--pprint(self.casillas[c][1][hash("casilla")])
+		gui.animate(anim_casilla, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+		--pprint(self.obstaculos_tabla)
+	end
+	for o = 1 ,table.maxn(self.obstaculos_tabla) do
+		local anim_obs = self.obstaculos_tabla[o][hash("obstaculo")]
+		gui.animate(anim_obs, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	end
+	for s = 1 ,table.maxn(self.switches) do
+		--local anim_obs = self.obstaculos_tabla[o][hash("obstaculo")]
+		gui.animate(self.switches[s], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	end
+	for l = 1,table.maxn(self.casillas) do
+		if 	self.casillas[l]["laser"] then
+			gui.animate(self.casillas[l]["laser"], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+		end
+	end
+	for e = 1 ,table.maxn(self.espejos) do
+		gui.animate(self.espejos[e][hash("espejo")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	end
+	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	gui.animate(self.barrera, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1, 0, function() msg.post("loader:/loader#loader", "retroceder_escena") end)
+	gui.animate(self.fondo_gris, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	
+	gui.animate(self.retroceder, "position.y", 835, gui.EASING_INBACK, 1)
+	gui.animate(self.sonido_nodo, "position.x", 1354, gui.EASING_INBACK, 1)
+	gui.animate(self.lupa, "position.x", 1391, gui.EASING_INBACK, 1)
+	gui.animate(self.espejo, "position.x", -150, gui.EASING_INBACK, 1)
+	gui.animate(self.toolbar, "position.x", -150, gui.EASING_INBACK, 1)
+end
+
+local function inicializacion_objetos_alpha(self) -- Da el input focus inicial.
 	for c = 1, table.maxn(self.casillas) do
 		local anim_casilla = self.casillas[c][1][hash("casilla")]
 		--pprint(self.casillas[c][1][hash("casilla")])
@@ -22,7 +56,7 @@ local function inicializacion_objetos_alpha(self)
 		gui.animate(self.laser_tabla[l][hash("laser_beam")], "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
 	end
 	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
-	gui.animate(self.barrera, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
+	gui.animate(self.barrera, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1, 0, function() msg.post("", "acquire_input_focus") end)
 	gui.move_below(self.sonido_nodo, self.tacho)
 	gui.move_below(self.retroceder, self.tacho)
 	gui.move_below(self.lupa, self.tacho)
@@ -195,7 +229,7 @@ function init(self)
 	
 	self.obj_seleccionado = ""
 
-	msg.post("", "acquire_input_focus")
+	
 
 	---------------------------------------------------
 	self.pos_x_casillas = 400
@@ -552,7 +586,8 @@ function on_input(self, action_id, action)
 					print(datos.ultimo_nivel_desbloqueado)
 				end
 				msg.post("", "release_input_focus")
-				msg.post("loader:/loader#loader", "retroceder_escena")
+				terminar_escena_volver_atras(self)
+				
 			elseif gui.pick_node(self.sonido_nodo, action.x, action.y) then
 				datos.animar_click(self, self.sonido_nodo, 0.7, 0.6)
 				if datos.sonido == true then
