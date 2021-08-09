@@ -36,4 +36,13 @@ M.ultimo_nivel_desbloqueado = 1 -- esto tiene que ser 1
 M.ultima_escena = ""
 M.sonido = true
 
+M.animar_click = function(self, nodo)
+	gui.animate(nodo, "scale", 1.1, gui.EASING_INBACK, 0.15, 0, function() gui.set_scale(nodo, vmath.vector3(1,1,1)) end)
+end
+
+
+
+
+
+
 return M

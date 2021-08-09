@@ -147,6 +147,7 @@ function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		for k, boton in pairs(self.tabla_de_botones) do
 			if gui.pick_node(boton[hash("boton_celeste")], action.x, action.y) then	
+				datos.animar_click(self, boton[hash("boton_celeste")])
 				print("Nivel " .. k .. " habilitado: " .. tostring(niveles[k]["habilitado"]))
 				if niveles[k]["habilitado"] == true then
 					datos.jugar_nivel = k
@@ -161,6 +162,7 @@ function on_input(self, action_id, action)
 		end
 		
 		if gui.pick_node(self.boton_volver, action.x, action.y) then
+			datos.animar_click(self, self.boton_volver)
 			msg.post("", "release_input_focus")
 			gui.animate(self.cuadro_azul, "position.x", 1790, gui.EASING_INBACK, 1)
 			gui.animate(self.boton_volver, "position.y", 867, gui.EASING_INBACK, 1, 0,

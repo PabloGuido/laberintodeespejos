@@ -48,10 +48,12 @@ end
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		if gui.is_enabled(self.ui_objetos) and datos.nivel_completado == false then
-				if gui.pick_node(self.izq, action.x, action.y) then
+			if gui.pick_node(self.izq, action.x, action.y) then
+					datos.animar_click(self, self.izq)
 					msg.post("", "release_input_focus")
 					msg.post("/gui#gui", "accion_ui_obj", {accion = "izquierda"})
 				elseif gui.pick_node(self.der, action.x, action.y) then
+					datos.animar_click(self, self.der)
 					msg.post("", "release_input_focus")
 					msg.post("/gui#gui", "accion_ui_obj", {accion = "derecha"})
 
