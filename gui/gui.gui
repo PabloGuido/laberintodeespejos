@@ -971,13 +971,13 @@ nodes {
   }
   color {
     x: 1.0
-    y: 0.0
+    y: 1.0
     z: 1.0
     w: 1.0
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "seleccion_de_nivel/boton volver"
+  texture: "gui/sonido on"
   id: "sonido"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE

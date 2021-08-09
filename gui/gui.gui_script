@@ -2,6 +2,14 @@ local datos = require("main.datos")
 local niveles = require("gui.niveles")
 local dif_entre_casillas = 142
 
+local function on_off_sonido(self, sonido)
+	if datos.sound == true then
+		sound.play(sonido)
+	else
+		sound.stop(sonido)
+	end
+end
+
 local function mover_bajo_adorno(self, nodo)
 	gui.move_below(nodo, self.adorno)
 end
@@ -109,6 +117,10 @@ function init(self)
 	self.adorno = gui.get_node("adorno")
 	gui.animate(self.adorno, "rotation.z", 360, gui.EASING_LINEAR, 25, 0, nil, gui.PLAYBACK_LOOP_FORWARD)
 	gui.set_enabled(self.adorno, false)
+	self.sonido_nodo = gui.get_node("sonido")
+	if datos.sonido == false then
+		gui.play_flipbook(self.sonido_nodo, "sonido off")
+	end
 	-- tacho ----------------------------------------------
 	self.tacho = gui.get_node("tacho")
 	self.tacho_pos_inical = vmath.vector3(-600, 300, 0)
@@ -482,6 +494,14 @@ function on_input(self, action_id, action)
 				end
 				msg.post("", "release_input_focus")
 				msg.post("loader:/loader#loader", "retroceder_escena")
+			elseif gui.pick_node(self.sonido_nodo, action.x, action.y) then
+				if datos.sonido == true then
+					datos.sonido = false
+					gui.play_flipbook(self.sonido_nodo, "sonido off")
+				else
+					datos.sonido = true
+					gui.play_flipbook(self.sonido_nodo, "sonido on")
+				end
 			end	
 		elseif action.released then
 			if self.mouse_sobre_casillas == false and datos.obj_en_mouse ~= nil and self.moviendo_obj == false then
