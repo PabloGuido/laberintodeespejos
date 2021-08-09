@@ -22,6 +22,9 @@ local function inicializacion_objetos_alpha(self)
 		gui.animate(self.laser_tabla[l][hash("laser_beam")], "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
 	end
 	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
+	gui.move_below(self.sonido_nodo, self.tacho)
+	gui.move_below(self.retroceder, self.tacho)
+	gui.move_below(self.lupa, self.tacho)
 end
 
 local function on_off_sonido(self, sonido)
@@ -63,16 +66,24 @@ local function mover_relevo(self, posicion)
 	--print(posicion)
 end
 
+local function mover_abajo_botones(self, nodo)
+	gui.move_below(self.sonido_nodo, nodo)
+	gui.move_below(self.retroceder, nodo)
+	gui.move_below(self.lupa, nodo)
+end
+
 local function mover_tacho(self, posicion, nodo)
 	local pos = posicion
 	pos.y = pos.y - 115
 	gui.set_position(self.tacho, pos)
-	gui.move_above(self.tacho, nodo)
+	--gui.move_above(self.tacho, nodo)
 	if nodo ~=nil then
 
 		local rot = gui.get_rotation(nodo)
 	--	print(rot.z/90)
-		end
+	end
+
+
 
 
 end
@@ -477,6 +488,7 @@ function on_input(self, action_id, action)
 				
 				local pos_obj = gui.get_position(self.ultimo_obj_clickeado)
 				local obj = self.ultimo_obj_clickeado
+				mover_abajo_botones(self, obj)
 				--print("enviando mensaje al ui")
 				msg.post("/ui_objetos#ui_objetos", "activar_ui_objetos", {pos = pos_obj, obj = tostring(obj)})
 				self.delta_pos = pos_obj
@@ -501,14 +513,17 @@ function on_input(self, action_id, action)
 	if action_id == hash("touch") then -- crea objetos y los reja en una casilla o elimina, drag and drop.
 		
 		if action.pressed then
-			if gui.pick_node(self.espejo, action.x, action.y) then
+			if gui.pick_node(self.espejo, action.x, action.y) or gui.pick_node(self.toolbar, action.x, action.y) then
 				--crear espejo para poner
 					self.ultimo_obj_clickeado = nil
 					self.ultimo_nodo_creado = clonar_nodo(self, self.espejo, hash("espejo"), vmath.vector3(action.x, action.y, 0), self.espejos, true)
 					mover_bajo_adorno(self, self.ultimo_nodo_creado)
+					mover_abajo_botones(self, ultimo_nodo_creado)
 					self.ultimo_obj_clickeado = self.ultimo_nodo_creado
 					self.moviendo_obj = false
 					datos.animar_click(self, self.toolbar)
+					--print("test")
+					
 			elseif gui.pick_node(self.espejo_doble, action.x, action.y) then
 					self.ultimo_obj_clickeado = nil
 					self.ultimo_nodo_creado = clonar_nodo(self, self.espejo, hash("espejo"), vmath.vector3(action.x, action.y, 0), self.espejos, true)
