@@ -1,0 +1,7 @@
+function on_message(self, message_id, message, sender) -- parece funcionar
+	if message_id == hash("mover_obj_fisico_relevo") then
+		go.set_position(message.pos, "")
+		--print("pos fisico relevo:")
+		--print(go.get_position())
+	end
+end
