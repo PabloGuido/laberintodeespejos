@@ -1,6 +1,7 @@
 local datos = require("main.datos")
 
 function init(self)
+	gui.set_render_order(1)
 	-- ui objetos -------------------------------------
 	self.ui_objetos = gui.get_node("ui_objeto")
 	gui.set_enabled(self.ui_objetos, false)

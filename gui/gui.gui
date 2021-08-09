@@ -181,8 +181,8 @@ nodes {
 }
 nodes {
   position {
-    x: 108.0
-    y: 562.0
+    x: 155.0
+    y: 600.0
     z: 0.0
     w: 1.0
   }
@@ -199,20 +199,20 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
-    y: 300.0
+    x: 306.0
+    y: 187.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 0.8
-    y: 0.8
-    z: 0.8
+    x: 1.0
+    y: 1.0
+    z: 1.0
     w: 1.0
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: ""
+  texture: "gui/toolbar"
   id: "toolbar"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -231,12 +231,12 @@ nodes {
   clipping_inverted: false
   alpha: 1.0
   template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
-    x: 108.0
-    y: 638.0
+    x: 155.0
+    y: 600.0
     z: 0.0
     w: 1.0
   }

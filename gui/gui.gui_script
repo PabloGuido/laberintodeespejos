@@ -73,7 +73,7 @@ function init(self)
 	datos.primera_vez_que_abre_gameplay = false
 
 
-	
+	gui.set_render_order(2)
 	-- niveles ----------------------------------------
 	self.nivel = datos.jugar_nivel
 	self.contador_para_leer_mapa_nivel = 1
