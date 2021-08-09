@@ -121,6 +121,7 @@ function init(self)
 	if datos.sonido == false then
 		gui.play_flipbook(self.sonido_nodo, "sonido off")
 	end
+	self.lupa = gui.get_node("lupa")
 	-- tacho ----------------------------------------------
 	self.tacho = gui.get_node("tacho")
 	self.tacho_pos_inical = vmath.vector3(-600, 300, 0)
@@ -489,7 +490,7 @@ function on_input(self, action_id, action)
 					end
 				end
 			elseif gui.pick_node(self.retroceder, action.x, action.y) then
-				gui.animate(self.retroceder, "scale", 0.7, gui.EASING_INBACK, 0.15, 0, function() gui.set_scale(self.retroceder, vmath.vector3(0.6,0.6,1)) end)
+				datos.animar_click(self, self.retroceder, 0.7, 0.6)
 				if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultimo_nivel_desbloqueado < 11 then
 					datos.jugar_nivel = datos.jugar_nivel + 1
 					datos.ultimo_nivel_desbloqueado = datos.ultimo_nivel_desbloqueado + 1
@@ -498,7 +499,7 @@ function on_input(self, action_id, action)
 				msg.post("", "release_input_focus")
 				msg.post("loader:/loader#loader", "retroceder_escena")
 			elseif gui.pick_node(self.sonido_nodo, action.x, action.y) then
-				gui.animate(self.sonido_nodo, "scale", 0.7, gui.EASING_INBACK, 0.15, 0, function() gui.set_scale(self.sonido_nodo, vmath.vector3(0.6,0.6,1)) end)
+				datos.animar_click(self, self.sonido_nodo, 0.7, 0.6)
 				if datos.sonido == true then
 					datos.sonido = false
 					gui.play_flipbook(self.sonido_nodo, "sonido off")
@@ -506,6 +507,8 @@ function on_input(self, action_id, action)
 					datos.sonido = true
 					gui.play_flipbook(self.sonido_nodo, "sonido on")
 				end
+			elseif gui.pick_node(self.lupa, action.x, action.y) then
+				datos.animar_click(self, self.lupa)
 			end	
 		elseif action.released then
 			if self.mouse_sobre_casillas == false and datos.obj_en_mouse ~= nil and self.moviendo_obj == false then
