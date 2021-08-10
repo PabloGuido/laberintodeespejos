@@ -24,6 +24,7 @@ local function terminar_escena_volver_atras(self)
 	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	gui.animate(self.fondo_gris, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	gui.animate(self.cannon, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	if gui.is_enabled(self.adorno) then
 		gui.animate(self.adorno, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	end
