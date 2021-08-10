@@ -41,7 +41,7 @@ function on_message(self, message_id, message, sender)
 		msg.post("/gui#gui", "accion_ui_obj", {accion = "aceptar"})
 	elseif message_id == hash("nivel_completado") then
 		gui.set_enabled(self.ui_objetos, false)
-		msg.post("", "release_input_focus")
+		--msg.post("", "release_input_focus") -- esto dsp ver que se hace, pero no puede quedar el input claramente.
 
 	end
 end

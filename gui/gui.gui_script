@@ -26,7 +26,7 @@ local function terminar_escena_volver_atras(self)
 		gui.animate(self.espejos[e][hash("espejo")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	end
 	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
-	
+	gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	gui.animate(self.fondo_gris, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	if gui.is_enabled(self.adorno) then
 		gui.animate(self.adorno, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
@@ -62,7 +62,8 @@ local function inicializacion_objetos_alpha(self) -- Da el input focus inicial.
 		gui.animate(self.laser_tabla[l][hash("laser_beam")], "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
 	end
 	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
-	gui.animate(self.barrera, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1, 0, function() msg.post("", "acquire_input_focus") end)
+	gui.animate(self.barrera, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
+	gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1, 0, function() msg.post("", "acquire_input_focus") end)
 	gui.move_below(self.sonido_nodo, self.tacho)
 	gui.move_below(self.retroceder, self.tacho)
 	gui.move_below(self.lupa, self.tacho)
@@ -127,11 +128,19 @@ end
 
 local function desactivar_activar_barrera(self)
 	if self.cantidad_de_switches_activados == self.cantidad_de_switches_en_el_nivel then
-		gui.set_enabled(self.barrera, false)
-		--gui.set_color(self.barrera, vmath.vector4(1,1,1,0))
 		msg.post("/barrera#barrera", "desactivar_barrera")
+		if gui.is_enabled(self.barrera) then
+			local escala_barrera = gui.get_scale(self.barrera)
+			gui.animate(self.barrera, "scale", escala_barrera*1.25, gui.EASING_INBOUNCE, 0.75, 0,
+			function()
+				gui.set_scale(self.barrera, escala_barrera)
+				if self.cantidad_de_switches_activados == self.cantidad_de_switches_en_el_nivel then
+					gui.set_enabled(self.barrera, false)
+				end
+				--msg.post("/barrera#barrera", "desactivar_barrera")
+			end)
+		end
 	else
-		--gui.set_color(self.barrera, vmath.vector4(1,1,1,1))
 		gui.set_enabled(self.barrera, true)
 		msg.post("/barrera#barrera", "activar_barrera")
 	end
@@ -182,7 +191,8 @@ function init(self)
 	gui.set_enabled(self.cruz, false)
 	self.objetivo = gui.get_node("objetivo")
 	self.obstaculo = gui.get_node("obstaculo")
-	self.barrera = gui.get_node("barrera")
+	self.barrera = gui.get_node("barrera")	
+	gui.animate(self.barrera, "rotation.z", -180, gui.EASING_LINEAR, 50, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 	gui.set_color(self.barrera , vmath.vector4(1,1,1,0))
 	self.laser_en_barrera = false
 	self.switch = gui.get_node("switch")
@@ -248,6 +258,7 @@ function init(self)
 				-- Y esto debería enviar un mensaje para crear un objeto fisico del "objetivo"
 				gui.set_position(self.objetivo, self.pos)
 				gui.set_position(self.barrera, self.pos)
+				gui.set_color(self.objetivo, vmath.vector4(1,1,1,0))
 				msg.post("/objetivo", "mover_posicion", {pos = self.pos})
 				msg.post("barrera", "mover_posicion", {pos = self.pos})
 				ocupado = true
@@ -273,6 +284,7 @@ function init(self)
 			gui.set_position(clon_casilla, self.pos)
 			table.insert(self.casillas, {nueva_casilla, ocupado = ocupado})
 			mover_bajo_adorno(self, clon_casilla)
+			gui.move_above(self.barrera, clon_casilla)
 			gui.set_color(clon_casilla, vmath.vector4(1,1,1,0))
 			
 			if constatador == 3 then  -- esto es para poner el laser en los switches
