@@ -121,10 +121,12 @@ end
 
 local function desactivar_activar_barrera(self)
 	if self.cantidad_de_switches_activados == self.cantidad_de_switches_en_el_nivel then
-		gui.set_enabled(self.barrera, false)
+		--gui.set_enabled(self.barrera, false)
+		gui.set_color(self.barrera, vmath.vector4(1,1,1,0))
 		msg.post("/barrera#barrera", "desactivar_barrera")
 	else
-		gui.set_enabled(self.barrera, true)
+		gui.set_color(self.barrera, vmath.vector4(1,1,1,1))
+		--gui.set_enabled(self.barrera, true)
 		msg.post("/barrera#barrera", "activar_barrera")
 	end
 	

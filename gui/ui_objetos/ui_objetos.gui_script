@@ -40,6 +40,7 @@ function on_message(self, message_id, message, sender)
 		gui.set_enabled(self.ui_objetos, false)
 		msg.post("/gui#gui", "accion_ui_obj", {accion = "aceptar"})
 	elseif message_id == hash("nivel_completado") then
+		gui.set_enabled(self.ui_objetos, false)
 		msg.post("", "release_input_focus")
 
 	end
