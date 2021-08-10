@@ -21,15 +21,15 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("disparar_ray") then
 		self.cuenta = self.cuenta + 1
 		--if self.cuenta >= 1 and self.objetivo_encontrado == false then
-		print("cuenta :" .. self.cuenta)
+		--print("cuenta :" .. self.cuenta)
 		if self.objetivo_encontrado == false and self.cuenta > 25 then
 			msg.post("/gui#gui", "objetivo_encontrado")
 			self.objetivo_encontrado = true
 		end
 	elseif message_id == hash("desactivar_objetivo") then
-		print("objetivo desactivado")
+		print("desactivar objetivo")
 		self.cuenta = 0
-		print("cuenta :" .. self.cuenta)
+		--print("cuenta :" .. self.cuenta)
 	end
 end
 

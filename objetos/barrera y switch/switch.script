@@ -59,9 +59,7 @@ function update(self, dt)
 				msg.post("/gui#gui", "switch_desactivado", {switch = self.pos_en_tabla_casillas, nodo = self.nodo})
 				self.switch_activo = false
 			end
-			
 		end
-
 	end
 end
 

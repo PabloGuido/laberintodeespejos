@@ -5,20 +5,16 @@ local dif_entre_casillas = 142
 local function terminar_escena_volver_atras(self)
 	for c = 1, table.maxn(self.casillas) do
 		local anim_casilla = self.casillas[c][1][hash("casilla")]
-		--pprint(self.casillas[c][1][hash("casilla")])
 		gui.animate(anim_casilla, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
-		--pprint(self.obstaculos_tabla)
 	end
 	for o = 1 ,table.maxn(self.obstaculos_tabla) do
 		local anim_obs = self.obstaculos_tabla[o][hash("obstaculo")]
 		gui.animate(anim_obs, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	end
 	for s = 1 ,table.maxn(self.switches) do
-		--local anim_obs = self.obstaculos_tabla[o][hash("obstaculo")]
 		gui.animate(self.switches[s], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	end
 	for l = 1,table.maxn(self.laser_tabla) do
-		--pprint(self.laser_tabla)
 		gui.animate(self.laser_tabla[l][hash("laser_beam")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	end
 	for e = 1 ,table.maxn(self.espejos) do
@@ -128,7 +124,7 @@ local function desactivar_activar_barrera(self)
 	if self.cantidad_de_switches_activados == self.cantidad_de_switches_en_el_nivel then
 		msg.post("/barrera#barrera", "desactivar_barrera")
 		gui.set_enabled(self.barrera, false)
-		--[[
+		--[[ -- Animación que no estaría funciondo con el sistema. No creo que vaya a hacer el corte.
 		if gui.is_enabled(self.barrera) then
 			local escala_barrera = gui.get_scale(self.barrera)
 			gui.animate(self.barrera, "scale", escala_barrera*1.25, gui.EASING_INBOUNCE, 0.75, 0,
@@ -174,7 +170,7 @@ function init(self)
 	self.cantidad_de_switches_en_el_nivel = niveles[self.nivel]["switches"]
 	self.cantidad_de_switches_activados = 0
 
-	datos.nivel_completado = false -- esto no va después creo.
+	datos.nivel_completado = false -- esto no va después creo. ?
 	---------------------------------------------------
 	self.moviendo_obj = false
 	self.ultima_pos = vmath.vector3()
@@ -211,7 +207,6 @@ function init(self)
 	self.tacho_pos_inical = vmath.vector3(-600, 300, 0)
 	gui.animate(self.tacho, "rotation.z", -5, go.EASING_LINEAR, 1, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 
-	--gui.ani
 	-- laser beam -----------------------------------------
 	self.laser_beam = gui.get_node("laser_beam")
 	gui.set_color(self.laser_beam , vmath.vector4(1,1,1,0))
@@ -269,17 +264,14 @@ function init(self)
 				local nuevo_obs = clonar_nodo(self, self.obstaculo, hash("obstaculo"), self.pos, self.obstaculos_tabla, false)
 				gui.set_color(nuevo_obs, vmath.vector4(1,1,1,0))
 			elseif constatador == 3 then -- Coloca switches
-				
 				ocupado = true
 				nuevo_switch = clonar_nodo(self, self.switch, hash("switch"), self.pos, {}, false)
 				table.insert(self.switches, nuevo_switch)
 				gui.set_color(nuevo_switch, vmath.vector4(1,1,1,0))
 				--pprint(datos.switches)
 				msg.post("/switches#switchfactory", "crear_switch", {pos = self.pos, nodo = tostring(nuevo_switch), pos_en_tabla = self.contador_para_leer_mapa_nivel})
-
-
-				
 			end
+			
 			local nueva_casilla = gui.clone_tree(self.casilla)
 			local clon_casilla = nueva_casilla[hash("casilla")]
 			gui.set_position(clon_casilla, self.pos)
@@ -297,8 +289,8 @@ function init(self)
 				gui.move_below(nuevo_laser_beam, nuevo_switch)
 				gui.move_above(nuevo_laser_beam, self.fondo_gris)
 				--print("cuantos laser en switches")
-
 			end
+			
 			self.pos.x = self.pos.x + dif_entre_casillas
 			self.contador_para_leer_mapa_nivel = self.contador_para_leer_mapa_nivel + 1
 
@@ -336,10 +328,7 @@ function on_message(self, message_id, message, sender)
 		gui.set_position(self.laser_beam, message.pos_inicial_laser)
 		local distance = dist2d(message.pos_inicial_laser.x, message.pos_inicial_laser.y, message.datos.position.x, message.datos.position.y)
 		self.scale.x = distance
-
 		gui.set_scale(self.laser_beam, self.scale)
-
-
 		local direction = angle_of_vector_between_two_points(message.pos_inicial_laser.x, message.pos_inicial_laser.y, message.datos.position.x, message.datos.position.y)
 		local rotation = vmath.quat_rotation_z(direction)
 		gui.set_rotation(self.laser_beam, rotation)
@@ -350,12 +339,9 @@ function on_message(self, message_id, message, sender)
 			local distance = dist2d(message.pos_inicial_laser.x, message.pos_inicial_laser.y, message.datos.position.x, message.datos.position.y)
 			self.scale.x = distance
 			gui.set_scale(self.laser_relevo, self.scale)
-
-
 			local direction = angle_of_vector_between_two_points(message.pos_inicial_laser.x, message.pos_inicial_laser.y, message.datos.position.x, message.datos.position.y)
 			local rotation = vmath.quat_rotation_z(direction)
 			gui.set_rotation(self.laser_relevo, rotation)
-
 		end
 	elseif message_id == hash("desactivar_laser_relevo") then
 		gui.set_scale(self.laser_relevo, vmath.vector3(1,1,0))
@@ -367,10 +353,9 @@ function on_message(self, message_id, message, sender)
 				--print(message.instancia)
 				if self.casillas[i]["instancia"] == message.instancia then
 					--print("misma instancia " ..  message.instancia)
-					
 					local distance = dist2d(message.pos_inicial_laser.x, message.pos_inicial_laser.y, message.datos.position.x, message.datos.position.y)
 					self.scale.x = distance
-
+					
 					gui.animate(self.casillas[i]["laser"], "scale.x", self.scale, gui.EASING_LINEAR, 0, 0,
 					function()
 						--msg.post("", "acquire_input_focus")
@@ -381,25 +366,18 @@ function on_message(self, message_id, message, sender)
 					local rotation = vmath.quat_rotation_z(direction)
 					gui.set_rotation(self.casillas[i]["laser"], rotation)
 					gui.move_below(self.laser_beam, self.espejo)
-					
 				end
-
 			end
-
 		end
 
 	elseif message_id == hash("borrar_laser") then
 		--pprint(message)
 		for i = 1, table.maxn(self.casillas) do
 			if self.casillas[i]["instancia"] == message.instancia then
-				
-				if self.casillas[i]["laser"] ~= nil then 
-				gui.set_scale(self.casillas[i]["laser"], vmath.vector3(1,1,0))
-
-
+				if self.casillas[i]["laser"] ~= nil then
+					gui.set_scale(self.casillas[i]["laser"], vmath.vector3(1,1,0))
 				end
 			end
-			
 		end
 
 	elseif message_id == hash("accion_ui_obj") then
@@ -410,17 +388,14 @@ function on_message(self, message_id, message, sender)
 			local rot = gui.get_rotation(self.ultimo_obj_clickeado)
 			gui.animate(self.ultimo_obj_clickeado, "rotation.z", rot.z - 90, gui.EASING_INBACK, 0.65, 0,
 			function()
-
 				msg.post(self.casillas[self.ultima_casilla]["instancia"], "accion_gui", {accion= "rot_der", valor = -1})
 				msg.post("/ui_objetos#ui_objetos", "restablecer_input")
 				msg.post("", "acquire_input_focus")
-	
 			end	)
 		elseif message.accion == "izquierda" then
 			local rot = gui.get_rotation(self.ultimo_obj_clickeado)
 			gui.animate(self.ultimo_obj_clickeado, "rotation.z", rot.z + 90, gui.EASING_INBACK, 0.65, 0,
 			function()
-
 				msg.post(self.casillas[self.ultima_casilla]["instancia"], "accion_gui", {accion= "rot_izq", valor = 1})
 				msg.post("/ui_objetos#ui_objetos", "restablecer_input")
 				msg.post("", "acquire_input_focus")
@@ -432,36 +407,36 @@ function on_message(self, message_id, message, sender)
 		elseif message.accion == "borrar_objeto" then
 			for i = table.maxn(self.espejos), 1, -1 do
 				if self.ultimo_obj_clickeado == self.espejos[i][hash("espejo")] then
-					-- borra nodo espejo
+					-- borra nodo espejo y laser
 					gui.delete_node(self.espejos[i][hash("espejo")])
 					gui.delete_node(self.espejos[i]["laser"])
 					table.remove(self.espejos, i)
-					--pprint(self.espejos)
 					
+					--pprint(self.espejos)
 					--print(self.ultimo_obj_clickeado)
-					for k, v in pairs(self.casillas) do -- No se que onda esto, si no hace error no lo toco mas
+					for k, v in pairs(self.casillas) do -- No se que onda esto, si no hace error no lo toco mas.
+						-- Este pedazo de código es medio curioso pero parece funcionar por el momento, o al menos mejor que antes.
 						-- desocupa la casilla y borra obj físico
 						if tostring(self.casillas[k][1][hash("casilla")]) == tostring(self.ultimo_obj_clickeado) then
 							self.casillas[k]["ocupado"] = false
 							if self.casillas[self.ultima_casilla]["instancia"] == nil then
 								msg.post(self.casillas[self.casilla_delta]["instancia"], "borrar_obj")
-								
+								----------
 								--print(self.casillas[self.casilla_delta]["laser"])
 								--pprint(self.laser_tabla)
 								--gui.delete_node(self.casillas[self.casilla_delta]["laser"])
-								
+								----------
 								self.casillas[self.casilla_delta]["laser"] = nil
 							else
 								msg.post(self.casillas[self.ultima_casilla]["instancia"], "borrar_obj")
+								----------
 								--pprint(self.casillas[self.ultima_casilla])
-								
 								--self.casillas[self.casilla_delta]["laser"] = nil
 								--print(self.casillas[self.casilla_delta]["laser"])
 								--pprint(self.laser_tabla)
 								--gui.delete_node(self.casillas[self.ultima_casilla]["laser"])
-								self.casillas[self.ultima_casilla]["laser"] = nil --- ???
-								
-								
+								----------
+								self.casillas[self.ultima_casilla]["laser"] = nil
 							end
 							
 							self.casillas[self.ultima_casilla]["instancia"] = nil -- esta pos de table es la instancia del objeto físico.
@@ -490,8 +465,8 @@ function on_message(self, message_id, message, sender)
 		pos.x = pos.x +10
 		gui.animate(self.objetivo, "scale",1.1, gui.EASING_INCIRC, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 		print("Objetivo encontrado - nivel superado")
+		
 	elseif message_id == hash("switch_activado") then
-
 		self.cantidad_de_switches_activados = self.cantidad_de_switches_activados + 1
 		--print("activando " .. self.cantidad_de_switches_activados)
 		--pprint(message)
@@ -506,7 +481,7 @@ function on_message(self, message_id, message, sender)
 			print("cantidad de switches necesaria activada")
 			desactivar_activar_barrera(self)
 		end
-
+		
 	elseif message_id == hash("switch_desactivado") then
 		for i = 1, table.maxn(self.switches) do
 			if message.nodo == tostring(self.switches[i]) then
@@ -518,6 +493,7 @@ function on_message(self, message_id, message, sender)
 		desactivar_activar_barrera(self)
 		msg.post("/objetivo#objetivo", "desactivar_objetivo")
 		--print("desactivando " .. self.cantidad_de_switches_activados)
+		
 	elseif message_id == hash("laser_en_barrera") then
 		self.laser_en_barrera = true -- chquea si llego el laser a la barrera antes de activar todos los switches
 	elseif message_id == hash("mover_adorno") then
@@ -526,14 +502,11 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("sacar_adorno") then
 		gui.set_enabled(self.adorno, false)
 	end
-
 end
 
 
-
-
 function on_input(self, action_id, action)
-	 --esto hay que cambuiar dsp a rotar objs
+
 	if action_id == hash("touch") and action.pressed then
 		for _,casillero in pairs(self.espejos) do -- Repasa la tabla de self.espejos
 			if gui.pick_node(casillero[("espejo")], action.x, action.y) then
@@ -563,13 +536,11 @@ function on_input(self, action_id, action)
 						self.casillas[k]["ocupado"] = false
 						--print("guardando casilla delta")
 						self.casilla_delta = k
-
-
 					end
 				end
 			end
 		end
-	end	
+	end
 
 	
 	if action_id == hash("touch") then -- crea objetos y los reja en una casilla o elimina, drag and drop.
@@ -625,12 +596,11 @@ function on_input(self, action_id, action)
 				end
 			elseif gui.pick_node(self.lupa, action.x, action.y) then
 				datos.animar_click(self, self.lupa)
-			end	
+			end
 		elseif action.released then
 			if self.mouse_sobre_casillas == false and datos.obj_en_mouse ~= nil and self.moviendo_obj == false then
 				-- Suelta y elimina el objeto si se soltó por fuera de una casilla y libera "obj_en_mouse".
 				-- Acá se puede chequear si que pasa si se suelta sobre otro nodo o casilla ya ocupada.
-				
 					for i = table.maxn(self.espejos), 1, -1 do
 						if datos.obj_en_mouse == self.espejos[i][hash("espejo")] then
 							gui.delete_node(self.espejos[i][hash("espejo")])
@@ -640,7 +610,6 @@ function on_input(self, action_id, action)
 							if self.moviendo_obj == true then
 								msg.post(self.casillas[self.casilla_delta]["instancia"], "borrar_obj")
 								self.casillas[self.casilla_delta]["instancia"] = nil -- esta pos de table es la instancia del objeto físico.
-								
 							end
 						end
 					end
@@ -672,10 +641,8 @@ function on_input(self, action_id, action)
 									self.ultima_casilla = k
 									--pprint(v)
 								end
-
 							end
 							if self.mouse_sobre_casillas == false then
-								
 								msg.post("/gui#gui", "accion_ui_obj", {accion = "borrar_objeto"})
 								msg.post("/ui_objetos#ui_objetos", "desactivar_ui_objetos")
 								mover_tacho(self, self.tacho_pos_inical, nil)
@@ -697,26 +664,25 @@ function on_input(self, action_id, action)
 				elseif self.casillas[self.ultima_casilla]["ocupado"] == false and datos.obj_en_mouse ~= nil then
 					datos.obj_en_mouse = nil
 					self.casillas[self.ultima_casilla]["ocupado"] = true
-
 					--self.ultimo_obj_clickeado = self.ultimo_nodo_creado -- esto?
 					-- crear physics obj
 					if self.moviendo_obj == true then
 					--print(self.ultima_casilla)
-
 						if self.casilla_delta ~= self.ultima_casilla and self.mouse_sobre_casillas == true then
+						
 							--print(self.casillas[self.casilla_delta]["instancia"])
 							
 							self.casillas[self.ultima_casilla]["instancia"] = self.casillas[self.casilla_delta]["instancia"]
 							msg.post(self.casillas[self.ultima_casilla]["instancia"], "mover_obj", {pos = self.pos_casilla})
 							self.casillas[self.ultima_casilla]["laser"] = self.casillas[self.casilla_delta]["laser"]
+							
 							--print(self.casillas[self.ultima_casilla]["laser"])
 							gui.set_position(self.casillas[self.ultima_casilla]["laser"], self.pos_casilla)
-							
 							self.casillas[self.casilla_delta]["instancia"] = nil 
 							
 							--print("mover obj fisico // gui")
 						elseif self.mouse_sobre_casillas == false then
-							
+							-- Esto está así porque antes los objetos no se borraban desde afuera. Esperemos que funcione. Si hay tiempo ver de escribirlo de una forma mas robusta.
 							print("Restableciendo obj desde afuera y borrando.") -- Restablece la pos del objeto físico si está fuera de las casillas y luego los borra
 							local pos_de_restablecimiento = gui.get_position(self.casillas[self.casilla_delta][1][hash("casilla")])
 							msg.post(self.casillas[self.casilla_delta]["instancia"], "mover_obj", {pos = pos_de_restablecimiento})
@@ -740,24 +706,21 @@ function on_input(self, action_id, action)
 						gui.set_scale(nuevo_laser_beam, vmath.vector3(1,1,0))
 						gui.move_below(nuevo_laser_beam, self.ultimo_nodo_creado)
 						--print(self.ultimo_nodo_creado)
-						for i = 1, table.maxn(self.espejos) do
+						for i = 1, table.maxn(self.espejos) do -- Pone los laser en la tabla de espejos para mejor control.
 							if self.ultimo_nodo_creado == self.espejos[i][hash("espejo")] then
 								self.espejos[i]["laser"] = nuevo_laser_beam
 							--	pprint(self.espejos)
 							--	print("MISMO NODO")
 							end
 						end
-						--pprint(self.casillas[self.ultima_casilla])
-						print("creando laser beam")
+						--print("creando laser beam")
 					elseif gui.get_flipbook(self.ultimo_nodo_creado) == hash("espejo_doble") and self.moviendo_obj == false then
 						msg.post("/espejos_dobles#espejosdoblesfactory", "crear_physics_obj",{x = self.pos_casilla.x , y = self.pos_casilla.y})
-						
 					end
 					self.moviendo_obj = false
 					mover_relevo(self, vmath.vector3())
 					mensaje_para_ui (self)
 					--print("Colocando obj en casillero número (" .. self.ultima_casilla .. ") " .. tostring(self.casillas[self.ultima_casilla ]["ocupado"]))
-
 				end
 				gui.set_enabled(self.cruz, false)
 				msg.post("/obj_fisico_relevo", "mover_obj_fisico_relevo", {pos = vmath.vector3(0, -500, 0)})
