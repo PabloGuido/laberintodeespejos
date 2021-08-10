@@ -3,6 +3,7 @@ local M = {}
 1) Obstáculos
 2) Objetivo (+barrera)
 3) Switches
+4) Cannon
 ]]
 
 
@@ -13,7 +14,7 @@ M["1"] = {
 0,0,0,3,0,
 0,3,0,0,0,
 0,0,1,0,0,
-0,0,0,0,0,
+4,0,0,0,0,
 }
 M[1] = {}
 M[1]["cuanto_por_cuanto"] = 5

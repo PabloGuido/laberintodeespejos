@@ -3,7 +3,7 @@ local distancia_rayo = 1200
 function init(self)
 	self.to = go.get_position()
 	self.to.x = distancia_rayo
-	self.disparar = true
+	self.disparar = false
 	--msg.post("", "acquire_input_focus")
 	self.datos_del_laser = {}
 end
@@ -23,6 +23,13 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+	if message_id == hash("posicion_inicial") then
+	--	message.pos.x = message.pos.x  + 58
+		go.set_position(message.pos)
+		self.to = go.get_position()
+		self.to.x = distancia_rayo
+		self.disparar = true
+	end
 	--[[
 	if message_id == hash("disparar_ray_cast") then
 		if self.disparar == true then

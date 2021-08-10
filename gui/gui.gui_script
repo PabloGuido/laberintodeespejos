@@ -57,6 +57,7 @@ local function inicializacion_objetos_alpha(self) -- Da el input focus inicial.
 	end
 	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
 	gui.animate(self.barrera, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
+	gui.animate(self.cannon, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
 	gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1, 0, function() msg.post("", "acquire_input_focus") end)
 	gui.move_below(self.sonido_nodo, self.tacho)
 	gui.move_below(self.retroceder, self.tacho)
@@ -217,6 +218,10 @@ function init(self)
 	self.scale = gui.get_scale(self.laser_beam )
 	self.play_stop = gui.get_node("play_stop")
 	self.laser_prendido = false
+	self.cannon = gui.get_node("cannon")
+	gui.set_color(self.cannon , vmath.vector4(1,1,1,0))
+	self.cannon_adorno = gui.get_node("cannon_adorno")
+	--gui.animate(self.cannon_adorno, "rotation.z", 360, gui.EASING_LINEAR, 50, 0, nil, gui.PLAYBACK_LOOP_FORWARD)
 	-- clonacion de beams
 	self.laser_tabla = {}
 	
@@ -270,6 +275,10 @@ function init(self)
 				gui.set_color(nuevo_switch, vmath.vector4(1,1,1,0))
 				--pprint(datos.switches)
 				msg.post("/switches#switchfactory", "crear_switch", {pos = self.pos, nodo = tostring(nuevo_switch), pos_en_tabla = self.contador_para_leer_mapa_nivel})
+			elseif constatador == 4 then -- Coloca el cannon
+				ocupado = true
+				gui.set_position(self.cannon, self.pos)
+				msg.post("laser#laser", "posicion_inicial", {pos = self.pos})
 			end
 			
 			local nueva_casilla = gui.clone_tree(self.casilla)

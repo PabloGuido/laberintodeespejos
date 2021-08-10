@@ -78,6 +78,14 @@ images {
   image: "/gui/gui_img/barrera.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
+images {
+  image: "/objetos/cannon/cannon_adorno.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/objetos/cannon/cannon.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 margin: 0
 extrude_borders: 2
 inner_padding: 0
