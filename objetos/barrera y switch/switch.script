@@ -52,7 +52,7 @@ end
 function update(self, dt)
 	if self.disparar_rayo == false then
 		self.cuenta = self.cuenta + 1
-		if self.cuenta >= 8 then
+		if self.cuenta >= 2 then
 			--print("desactivar")
 			msg.post("/gui#gui", "borrar_laser", {instancia = go.get_id()})
 			if self.switch_activo == true then
