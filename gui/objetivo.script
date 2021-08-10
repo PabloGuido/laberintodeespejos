@@ -22,7 +22,7 @@ function on_message(self, message_id, message, sender)
 		self.cuenta = self.cuenta + 1
 		--if self.cuenta >= 1 and self.objetivo_encontrado == false then
 		print("cuenta :" .. self.cuenta)
-		if self.objetivo_encontrado == false and self.cuenta > 50 then
+		if self.objetivo_encontrado == false and self.cuenta > 25 then
 			msg.post("/gui#gui", "objetivo_encontrado")
 			self.objetivo_encontrado = true
 		end
