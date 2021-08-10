@@ -10,14 +10,14 @@ local M = {}
 --1 Ta bueno este
 M["1"] = {
 1,2,0,0,0,
-0,1,1,3,0,
+0,0,0,3,0,
 0,3,0,0,0,
-0,0,1,3,0,
+0,0,1,0,0,
 0,0,0,0,0,
 }
 M[1] = {}
 M[1]["cuanto_por_cuanto"] = 5
-M[1]["switches"] = 3
+M[1]["switches"] = 2
 M[1]["habilitado"] = true
 
 --2
