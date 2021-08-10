@@ -34,12 +34,14 @@ end
 function init(self)
 	self.nodo = ""
 	self.disparar_rayo = false
+	self.disparar_rayo2 = false
 	self.borrando = false
 	self.normal = 0
 	self.to = vmath.vector3()
 	self.switch_activo = false
 
 	self.cuenta = 0
+	self.cuenta2 = 0
 	--msg.post("/gui#gui", "guardar_obj_fisico_nodo", {obj = go.get_id()}) -- esto lo está resolviendo el swtich factory
 end
 
@@ -55,12 +57,32 @@ function update(self, dt)
 		if self.cuenta >= 2 then
 			--print("desactivar")
 			msg.post("/gui#gui", "borrar_laser", {instancia = go.get_id()})
-			if self.switch_activo == true then
-				msg.post("/gui#gui", "switch_desactivado", {switch = self.pos_en_tabla_casillas, nodo = self.nodo})
-				self.switch_activo = false
-			end
+		--	if self.switch_activo == true then
+		--		msg.post("/gui#gui", "switch_desactivado", {switch = self.pos_en_tabla_casillas, nodo = self.nodo})
+		--		self.switch_activo = false
+		--	end
 		end
 	end
+	if self.disparar_rayo2 == false then
+		self.cuenta2 = self.cuenta2 + 1
+		if self.cuenta2 >= 2 then
+			--print("desactivar")
+			msg.post("/gui#gui", "borrar_laser2", {instancia = go.get_id()})
+
+		end
+	end
+	if self.cuenta >= 2 and self.cuenta2 >= 2 then
+		if self.switch_activo == true then
+			msg.post("/gui#gui", "switch_desactivado", {switch = self.pos_en_tabla_casillas, nodo = self.nodo})
+			self.switch_activo = false
+		end
+	end
+	--[[
+	if self.switch_activo == true then
+		msg.post("/gui#gui", "switch_desactivado", {switch = self.pos_en_tabla_casillas, nodo = self.nodo})
+		self.switch_activo = false
+	end
+	]]
 end
 
 function on_message(self, message_id, message, sender)
@@ -73,11 +95,17 @@ function on_message(self, message_id, message, sender)
 
 		self.normal = message.normal
 		self.grupo_donde_llego_raycast = message.grupo
-		self.disparar_rayo = true
+		--self.disparar_rayo = true
 		local datos_laser = disparar_raycast(self)
 		-- Acá hay que mandar el mensaje de dibujar el laser
-		msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position(), instancia = go.get_id()})
-		
+		if self.normal.y == 1 or self.normal.y == -1 then
+			self.disparar_rayo = true
+			msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position(), instancia = go.get_id()})
+		end
+		if self.normal.x == 1 or self.normal.x == -1 then
+			self.disparar_rayo2 = true
+			msg.post("/gui#gui", "dibujar_laser2", {datos = datos_laser, pos_inicial_laser = go.get_position(), instancia = go.get_id()})
+		end
 		if self.switch_activo == false then
 			msg.post("/gui#gui", "switch_activado", {switch = self.pos_en_tabla_casillas, nodo = self.nodo})
 			self.switch_activo = true
@@ -86,4 +114,5 @@ function on_message(self, message_id, message, sender)
 	end
 	
 	self.disparar_rayo = false
+	self.disparar_rayo2 = false
 end

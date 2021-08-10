@@ -289,6 +289,16 @@ function init(self)
 			mover_bajo_adorno(self, clon_casilla)
 			gui.move_above(self.barrera, clon_casilla)
 			gui.set_color(clon_casilla, vmath.vector4(1,1,1,0))
+
+			local function segundo_laser_switch(self)
+				self.ultima_casilla = self.contador_para_leer_mapa_nivel
+				local nuevo_laser_beam = clonar_nodo(self, self.laser_beam, hash("laser_beam"), self.pos, self.laser_tabla, false)
+				gui.set_color(nuevo_laser_beam, vmath.vector4(1,1,1,0))
+				self.casillas[self.ultima_casilla]["laser2"] = nuevo_laser_beam
+				gui.set_scale(nuevo_laser_beam, vmath.vector3(1,1,0))
+				gui.move_below(nuevo_laser_beam, nuevo_switch)
+				gui.move_above(nuevo_laser_beam, self.fondo_gris)
+			end
 			
 			if constatador == 3 then  -- esto es para poner el laser en los switches
 				self.ultima_casilla = self.contador_para_leer_mapa_nivel
@@ -299,6 +309,7 @@ function init(self)
 				gui.move_below(nuevo_laser_beam, nuevo_switch)
 				gui.move_above(nuevo_laser_beam, self.fondo_gris)
 				--print("cuantos laser en switches")
+				segundo_laser_switch(self)
 			end
 			
 			self.pos.x = self.pos.x + dif_entre_casillas
@@ -380,7 +391,33 @@ function on_message(self, message_id, message, sender)
 				end
 			end
 		end
+		-------------------------
+	elseif message_id == hash("dibujar_laser2") then
+		if message.datos then
+			--pprint(message)
+			--print(message.instancia)
+			for i = 1, table.maxn(self.casillas) do
+				--print(message.instancia)
+				if self.casillas[i]["instancia"] == message.instancia then
+					--print("misma instancia " ..  message.instancia)
+					local distance = dist2d(message.pos_inicial_laser.x, message.pos_inicial_laser.y, message.datos.position.x, message.datos.position.y)
+					self.scale.x = distance
 
+					gui.animate(self.casillas[i]["laser2"], "scale.x", self.scale, gui.EASING_LINEAR, 0, 0,
+					function()
+						--msg.post("", "acquire_input_focus")
+						msg.post(message.datos.id, "disparar_ray")
+					end)
+
+					local direction = angle_of_vector_between_two_points(message.pos_inicial_laser.x, message.pos_inicial_laser.y, message.datos.position.x, message.datos.position.y)
+					local rotation = vmath.quat_rotation_z(direction)
+					gui.set_rotation(self.casillas[i]["laser2"], rotation)
+					gui.move_below(self.laser_beam, self.espejo)
+				end
+			end
+		end
+
+		-------------------------------
 	elseif message_id == hash("borrar_laser") then
 		--pprint(message)
 		for i = 1, table.maxn(self.casillas) do
@@ -390,7 +427,16 @@ function on_message(self, message_id, message, sender)
 				end
 			end
 		end
-
+		-------------------------------
+	elseif message_id == hash("borrar_laser2") then
+		for i = 1, table.maxn(self.casillas) do
+			if self.casillas[i]["instancia"] == message.instancia then
+				if self.casillas[i]["laser2"] ~= nil then
+					gui.set_scale(self.casillas[i]["laser2"], vmath.vector3(1,1,0))
+				end
+			end
+		end
+		-------------------------------
 	elseif message_id == hash("accion_ui_obj") then
 
 		msg.post("", "release_input_focus")
