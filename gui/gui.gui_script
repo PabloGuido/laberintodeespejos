@@ -438,7 +438,9 @@ function on_message(self, message_id, message, sender)
 		end
 		-------------------------------
 	elseif message_id == hash("accion_ui_obj") then
-
+		local function test()
+			msg.post("/ui_objetos#ui_objetos", "restablecer_input")
+		end
 		msg.post("", "release_input_focus")
 		self.mouse_sobre_casillas = true
 		if message.accion == "derecha" then
@@ -446,7 +448,8 @@ function on_message(self, message_id, message, sender)
 			gui.animate(self.ultimo_obj_clickeado, "rotation.z", rot.z - 90, gui.EASING_INBACK, 0.65, 0,
 			function()
 				msg.post(self.casillas[self.ultima_casilla]["instancia"], "accion_gui", {accion= "rot_der", valor = -1})
-				msg.post("/ui_objetos#ui_objetos", "restablecer_input")
+				--msg.post("/ui_objetos#ui_objetos", "restablecer_input")
+				timer.delay(0.1, false, test)
 				msg.post("", "acquire_input_focus")
 			end	)
 		elseif message.accion == "izquierda" then
@@ -454,7 +457,8 @@ function on_message(self, message_id, message, sender)
 			gui.animate(self.ultimo_obj_clickeado, "rotation.z", rot.z + 90, gui.EASING_INBACK, 0.65, 0,
 			function()
 				msg.post(self.casillas[self.ultima_casilla]["instancia"], "accion_gui", {accion= "rot_izq", valor = 1})
-				msg.post("/ui_objetos#ui_objetos", "restablecer_input")
+				--msg.post("/ui_objetos#ui_objetos", "restablecer_input")
+				timer.delay(0.1, false, test)
 				msg.post("", "acquire_input_focus")
 			end	)
 		elseif message.accion == "aceptar" and datos.nivel_completado == false then
@@ -513,9 +517,10 @@ function on_message(self, message_id, message, sender)
 		--pprint(message)
 		self.casillas[message.pos_en_tabla]["instancia"] =  message.obj
 	elseif message_id == hash("objetivo_encontrado") then
+		datos.nivel_completado = true
 		msg.post("/ui_objetos#ui_objetos", "nivel_completado")
 		--msg.post("", "release_input_focus")
-		datos.nivel_completado = true
+		
 		gui.move_above(self.objetivo, self.laser)
 		gui.play_flipbook(self.objetivo, "objetivo_on")
 		local pos = gui.get_position(self.objetivo)
