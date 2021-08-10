@@ -322,6 +322,7 @@ function init(self)
 	gui.animate(self.lupa, "position.x", 1173, gui.EASING_OUTCUBIC, 1)
 	gui.animate(self.espejo, "position.x", 155, gui.EASING_OUTCUBIC, 1)
 	gui.animate(self.toolbar, "position.x", 155, gui.EASING_OUTCUBIC, 1)
+	desactivar_activar_barrera(self)
 end
 
 --function update(self, dt)

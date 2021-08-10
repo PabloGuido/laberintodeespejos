@@ -24,27 +24,27 @@ M[1]["habilitado"] = true
 --2
 M["2"] = {
 2,0,0,0,0,
-1,0,1,0,1,
+0,3,1,0,1,
 0,0,4,0,0,
 0,1,0,1,1,
 0,0,0,0,0
 }
 M[2] = {}
 M[2]["cuanto_por_cuanto"] = 5
-M[2]["switches"] = 0
+M[2]["switches"] = 1
 M[2]["habilitado"] = false
 
 --3
 M["3"] = {
 	4,0,0,0,0,
-	0,0,0,0,0,
+	0,3,0,3,0,
 	0,0,2,0,0,
-	0,0,0,0,0,
+	0,3,0,3,0,
 	0,0,0,0,0
 }
 M[3] = {}
 M[3]["cuanto_por_cuanto"] = 5
-M[3]["switches"] = 0
+M[3]["switches"] = 4
 M[3]["habilitado"] = false
 
 --4
