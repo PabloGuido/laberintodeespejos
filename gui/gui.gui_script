@@ -203,6 +203,7 @@ function init(self)
 		gui.play_flipbook(self.sonido_nodo, "sonido off")
 	end
 	self.lupa = gui.get_node("lupa")
+	self.pista = gui.get_node("pista")
 	self.fondo_gris = gui.get_node("fondo_gris")
 	-- tacho ----------------------------------------------
 	self.tacho = gui.get_node("tacho")
@@ -240,6 +241,7 @@ function init(self)
 	self.switches = {}
 	self.switches_activados = {}
 	self.obstaculos_tabla = {}
+	self.pistas = {}
 	---------------------------------------------------
 	
 	self.obj_seleccionado = ""
@@ -280,6 +282,10 @@ function init(self)
 				ocupado = true
 				gui.set_position(self.cannon, self.pos)
 				msg.post("laser#laser", "posicion_inicial", {pos = self.pos})
+			elseif constatador == 5 then
+				local nueva_pista = clonar_nodo(self, self.pista, hash("pista"), self.pos, self.pistas, false)
+				gui.move_above(nueva_pista, self.fondo_gris)
+				--gui.set_color(nueva_pista, vmath.vector4(1,1,1,0))
 			end
 			
 			local nueva_casilla = gui.clone_tree(self.casilla)
@@ -321,7 +327,9 @@ function init(self)
 	end
 	
 	self.contador_para_leer_mapa_nivel = 1
+	-- Esto estaría deshabilitando sin problemas aparentes los nodos que fueron orignalmente clonados y no son necesarios.
 	gui.set_enabled(self.casilla, false) -- ver que esto no haga bardo dsp
+	gui.set_enabled(self.pista, false)
 	---------------------------------------------------
 	-- Inicialización --
 	gui.animate(self.fondo_gris, "position.y", 376, gui.EASING_OUTCUBIC, 1, 0,
@@ -612,12 +620,16 @@ function on_input(self, action_id, action)
 				--crear espejo para poner
 					self.ultimo_obj_clickeado = nil
 					self.ultimo_nodo_creado = clonar_nodo(self, self.espejo, hash("espejo"), vmath.vector3(action.x, action.y, 0), self.espejos, true)
+
+
 					mover_bajo_adorno(self, self.ultimo_nodo_creado)
-					mover_abajo_botones(self, ultimo_nodo_creado)
+					mover_abajo_botones(self, ultimo_nodo_creado) -- ?
+
 					self.ultimo_obj_clickeado = self.ultimo_nodo_creado
 					self.moviendo_obj = false
 					datos.animar_click(self, self.toolbar)
 					--print("test")
+
 					
 			elseif gui.pick_node(self.espejo_doble, action.x, action.y) then
 					self.ultimo_obj_clickeado = nil

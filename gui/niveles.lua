@@ -4,17 +4,18 @@ local M = {}
 2) Objetivo (+barrera)
 3) Switches
 4) Cannon
+5) Pista
 ]]
 
 
 -- El número del plano del nivel se lee en string.
 --1 Ta bueno este
 M["1"] = {
-1,2,0,0,0,
-0,0,0,3,0,
+1,2,0,0,5,
+0,5,0,3,5,
 0,3,0,0,0,
 0,0,1,0,0,
-4,0,0,0,0,
+4,5,0,0,0,
 }
 M[1] = {}
 M[1]["cuanto_por_cuanto"] = 5
