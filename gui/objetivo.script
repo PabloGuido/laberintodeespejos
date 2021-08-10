@@ -22,7 +22,7 @@ function on_message(self, message_id, message, sender)
 		self.cuenta = self.cuenta + 1
 		--if self.cuenta >= 1 and self.objetivo_encontrado == false then
 		--print("cuenta :" .. self.cuenta)
-		if self.objetivo_encontrado == false and self.cuenta > 5 then
+		if self.objetivo_encontrado == false and self.cuenta > 5 then -- por ahora 5 está bien, si hay problemas con el spamming subir el número
 			msg.post("/gui#gui", "objetivo_encontrado")
 			self.objetivo_encontrado = true
 		end
