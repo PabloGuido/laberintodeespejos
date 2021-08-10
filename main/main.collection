@@ -339,8 +339,8 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: 711.0
-    y: 717.0
+    x: 688.0
+    y: 733.0
     z: 0.0
   }
   rotation {
@@ -406,8 +406,8 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: 726.0
-    y: 12.0
+    x: 681.0
+    y: 25.0
     z: 0.0
   }
   rotation {
@@ -417,8 +417,8 @@ embedded_instances {
     w: 1.0
   }
   scale3 {
-    x: 1.246
-    y: 0.841
+    x: 1.0
+    y: 1.8
     z: 0.94
   }
 }
@@ -473,8 +473,8 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: 1097.0
-    y: 355.0
+    x: 1036.0
+    y: 381.0
     z: 0.0
   }
   rotation {
@@ -505,7 +505,7 @@ embedded_instances {
   "  shapes {\\n"
   "    shape_type: TYPE_BOX\\n"
   "    position {\\n"
-  "      x: 0.0\\n"
+  "      x: -12.0\\n"
   "      y: 0.0\\n"
   "      z: 0.0\\n"
   "    }\\n"
@@ -518,9 +518,9 @@ embedded_instances {
   "    index: 0\\n"
   "    count: 3\\n"
   "  }\\n"
-  "  data: 377.541\\n"
-  "  data: 6.8465\\n"
-  "  data: 11.4\\n"
+  "  data: 500.0\\n"
+  "  data: 10.0\\n"
+  "  data: 0.5\\n"
   "}\\n"
   "linear_damping: 0.0\\n"
   "angular_damping: 0.0\\n"
@@ -540,8 +540,8 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: 385.0
-    y: 450.0
+    x: 327.0
+    y: 394.0
     z: 0.0
   }
   rotation {
@@ -551,7 +551,7 @@ embedded_instances {
     w: 0.70710677
   }
   scale3 {
-    x: 0.491
+    x: 2.0
     y: 0.733
     z: 0.733
   }
