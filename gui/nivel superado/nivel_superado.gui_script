@@ -1,9 +1,16 @@
-local function finalizar_nivel_superado_volver_atras(self)
+local datos = require("main.datos")
+
+local function finalizar_nivel_superado(self)
 	gui.animate(self.text, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	
 	gui.animate(self.siguiente_nivel, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	gui.animate(self.volver_atras, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1, 0,
 	function()
-		msg.post("/gui#gui", "finalizar_gui_gameplay")
+		if self.volver_a_seleccion_de_nivel == true then
+			msg.post("/gui#gui", "finalizar_gui_gameplay")
+		else
+			msg.post("/gui#gui", "avanzar_de_nivel")
+		end
 	end)
 end
 
@@ -14,6 +21,7 @@ function init(self)
 	self.volver_atras = gui.get_node("volver_atras")
 	self.siguiente_nivel = gui.get_node("siguiente_nivel")
 	gui.set_enabled(self.cuadro, false)
+	self.volver_a_seleccion_de_nivel = false
 end
 
 function final(self)
@@ -31,6 +39,9 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("nivel_superado") then
 		gui.set_enabled(self.cuadro, true)
+		if datos.jugar_nivel >= 10 then
+			gui.set_enabled(self.siguiente_nivel, false)
+		end
 		gui.animate(self.cuadro, "position.y", 380, gui.EASING_OUTCUBIC, 1, 0,
 		function()
 			msg.post("", "acquire_input_focus")
@@ -41,7 +52,12 @@ end
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		if gui.pick_node(self.volver_atras, action.x, action.y) then
-			finalizar_nivel_superado_volver_atras(self)
+			msg.post("", "release_input_focus")
+			self.volver_a_seleccion_de_nivel = true
+			finalizar_nivel_superado(self)
+		elseif gui.pick_node(self.siguiente_nivel, action.x, action.y) and gui.is_enabled(self.siguiente_nivel)then
+			msg.post("", "release_input_focus")
+			finalizar_nivel_superado(self)
 		end
 	end
 end

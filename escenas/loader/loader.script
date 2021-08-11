@@ -41,6 +41,9 @@ function on_message(self, message_id, message, sender)
 		self.contador = self.contador - 1
 	elseif message_id == hash("proxy_unloaded") then
 		msg.post(self.colecciones[self.contador], "load")
+	elseif message_id == hash("siguiente_nivel") then
+		--msg.post(sender, "unload")
+		msg.post(self.colecciones[3], "unload")
 	end
 end
 

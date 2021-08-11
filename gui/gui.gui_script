@@ -2,7 +2,7 @@ local datos = require("main.datos")
 local niveles = require("gui.niveles")
 local dif_entre_casillas = 142
 
-local function terminar_escena_volver_atras(self)
+local function terminar_escena_gameplay(self)
 
 	if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultimo_nivel_desbloqueado < 11 then
 		datos.jugar_nivel = datos.jugar_nivel + 1
@@ -46,7 +46,15 @@ local function terminar_escena_volver_atras(self)
 	gui.animate(self.sonido_nodo, "position.x", 1354, gui.EASING_INBACK, 1)
 	gui.animate(self.lupa, "position.x", 1391, gui.EASING_INBACK, 1)
 	gui.animate(self.espejo, "position.x", -150, gui.EASING_INBACK, 1)
-	gui.animate(self.toolbar, "position.x", -150, gui.EASING_INBACK, 1, 0, function() msg.post("loader:/loader#loader", "retroceder_escena") end)
+	gui.animate(self.toolbar, "position.x", -150, gui.EASING_INBACK, 1, 0, function()
+		if self.volver_a_seleccion_de_nivel == true then
+			msg.post("loader:/loader#loader", "retroceder_escena")
+		else
+			print("VAMOS AL SIGUIENTE NIVEL")
+			niveles[self.nivel+1]["habilitado"] = true
+			msg.post("loader:/loader#loader", "siguiente_nivel")
+		end
+	end)
 end
 
 local function inicializacion_objetos_alpha(self) -- Da el input focus inicial.
@@ -177,8 +185,9 @@ function init(self)
 	gui.set_render_order(2)
 	-- niveles ----------------------------------------
 	self.nivel = datos.jugar_nivel
+	niveles[self.nivel]["habilitado"] = true
+	
 	self.contador_para_leer_mapa_nivel = 1
-
 	self.cantidad_de_switches_en_el_nivel = niveles[self.nivel]["switches"]
 	self.cantidad_de_switches_activados = 0
 
@@ -216,6 +225,8 @@ function init(self)
 	self.pista = gui.get_node("pista")
 	self.pistas_activadas = false
 	self.fondo_gris = gui.get_node("fondo_gris")
+	self.numero_de_nivel = gui.get_node("numero_de_nivel") -- esto no se si hizo saltar un bug, pero raro, no debería. Solo pasó una vez por ahora. Problema en la carga y usado de nodos pareciera.
+	gui.set_text(self.numero_de_nivel, "Nivel " .. datos.jugar_nivel)
 	-- tacho ----------------------------------------------
 	self.tacho = gui.get_node("tacho")
 	self.tacho_pos_inical = vmath.vector3(-600, 300, 0)
@@ -256,7 +267,7 @@ function init(self)
 	---------------------------------------------------
 	
 	self.obj_seleccionado = ""
-
+	self.volver_a_seleccion_de_nivel = false
 	
 
 	---------------------------------------------------
@@ -584,7 +595,11 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("sacar_adorno") then
 		gui.set_enabled(self.adorno, false)
 	elseif message_id == hash("finalizar_gui_gameplay") then
-		terminar_escena_volver_atras(self)
+		self.volver_a_seleccion_de_nivel = true
+		terminar_escena_gameplay(self)
+	elseif message_id == hash("avanzar_de_nivel") then
+		print("avanzar_de_nivel")
+		terminar_escena_gameplay(self)
 	end
 end
 
@@ -669,9 +684,10 @@ function on_input(self, action_id, action)
 			--		datos.jugar_nivel = datos.jugar_nivel + 1
 			--		datos.ultimo_nivel_desbloqueado = datos.ultimo_nivel_desbloqueado + 1
 			--		print(datos.ultimo_nivel_desbloqueado)
-			--	end
+			--	end -- esto se metió en la fucion terminar_escena_gameplay, parece que no hay problema, borrar.
 				msg.post("", "release_input_focus")
-				terminar_escena_volver_atras(self)
+				self.volver_a_seleccion_de_nivel = true
+				terminar_escena_gameplay(self)
 				
 			elseif gui.pick_node(self.sonido_nodo, action.x, action.y) then
 				datos.animar_click(self, self.sonido_nodo, 0.7, 0.6)
