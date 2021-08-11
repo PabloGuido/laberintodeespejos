@@ -245,6 +245,9 @@ function init(self)
 	self.laser_prendido = false
 	self.cannon = gui.get_node("cannon")
 	gui.set_color(self.cannon , vmath.vector4(1,1,1,0))
+	print("rotacion cannon")
+	gui.set_rotation(self.cannon, niveles[self.nivel]["rotacion"])
+	print(gui.get_rotation(self.cannon))
 	self.cannon_adorno = gui.get_node("cannon_adorno")
 	--gui.animate(self.cannon_adorno, "rotation.z", 360, gui.EASING_LINEAR, 50, 0, nil, gui.PLAYBACK_LOOP_FORWARD)
 	-- clonacion de beams

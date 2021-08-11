@@ -1,8 +1,11 @@
 local datos = require("main.datos")
-local distancia_rayo = 1200
+local niveles = require("gui.niveles")
+
+local distancia_rayo = 1200 * niveles[datos.jugar_nivel]["direccion"]
 function init(self)
-	self.to = go.get_position()
-	self.to.x = distancia_rayo
+	self.to = go.get_position() + distancia_rayo
+	--self.to.x = distancia_rayo
+	--self.to = distancia_rayo
 	self.disparar = false
 	--msg.post("", "acquire_input_focus")
 	self.datos_del_laser = {}
@@ -26,8 +29,10 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("posicion_inicial") then
 	--	message.pos.x = message.pos.x  + 58
 		go.set_position(message.pos)
-		self.to = go.get_position()
-		self.to.x = distancia_rayo
+		--self.to = go.get_position()
+		--self.to.x = distancia_rayo
+		self.to = go.get_position() + distancia_rayo
+		--self.to = distancia_rayo
 		self.disparar = true
 	end
 	--[[
