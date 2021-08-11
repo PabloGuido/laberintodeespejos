@@ -17,17 +17,17 @@ local M = {}
 --1 Ta bueno este
 M["1"] = {
 1,2,0,0,5,
-0,5,0,3,5,
-0,3,4,0,0,
+0,3,0,0,5,
+0,0,4,0,0,
 0,0,0,0,0,
 0,5,0,0,0,
 }
 M[1] = {}
 M[1]["cuanto_por_cuanto"] = 5
-M[1]["switches"] = 2
+M[1]["switches"] = 1
 M[1]["habilitado"] = true
-M[1]["direccion"] = vmath.vector3(0, 1, 0)
-M[1]["rotacion"] = arriba
+M[1]["direccion"] = vmath.vector3(-1, 0, 0)
+M[1]["rotacion"] = izquierda
 
 --2
 M["2"] = {

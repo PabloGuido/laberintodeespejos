@@ -1,7 +1,7 @@
 local datos = require("main.datos")
 
 local function finalizar_nivel_superado(self)
-	gui.animate(self.text, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	gui.animate(self.nivel_superado, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	
 	gui.animate(self.siguiente_nivel, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	gui.animate(self.volver_atras, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1, 0,
@@ -16,7 +16,7 @@ end
 
 function init(self)
 	gui.set_render_order(2)
-	self.text = gui.get_node("text")
+	self.nivel_superado = gui.get_node("nivel_superado")
 	self.cuadro = gui.get_node("cuadro")
 	self.volver_atras = gui.get_node("volver_atras")
 	self.siguiente_nivel = gui.get_node("siguiente_nivel")
@@ -44,6 +44,7 @@ function on_message(self, message_id, message, sender)
 		end
 		gui.animate(self.cuadro, "position.y", 380, gui.EASING_OUTCUBIC, 1, 0,
 		function()
+			gui.animate(self.nivel_superado, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 			msg.post("", "acquire_input_focus")
 		end)
 	end

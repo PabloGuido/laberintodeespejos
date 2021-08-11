@@ -3,6 +3,14 @@ fonts {
   name: "rubik"
   font: "/main/fonts/rubik.font"
 }
+textures {
+  name: "gui"
+  texture: "/gui/gui.atlas"
+}
+textures {
+  name: "seleccion_de_nivel"
+  texture: "/escenas/seleccion de nievel/img/seleccion_de_nivel.atlas"
+}
 background_color {
   x: 0.0
   y: 0.0
@@ -65,8 +73,8 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
-    y: 147.0
+    x: -480.0
+    y: 0.0
     z: 0.0
     w: 1.0
   }
@@ -77,14 +85,14 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 0.75
-    y: 0.75
+    x: 0.6
+    y: 0.6
     z: 1.0
     w: 1.0
   }
   size {
-    x: 200.0
-    y: 100.0
+    x: 187.0
+    y: 189.0
     z: 0.0
     w: 1.0
   }
@@ -92,74 +100,11 @@ nodes {
     x: 1.0
     y: 1.0
     z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Nivel superado!"
-  font: "rubik"
-  id: "text"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "cuadro"
-  layer: ""
-  inherit_alpha: false
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
-}
-nodes {
-  position {
-    x: -177.0
-    y: -75.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 0.101960786
-    y: 0.3019608
-    z: 0.101960786
     w: 1.0
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: ""
+  texture: "seleccion_de_nivel/boton volver"
   id: "volver_atras"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -183,7 +128,7 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
+    x: 532.0
     y: 0.0
     z: 0.0
     w: 1.0
@@ -191,70 +136,7 @@ nodes {
   rotation {
     x: 0.0
     y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 0.25
-    y: 0.25
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Volver atr\303\241s"
-  font: "rubik"
-  id: "text1"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "volver_atras"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
-}
-nodes {
-  position {
-    x: 173.0
-    y: -72.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
+    z: 180.0
     w: 1.0
   }
   scale {
@@ -264,20 +146,20 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
-    y: 100.0
+    x: 187.0
+    y: 189.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 0.101960786
-    y: 0.3019608
-    z: 0.101960786
+    x: 1.0
+    y: 1.0
+    z: 1.0
     w: 1.0
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: ""
+  texture: "seleccion_de_nivel/boton volver"
   id: "siguiente_nivel"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -313,14 +195,14 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 0.25
-    y: 0.25
+    x: 0.75
+    y: 0.75
     z: 1.0
     w: 1.0
   }
   size {
-    x: 200.0
-    y: 100.0
+    x: 931.0
+    y: 149.0
     z: 0.0
     w: 1.0
   }
@@ -330,37 +212,29 @@ nodes {
     z: 1.0
     w: 1.0
   }
-  type: TYPE_TEXT
+  type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  text: "Siguiente nivel"
-  font: "rubik"
-  id: "text2"
+  texture: "gui/nivel_superado"
+  id: "nivel_superado"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
   adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "siguiente_nivel"
+  parent: "cuadro"
   layer: ""
-  inherit_alpha: true
+  inherit_alpha: false
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
   alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
   template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
+  size_mode: SIZE_MODE_AUTO
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
