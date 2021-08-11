@@ -1,6 +1,8 @@
 local datos = require("main.datos")
 local distancia_rayo = 1400
 go.property("pos_en_tabla_casillas", 0)
+-- 11/8. Había un bug visual con los laser dobles del switch.
+--		 Se sacó el if self.cuenta para mandar el mensaje de "borrar_laser", la cuenta sigue solo para desactivar los switch.
 
 local function disparar_raycast(self)
 	local datos_laser2
@@ -91,7 +93,6 @@ function on_message(self, message_id, message, sender)
 		self.nodo = message.nodo -- esto no hace nada creo
 		
 	elseif message_id == hash("rayo") then
-
 
 		self.normal = message.normal
 		self.grupo_donde_llego_raycast = message.grupo
