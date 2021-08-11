@@ -47,6 +47,7 @@ local function terminar_escena_gameplay(self)
 	gui.animate(self.lupa, "position.x", 1391, gui.EASING_INBACK, 1)
 	gui.animate(self.espejo, "position.x", -150, gui.EASING_INBACK, 1)
 	gui.animate(self.toolbar, "position.x", -150, gui.EASING_INBACK, 1, 0, function()
+		datos.obj_en_mouse = nil
 		if self.volver_a_seleccion_de_nivel == true then
 			msg.post("loader:/loader#loader", "retroceder_escena")
 		else

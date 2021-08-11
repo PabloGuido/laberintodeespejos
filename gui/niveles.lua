@@ -41,8 +41,8 @@ M[2] = {}
 M[2]["cuanto_por_cuanto"] = 5
 M[2]["switches"] = 1
 M[2]["habilitado"] = true
-M[2]["direccion"] = vmath.vector3(0, -1, 0)
-M[2]["rotacion"] = abajo
+M[2]["direccion"] = vmath.vector3(1, 0, 0)
+M[2]["rotacion"] = derecha
 
 --3
 M["3"] = {
@@ -56,6 +56,8 @@ M[3] = {}
 M[3]["cuanto_por_cuanto"] = 5
 M[3]["switches"] = 4
 M[3]["habilitado"] = true
+M[3]["direccion"] = vmath.vector3(1, 0, 0)
+M[3]["rotacion"] = derecha
 
 --4
 M["4"] = {
@@ -69,6 +71,8 @@ M[4] = {}
 M[4]["cuanto_por_cuanto"] = 5
 M[4]["switches"] = 0
 M[4]["habilitado"] = false
+M[4]["direccion"] = vmath.vector3(1, 0, 0)
+M[4]["rotacion"] = derecha
 
 --5
 M["5"] = {
@@ -82,6 +86,8 @@ M[5] = {}
 M[5]["cuanto_por_cuanto"] = 5
 M[5]["switches"] = 0
 M[5]["habilitado"] = false
+M[5]["direccion"] = vmath.vector3(1, 0, 0)
+M[5]["rotacion"] = derecha
 
 --6
 M["6"] = {
@@ -95,6 +101,8 @@ M[6] = {}
 M[6]["cuanto_por_cuanto"] = 5
 M[6]["switches"] = 0
 M[6]["habilitado"] = false
+M[6]["direccion"] = vmath.vector3(1, 0, 0)
+M[6]["rotacion"] = derecha
 
 --7
 M["7"] = {
@@ -108,6 +116,8 @@ M[7] = {}
 M[7]["cuanto_por_cuanto"] = 5
 M[7]["switches"] = 0
 M[7]["habilitado"] = false
+M[7]["direccion"] = vmath.vector3(1, 0, 0)
+M[7]["rotacion"] = derecha
 
 --8
 M["8"] = {
@@ -121,6 +131,8 @@ M[8] = {}
 M[8]["cuanto_por_cuanto"] = 5
 M[8]["switches"] = 0
 M[8]["habilitado"] = false
+M[8]["direccion"] = vmath.vector3(1, 0, 0)
+M[8]["rotacion"] = derecha
 
 --9
 M["9"] = {
@@ -134,6 +146,8 @@ M[9] = {}
 M[9]["cuanto_por_cuanto"] = 5
 M[9]["switches"] = 0
 M[9]["habilitado"] = false
+M[9]["direccion"] = vmath.vector3(1, 0, 0)
+M[9]["rotacion"] = derecha
 
 --10
 M["10"] = {
@@ -147,6 +161,7 @@ M[10] = {}
 M[10]["cuanto_por_cuanto"] = 5
 M[10]["switches"] = 0
 M[10]["habilitado"] = false
-
+M[10]["direccion"] = vmath.vector3(1, 0, 0)
+M[10]["rotacion"] = derecha
 
 return M
