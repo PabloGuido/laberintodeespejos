@@ -21,6 +21,9 @@ local function terminar_escena_volver_atras(self)
 		gui.animate(self.espejos[e][hash("espejo")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 		gui.animate(self.espejos[e]["laser"], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	end
+	for p = 1,table.maxn(self.pistas) do
+		gui.animate(self.pistas[p][hash("pista")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	end
 	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	gui.animate(self.fondo_gris, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
@@ -204,6 +207,7 @@ function init(self)
 	end
 	self.lupa = gui.get_node("lupa")
 	self.pista = gui.get_node("pista")
+	self.pistas_activadas = false
 	self.fondo_gris = gui.get_node("fondo_gris")
 	-- tacho ----------------------------------------------
 	self.tacho = gui.get_node("tacho")
@@ -285,7 +289,7 @@ function init(self)
 			elseif constatador == 5 then
 				local nueva_pista = clonar_nodo(self, self.pista, hash("pista"), self.pos, self.pistas, false)
 				gui.move_above(nueva_pista, self.fondo_gris)
-				--gui.set_color(nueva_pista, vmath.vector4(1,1,1,0))
+				gui.set_color(nueva_pista, vmath.vector4(1,1,1,0))
 			end
 			
 			local nueva_casilla = gui.clone_tree(self.casilla)
@@ -670,6 +674,15 @@ function on_input(self, action_id, action)
 				end
 			elseif gui.pick_node(self.lupa, action.x, action.y) then
 				datos.animar_click(self, self.lupa)
+				if self.pistas_activadas == false then
+					self.pistas_activadas = true
+					for p = 1,table.maxn(self.pistas) do
+						gui.animate(self.pistas[p][hash("pista")], "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 2, 0,
+						function()
+							gui.animate(self.pistas[p][hash("pista")], "color", vmath.vector4(1,1,1,0.25), gui.EASING_LINEAR, 2, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+						end)
+					end
+				end
 			end
 		elseif action.released then
 			if self.mouse_sobre_casillas == false and datos.obj_en_mouse ~= nil and self.moviendo_obj == false then
