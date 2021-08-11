@@ -1,0 +1,53 @@
+local function finalizar_nivel_superado_volver_atras(self)
+	gui.animate(self.text, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	gui.animate(self.siguiente_nivel, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	gui.animate(self.volver_atras, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1, 0,
+	function()
+		msg.post("/gui#gui", "finalizar_gui_gameplay")
+	end)
+end
+
+function init(self)
+	gui.set_render_order(2)
+	self.text = gui.get_node("text")
+	self.cuadro = gui.get_node("cuadro")
+	self.volver_atras = gui.get_node("volver_atras")
+	self.siguiente_nivel = gui.get_node("siguiente_nivel")
+	gui.set_enabled(self.cuadro, false)
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("nivel_superado") then
+		gui.set_enabled(self.cuadro, true)
+		gui.animate(self.cuadro, "position.y", 380, gui.EASING_OUTCUBIC, 1, 0,
+		function()
+			msg.post("", "acquire_input_focus")
+		end)
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("touch") and action.pressed then
+		if gui.pick_node(self.volver_atras, action.x, action.y) then
+			finalizar_nivel_superado_volver_atras(self)
+		end
+	end
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end

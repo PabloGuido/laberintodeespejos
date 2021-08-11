@@ -3,6 +3,13 @@ local niveles = require("gui.niveles")
 local dif_entre_casillas = 142
 
 local function terminar_escena_volver_atras(self)
+
+	if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultimo_nivel_desbloqueado < 11 then
+		datos.jugar_nivel = datos.jugar_nivel + 1
+		datos.ultimo_nivel_desbloqueado = datos.ultimo_nivel_desbloqueado + 1
+		print(datos.ultimo_nivel_desbloqueado)
+	end
+	
 	for c = 1, table.maxn(self.casillas) do
 		local anim_casilla = self.casillas[c][1][hash("casilla")]
 		gui.animate(anim_casilla, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
@@ -531,11 +538,12 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("objetivo_encontrado") then
 		datos.nivel_completado = true
 		msg.post("/ui_objetos#ui_objetos", "nivel_completado")
-		--msg.post("", "release_input_focus")
+		msg.post("/nivel_superado#nivel_superado", "nivel_superado")
+		msg.post("", "release_input_focus")
 		
 		gui.move_above(self.objetivo, self.laser)
 		gui.play_flipbook(self.objetivo, "objetivo_on")
-		local pos = gui.get_position(self.objetivo)
+		local pos = gui.get_position(self.objetivo) -- por qué está esto acá? Ver después si hay tiempo.
 		pos.x = pos.x +10
 		gui.animate(self.objetivo, "scale",1.1, gui.EASING_INCIRC, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 		print("Objetivo encontrado - nivel superado")
@@ -575,6 +583,8 @@ function on_message(self, message_id, message, sender)
 		gui.set_position(self.adorno, message.pos)
 	elseif message_id == hash("sacar_adorno") then
 		gui.set_enabled(self.adorno, false)
+	elseif message_id == hash("finalizar_gui_gameplay") then
+		terminar_escena_volver_atras(self)
 	end
 end
 
@@ -655,11 +665,11 @@ function on_input(self, action_id, action)
 				end
 			elseif gui.pick_node(self.retroceder, action.x, action.y) then
 				datos.animar_click(self, self.retroceder, 0.7, 0.6)
-				if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultimo_nivel_desbloqueado < 11 then
-					datos.jugar_nivel = datos.jugar_nivel + 1
-					datos.ultimo_nivel_desbloqueado = datos.ultimo_nivel_desbloqueado + 1
-					print(datos.ultimo_nivel_desbloqueado)
-				end
+			--	if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultimo_nivel_desbloqueado < 11 then
+			--		datos.jugar_nivel = datos.jugar_nivel + 1
+			--		datos.ultimo_nivel_desbloqueado = datos.ultimo_nivel_desbloqueado + 1
+			--		print(datos.ultimo_nivel_desbloqueado)
+			--	end
 				msg.post("", "release_input_focus")
 				terminar_escena_volver_atras(self)
 				
