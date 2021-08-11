@@ -46,7 +46,7 @@ M["3"] = {
 M[3] = {}
 M[3]["cuanto_por_cuanto"] = 5
 M[3]["switches"] = 4
-M[3]["habilitado"] = false
+M[3]["habilitado"] = true
 
 --4
 M["4"] = {

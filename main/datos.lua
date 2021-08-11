@@ -30,9 +30,9 @@ M.nivel_completado = false -- esto no va después creo.
 M.skins_delta = {"cara nomal", "cara sonrisa",  "cara o", "cara sonrisa 2", "cara w" }
 
 -- Cosas generales
-M.primera_vez_que_abre_gameplay = true -- esto hay que dejarlo en true después.
+M.primera_vez_que_abre_gameplay = false -- esto hay que dejarlo en true después.
 M.jugar_nivel = 1 -- esto tiene que ser 1
-M.ultimo_nivel_desbloqueado = 1 -- esto tiene que ser 1
+M.ultimo_nivel_desbloqueado = 3 -- esto tiene que ser 1
 M.ultima_escena = ""
 M.sonido = true
 
