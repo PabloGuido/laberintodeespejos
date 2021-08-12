@@ -19,8 +19,10 @@ local function sonido_inicio(self)
 end
 
 local function finalizar_nivel_superado(self)
+	if gui.is_enabled(self.siguiente_nivel) then
+		gui.animate(self.siguiente_nivel, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	end
 	gui.animate(self.nivel_superado, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)	
-	gui.animate(self.siguiente_nivel, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	gui.animate(self.sonido, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	gui.animate(self.volver_atras, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1, 0,
 	function()
@@ -44,6 +46,7 @@ function init(self)
 	gui.set_enabled(self.sonido, false)
 	
 	self.volver_a_seleccion_de_nivel = false
+	print("moveñ" .. datos.jugar_nivel)
 end
 
 function final(self)
@@ -61,16 +64,23 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("nivel_superado") then
 		gui.set_enabled(self.cuadro, true)
-		gui.set_enabled(self.volver_atras, true)
 		gui.set_enabled(self.sonido, true)
 		sonido_inicio(self)
-		if datos.jugar_nivel >= 10 then
+		if datos.jugar_nivel < 10 then
+			gui.set_enabled(self.volver_atras, true)
+			gui.set_position(self.volver_atras, vmath.vector3(1118,699,0))
+			gui.set_enabled(self.siguiente_nivel, true)
+			gui.animate(self.siguiente_nivel, "rotation.z", -1, gui.EASING_LINEAR, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+		elseif datos.jugar_nivel >= 10 then
 			gui.set_enabled(self.siguiente_nivel, false)
+			gui.set_scale(self.volver_atras, vmath.vector3(1.1,1.1,0))
+			gui.set_enabled(self.volver_atras, true)
+			gui.set_position(self.volver_atras, vmath.vector3(157,-324,0))
+			gui.animate(self.volver_atras, "position.y", 350, gui.EASING_OUTCUBIC, 2)
 		end
-		gui.set_position(self.volver_atras, vmath.vector3(1118,699,0))
+		
 		gui.set_position(self.sonido, vmath.vector3(1218,584,0))
 		gui.animate(self.nivel_superado, "scale", 0.36, gui.EASING_LINEAR, 2, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
-		gui.animate(self.siguiente_nivel, "rotation.z", -1, gui.EASING_LINEAR, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 		gui.animate(self.cuadro, "position.y", 380, gui.EASING_OUTCUBIC, 2, 0,
 		function()
 
@@ -82,7 +92,11 @@ end
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		if gui.pick_node(self.volver_atras, action.x, action.y) then
-			datos.animar_click(self, self.volver_atras, 0.7, 0.6)
+			if datos.jugar_nivel < 10 then
+				datos.animar_click(self, self.volver_atras, 0.7, 0.6)
+			else
+				datos.animar_click(self, self.volver_atras, 1.2, 1.1)
+			end
 			msg.post("", "release_input_focus")
 			self.volver_a_seleccion_de_nivel = true
 			finalizar_nivel_superado(self)

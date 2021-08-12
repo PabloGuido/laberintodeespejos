@@ -160,7 +160,7 @@ M["10"] = {
 M[10] = {}
 M[10]["cuanto_por_cuanto"] = 5
 M[10]["switches"] = 0
-M[10]["habilitado"] = false
+M[10]["habilitado"] = true
 M[10]["direccion"] = vmath.vector3(1, 0, 0)
 M[10]["rotacion"] = derecha
 
