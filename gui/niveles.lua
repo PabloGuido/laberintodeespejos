@@ -40,7 +40,7 @@ M["2"] = {
 M[2] = {}
 M[2]["cuanto_por_cuanto"] = 5
 M[2]["switches"] = 1
-M[2]["habilitado"] = true
+M[2]["habilitado"] = false
 M[2]["direccion"] = vmath.vector3(1, 0, 0)
 M[2]["rotacion"] = derecha
 
@@ -55,7 +55,7 @@ M["3"] = {
 M[3] = {}
 M[3]["cuanto_por_cuanto"] = 5
 M[3]["switches"] = 4
-M[3]["habilitado"] = true
+M[3]["habilitado"] = false
 M[3]["direccion"] = vmath.vector3(1, 0, 0)
 M[3]["rotacion"] = derecha
 
@@ -160,7 +160,7 @@ M["10"] = {
 M[10] = {}
 M[10]["cuanto_por_cuanto"] = 5
 M[10]["switches"] = 0
-M[10]["habilitado"] = true
+M[10]["habilitado"] = false
 M[10]["direccion"] = vmath.vector3(1, 0, 0)
 M[10]["rotacion"] = derecha
 
