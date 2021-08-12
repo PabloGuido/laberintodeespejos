@@ -2,7 +2,7 @@ local arriba = vmath.vector3(0,0,90)
 local abajo = vmath.vector3(0,0,270)
 local izquierda = vmath.vector3(0,0,180)
 local derecha = vmath.vector3(0,0,0)
-local niveles = true
+local niveles = false
 local M = {}
 --[[ Objetos 
 1) Obstáculos
@@ -25,7 +25,7 @@ M["1"] = {
 M[1] = {}
 M[1]["cuanto_por_cuanto"] = 5
 M[1]["switches"] = 1
-M[1]["habilitado"] = niveles
+M[1]["habilitado"] = true -- este true para el incio del juego
 M[1]["direccion"] = vmath.vector3(-1, 0, 0)
 M[1]["rotacion"] = izquierda
 
