@@ -35,6 +35,7 @@ local function terminar_escena_gameplay(self)
 	--	end
 	if datos.jugar_nivel < 10 then
 		datos.jugar_nivel = datos.jugar_nivel + 1
+	
 		if datos.ultimo_nivel_desbloqueado == datos.jugar_nivel - 1 then
 			datos.ultimo_nivel_desbloqueado = datos.ultimo_nivel_desbloqueado + 1
 		end

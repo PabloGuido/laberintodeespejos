@@ -2,7 +2,7 @@ local arriba = vmath.vector3(0,0,90)
 local abajo = vmath.vector3(0,0,270)
 local izquierda = vmath.vector3(0,0,180)
 local derecha = vmath.vector3(0,0,0)
-local niveles = false
+local niveles = true
 local M = {}
 --[[ Objetos 
 1) Obstáculos
@@ -16,78 +16,78 @@ local M = {}
 -- El número del plano del nivel se lee en string.
 --1 Ta bueno este
 M["1"] = {
-1,2,0,0,5,
-0,3,0,0,5,
-0,0,4,0,0,
 0,0,0,0,0,
-0,5,0,0,0,
+0,0,2,0,0,
+0,0,0,0,0,
+4,0,5,0,0,
+0,0,0,0,0,
 }
 M[1] = {}
 M[1]["cuanto_por_cuanto"] = 5
-M[1]["switches"] = 1
+M[1]["switches"] = 0
 M[1]["habilitado"] = true -- este true para el incio del juego
-M[1]["direccion"] = vmath.vector3(-1, 0, 0)
-M[1]["rotacion"] = izquierda
+M[1]["direccion"] = vmath.vector3(1, 0, 0)
+M[1]["rotacion"] = derecha
 
 --2
 M["2"] = {
-2,5,0,0,0,
-0,3,1,0,1,
-5,5,4,0,0,
-0,1,0,1,1,
-5,0,5,0,0
+0,0,0,0,0,
+0,4,0,2,0,
+0,0,0,0,0,
+0,5,0,5,0,
+0,0,0,0,0
 }
 M[2] = {}
 M[2]["cuanto_por_cuanto"] = 5
-M[2]["switches"] = 1
+M[2]["switches"] = 0
 M[2]["habilitado"] = niveles
-M[2]["direccion"] = vmath.vector3(1, 0, 0)
-M[2]["rotacion"] = derecha
+M[2]["direccion"] = vmath.vector3(0, -1, 0)
+M[2]["rotacion"] = abajo
 
 --3
 M["3"] = {
-	4,0,0,0,0,
-	0,3,0,3,0,
-	0,0,2,0,0,
-	0,3,0,3,0,
+	0,4,5,1,0,
+	5,0,5,0,0,
+	0,1,1,1,0,
+	5,0,2,0,0,
 	0,0,0,0,0
 }
 M[3] = {}
 M[3]["cuanto_por_cuanto"] = 5
-M[3]["switches"] = 4
+M[3]["switches"] = 0
 M[3]["habilitado"] = niveles
 M[3]["direccion"] = vmath.vector3(1, 0, 0)
 M[3]["rotacion"] = derecha
 
 --4
 M["4"] = {
-	0,0,0,0,0,
-	0,0,0,0,0,
-	0,0,2,0,0,
-	0,0,0,4,0,
-	0,0,0,0,0
+	5,5,0,0,1,
+	0,0,0,1,2,
+	0,4,1,0,0,
+	5,0,5,1,0,
+	1,0,5,0,5
 }
 M[4] = {}
 M[4]["cuanto_por_cuanto"] = 5
 M[4]["switches"] = 0
 M[4]["habilitado"] = niveles
-M[4]["direccion"] = vmath.vector3(1, 0, 0)
-M[4]["rotacion"] = derecha
+M[4]["direccion"] = vmath.vector3(0, 1, 0)
+M[4]["rotacion"] = arriba
 
 --5
 M["5"] = {
-	0,0,0,0,0,
-	0,0,0,0,0,
-	0,0,2,0,0,
-	4,0,0,0,0,
-	0,0,0,0,0
+	1,5,0,5,1,
+	5,5,1,0,0,
+	0,1,2,5,0,
+	5,5,1,1,1,
+	1,5,0,0,4
 }
 M[5] = {}
 M[5]["cuanto_por_cuanto"] = 5
 M[5]["switches"] = 0
 M[5]["habilitado"] = niveles
-M[5]["direccion"] = vmath.vector3(1, 0, 0)
-M[5]["rotacion"] = derecha
+M[5]["direccion"] = vmath.vector3(-1, 0, 0)
+M[5]["rotacion"] = izquierda
 
 --6
 M["6"] = {
@@ -145,7 +145,7 @@ M["9"] = {
 M[9] = {}
 M[9]["cuanto_por_cuanto"] = 5
 M[9]["switches"] = 0
-M[9]["habilitado"] = false
+M[9]["habilitado"] = niveles
 M[9]["direccion"] = vmath.vector3(1, 0, 0)
 M[9]["rotacion"] = derecha
 
@@ -160,7 +160,7 @@ M["10"] = {
 M[10] = {}
 M[10]["cuanto_por_cuanto"] = 5
 M[10]["switches"] = 0
-M[10]["habilitado"] = false
+M[10]["habilitado"] = niveles
 M[10]["direccion"] = vmath.vector3(1, 0, 0)
 M[10]["rotacion"] = derecha
 
