@@ -1,9 +1,27 @@
 local datos = require("main.datos")
 
+local function sonido_on_off(self)
+	if datos.sonido == false then
+		gui.play_flipbook(self.sonido, "sonido on")
+		datos.sonido = true
+	else
+		gui.play_flipbook(self.sonido, "sonido off")
+		datos.sonido = false
+	end
+end
+
+local function sonido_inicio(self)
+	if datos.sonido == false then
+		gui.play_flipbook(self.sonido, "sonido off")
+	else
+		gui.play_flipbook(self.sonido, "sonido on")
+	end
+end
+
 local function finalizar_nivel_superado(self)
-	gui.animate(self.nivel_superado, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
-	
+	gui.animate(self.nivel_superado, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)	
 	gui.animate(self.siguiente_nivel, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	gui.animate(self.sonido, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	gui.animate(self.volver_atras, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1, 0,
 	function()
 		if self.volver_a_seleccion_de_nivel == true then
@@ -19,8 +37,12 @@ function init(self)
 	self.nivel_superado = gui.get_node("nivel_superado")
 	self.cuadro = gui.get_node("cuadro")
 	self.volver_atras = gui.get_node("volver_atras")
+	gui.set_enabled(self.volver_atras, false)
 	self.siguiente_nivel = gui.get_node("siguiente_nivel")
 	gui.set_enabled(self.cuadro, false)
+	self.sonido = gui.get_node("sonido")
+	gui.set_enabled(self.sonido, false)
+	
 	self.volver_a_seleccion_de_nivel = false
 end
 
@@ -39,12 +61,20 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("nivel_superado") then
 		gui.set_enabled(self.cuadro, true)
+		gui.set_enabled(self.volver_atras, true)
+		gui.set_enabled(self.sonido, true)
+		sonido_inicio(self)
 		if datos.jugar_nivel >= 10 then
 			gui.set_enabled(self.siguiente_nivel, false)
 		end
-		gui.animate(self.cuadro, "position.y", 380, gui.EASING_OUTCUBIC, 1, 0,
+		gui.set_position(self.volver_atras, vmath.vector3(1118,699,0))
+		gui.set_position(self.sonido, vmath.vector3(1218,584,0))
+		gui.animate(self.nivel_superado, "scale", 0.36, gui.EASING_LINEAR, 2, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+		gui.animate(self.cuadro, "position.y", 380, gui.EASING_OUTCUBIC, 2, 0,
 		function()
-			gui.animate(self.nivel_superado, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+			--gui.animate(self.nivel_superado, "color", vmath.vector4(0.9,0.9,0,1), gui.EASING_LINEAR, 0.5, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+			
+			
 			msg.post("", "acquire_input_focus")
 		end)
 	end
@@ -53,10 +83,15 @@ end
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		if gui.pick_node(self.volver_atras, action.x, action.y) then
+			datos.animar_click(self, self.volver_atras, 0.7, 0.6)
 			msg.post("", "release_input_focus")
 			self.volver_a_seleccion_de_nivel = true
 			finalizar_nivel_superado(self)
+		elseif gui.pick_node(self.sonido, action.x, action.y) then
+			sonido_on_off(self)
+			datos.animar_click(self, self.sonido, 0.7, 0.6)
 		elseif gui.pick_node(self.siguiente_nivel, action.x, action.y) and gui.is_enabled(self.siguiente_nivel)then
+			datos.animar_click(self, self.siguiente_nivel)
 			msg.post("", "release_input_focus")
 			finalizar_nivel_superado(self)
 		end

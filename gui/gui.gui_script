@@ -2,6 +2,21 @@ local datos = require("main.datos")
 local niveles = require("gui.niveles")
 local dif_entre_casillas = 142
 
+local function finalizar_botones(self)
+	if datos.nivel_completado == false then
+		gui.animate(self.retroceder, "position.y", 835, gui.EASING_INBACK, 1)
+		gui.animate(self.sonido_nodo, "position.x", 1354, gui.EASING_INBACK, 1)
+		gui.animate(self.lupa, "position.x", 1391, gui.EASING_INBACK, 1)
+	else
+		gui.set_enabled(self.retroceder, false)
+		gui.set_enabled(self.sonido_nodo, false)
+		gui.animate(self.lupa, "position.x", 1391, gui.EASING_INBACK, 1, 0,
+		function()
+			gui.set_enabled(self.lupa, false)
+		end)
+	end
+end
+
 local function terminar_escena_gameplay(self)
 
 	if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultimo_nivel_desbloqueado < 11 then
@@ -44,10 +59,8 @@ local function terminar_escena_gameplay(self)
 	if gui.is_enabled(self.barrera) then
 		gui.animate(self.barrera, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
 	end
-	
-	gui.animate(self.retroceder, "position.y", 835, gui.EASING_INBACK, 1)
-	gui.animate(self.sonido_nodo, "position.x", 1354, gui.EASING_INBACK, 1)
-	gui.animate(self.lupa, "position.x", 1391, gui.EASING_INBACK, 1)
+
+	finalizar_botones(self)
 	gui.animate(self.espejo, "position.x", -150, gui.EASING_INBACK, 1)
 	gui.animate(self.numero_de_nivel, "position.x", -280, gui.EASING_INBACK, 1)
 	gui.animate(self.toolbar, "position.x", -150, gui.EASING_INBACK, 1, 0, function()
@@ -263,6 +276,7 @@ function init(self)
 	self.toolbar = gui.get_node("toolbar")
 	self.espejo = gui.get_node("espejo")
 	self.espejo_doble = gui.get_node("espejo_doble")
+	gui.set_enabled(self.espejo_doble, false)
 	self.ui_objetos = false
 	self.retroceder = gui.get_node("retroceder")
 	-- tablas -----------------------------------------
@@ -558,6 +572,7 @@ function on_message(self, message_id, message, sender)
 		self.casillas[message.pos_en_tabla]["instancia"] =  message.obj
 	elseif message_id == hash("objetivo_encontrado") then
 		datos.nivel_completado = true
+		finalizar_botones(self)
 		msg.post("/ui_objetos#ui_objetos", "nivel_completado")
 		msg.post("/nivel_superado#nivel_superado", "nivel_superado")
 		msg.post("", "release_input_focus")
