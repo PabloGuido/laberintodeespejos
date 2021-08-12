@@ -29,7 +29,9 @@ local function finalizar_nivel_superado(self)
 		if self.volver_a_seleccion_de_nivel == true then
 			msg.post("/gui#gui", "finalizar_gui_gameplay")
 		else
+
 			msg.post("/gui#gui", "avanzar_de_nivel")
+			
 		end
 	end)
 end

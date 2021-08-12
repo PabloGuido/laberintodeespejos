@@ -18,11 +18,27 @@ local function finalizar_botones(self)
 end
 
 local function terminar_escena_gameplay(self)
-
+--[[
 	if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultimo_nivel_desbloqueado < 11 then
 		datos.jugar_nivel = datos.jugar_nivel + 1
 		datos.ultimo_nivel_desbloqueado = datos.ultimo_nivel_desbloqueado + 1
 		print(datos.ultimo_nivel_desbloqueado)
+	end
+	]]
+--	if datos.ultimo_nivel_desbloqueado < 11 then
+--		datos.jugar_nivel = datos.jugar_nivel + 1
+--		datos.ultimo_nivel_desbloqueado = datos.jugar_nivel
+	--	if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado then
+	--		datos.ultimo_nivel_desbloqueado = datos.ultimo_nivel_desbloqueado + 1
+	--		print("ultimo nivel desbloqueado " .. datos.ultimo_nivel_desbloqueado)
+	--	end
+	--	end
+	if datos.jugar_nivel < 10 then
+		datos.jugar_nivel = datos.jugar_nivel + 1
+	
+		if datos.ultimo_nivel_desbloqueado == datos.jugar_nivel - 1 then
+			datos.ultimo_nivel_desbloqueado = datos.ultimo_nivel_desbloqueado + 1
+		end
 	end
 	
 	for c = 1, table.maxn(self.casillas) do
@@ -69,7 +85,7 @@ local function terminar_escena_gameplay(self)
 			msg.post("loader:/loader#loader", "retroceder_escena")
 		else
 			print("VAMOS AL SIGUIENTE NIVEL")
-			niveles[self.nivel+1]["habilitado"] = true
+			niveles[self.nivel+1]["habilitado"] = true ---
 			msg.post("loader:/loader#loader", "siguiente_nivel")
 		end
 	end)

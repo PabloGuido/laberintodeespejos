@@ -2,7 +2,7 @@ local arriba = vmath.vector3(0,0,90)
 local abajo = vmath.vector3(0,0,270)
 local izquierda = vmath.vector3(0,0,180)
 local derecha = vmath.vector3(0,0,0)
-
+local niveles = true
 local M = {}
 --[[ Objetos 
 1) Obstáculos
@@ -25,7 +25,7 @@ M["1"] = {
 M[1] = {}
 M[1]["cuanto_por_cuanto"] = 5
 M[1]["switches"] = 1
-M[1]["habilitado"] = true
+M[1]["habilitado"] = niveles
 M[1]["direccion"] = vmath.vector3(-1, 0, 0)
 M[1]["rotacion"] = izquierda
 
@@ -40,7 +40,7 @@ M["2"] = {
 M[2] = {}
 M[2]["cuanto_por_cuanto"] = 5
 M[2]["switches"] = 1
-M[2]["habilitado"] = false
+M[2]["habilitado"] = niveles
 M[2]["direccion"] = vmath.vector3(1, 0, 0)
 M[2]["rotacion"] = derecha
 
@@ -55,7 +55,7 @@ M["3"] = {
 M[3] = {}
 M[3]["cuanto_por_cuanto"] = 5
 M[3]["switches"] = 4
-M[3]["habilitado"] = false
+M[3]["habilitado"] = niveles
 M[3]["direccion"] = vmath.vector3(1, 0, 0)
 M[3]["rotacion"] = derecha
 
@@ -70,7 +70,7 @@ M["4"] = {
 M[4] = {}
 M[4]["cuanto_por_cuanto"] = 5
 M[4]["switches"] = 0
-M[4]["habilitado"] = false
+M[4]["habilitado"] = niveles
 M[4]["direccion"] = vmath.vector3(1, 0, 0)
 M[4]["rotacion"] = derecha
 
@@ -85,7 +85,7 @@ M["5"] = {
 M[5] = {}
 M[5]["cuanto_por_cuanto"] = 5
 M[5]["switches"] = 0
-M[5]["habilitado"] = false
+M[5]["habilitado"] = niveles
 M[5]["direccion"] = vmath.vector3(1, 0, 0)
 M[5]["rotacion"] = derecha
 
@@ -100,7 +100,7 @@ M["6"] = {
 M[6] = {}
 M[6]["cuanto_por_cuanto"] = 5
 M[6]["switches"] = 0
-M[6]["habilitado"] = false
+M[6]["habilitado"] = niveles
 M[6]["direccion"] = vmath.vector3(1, 0, 0)
 M[6]["rotacion"] = derecha
 
@@ -115,7 +115,7 @@ M["7"] = {
 M[7] = {}
 M[7]["cuanto_por_cuanto"] = 5
 M[7]["switches"] = 0
-M[7]["habilitado"] = false
+M[7]["habilitado"] = niveles
 M[7]["direccion"] = vmath.vector3(1, 0, 0)
 M[7]["rotacion"] = derecha
 
@@ -130,7 +130,7 @@ M["8"] = {
 M[8] = {}
 M[8]["cuanto_por_cuanto"] = 5
 M[8]["switches"] = 0
-M[8]["habilitado"] = false
+M[8]["habilitado"] = niveles
 M[8]["direccion"] = vmath.vector3(1, 0, 0)
 M[8]["rotacion"] = derecha
 

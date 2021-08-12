@@ -3,23 +3,27 @@ local niveles = require("gui.niveles")
 
 local function abrir_candado(self)
 	local boton_ac = self.tabla_de_botones[datos.ultimo_nivel_desbloqueado]
-	
-	gui.animate(boton_ac[hash("aro")], "rotation.z", 20, gui.EASING_INBOUNCE, 0.75, 0.25)
-	sound.play("#candado_abierto", {delay = 0.25})
-	gui.animate(boton_ac[hash("cuerpo")], "rotation.z", -10, gui.EASING_INBOUNCE, 0.75, 0.25,
-	function()
-		gui.animate(boton_ac[hash("aro")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 0.35)
-		gui.animate(boton_ac[hash("cuerpo")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 0.35, 0,
-		function()
-			gui.set_enabled(boton_ac[hash("aro")], false)
-			gui.set_enabled(boton_ac[hash("cuerpo")], false)
-			sound.play("#nivel_desbloqueado")
-			gui.set_enabled(boton_ac[hash("numero_de_nivel")], true)
-			niveles[datos.ultimo_nivel_desbloqueado]["habilitado"] = true
+	if niveles[datos.ultimo_nivel_desbloqueado]["habilitado"] ~= nil then
+		if niveles[datos.ultimo_nivel_desbloqueado]["habilitado"]  == false then
+			gui.animate(boton_ac[hash("aro")], "rotation.z", 20, gui.EASING_INBOUNCE, 0.75, 0.25)
+			sound.play("#candado_abierto", {delay = 0.25})
+			gui.animate(boton_ac[hash("cuerpo")], "rotation.z", -10, gui.EASING_INBOUNCE, 0.75, 0.25,
+			function()
+				gui.animate(boton_ac[hash("aro")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 0.35)
+				gui.animate(boton_ac[hash("cuerpo")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 0.35, 0,
+				function()
+					gui.set_enabled(boton_ac[hash("aro")], false)
+					gui.set_enabled(boton_ac[hash("cuerpo")], false)
+					sound.play("#nivel_desbloqueado")
+					gui.set_enabled(boton_ac[hash("numero_de_nivel")], true)
+					niveles[datos.ultimo_nivel_desbloqueado]["habilitado"] = true
+					msg.post("", "acquire_input_focus")
+				end)
+			end)
+		else
 			msg.post("", "acquire_input_focus")
-		end)
-	end)
-	
+		end
+	end
 end
 
 local function desbloquear_niveles(self)
@@ -119,7 +123,7 @@ function init(self)
 			if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultima_escena ~= "#pantalla_inicial" and datos.ultimo_nivel_desbloqueado <= 10 then
 				abrir_candado(self)
 			else
-				msg.post("", "acquire_input_focus")
+				msg.post("", "acquire_input_focus") -- ?
 			end
 		end
 	end)
