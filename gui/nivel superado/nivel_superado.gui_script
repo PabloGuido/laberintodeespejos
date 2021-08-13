@@ -94,6 +94,7 @@ end
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		if gui.pick_node(self.volver_atras, action.x, action.y) then
+			sound.play("/sonidos#sonido_volver", {gain = datos.gain_sfx})
 			if datos.jugar_nivel < 10 then
 				datos.animar_click(self, self.volver_atras, 0.7, 0.6)
 			else

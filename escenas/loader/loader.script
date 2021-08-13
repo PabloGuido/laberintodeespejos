@@ -9,6 +9,7 @@ function init(self)
 
 	--fondo
 	go.animate("#sprite", "scale", go.PLAYBACK_LOOP_PINGPONG, 1.1, go.EASING_LINEAR, 20)
+	sound.play("#proto_cancion_1", {gain = datos.gain_musica})
 end
 
 function final(self)

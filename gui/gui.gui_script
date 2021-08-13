@@ -720,6 +720,7 @@ function on_input(self, action_id, action)
 					end
 				end
 			elseif gui.pick_node(self.retroceder, action.x, action.y) then
+				sound.play("/sonidos#sonido_volver", {gain = datos.gain_sfx})
 				datos.animar_click(self, self.retroceder, 0.7, 0.6)
 			--	if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultimo_nivel_desbloqueado < 11 then
 			--		datos.jugar_nivel = datos.jugar_nivel + 1
