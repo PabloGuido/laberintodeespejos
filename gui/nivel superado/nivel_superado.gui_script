@@ -102,11 +102,11 @@ function on_input(self, action_id, action)
 		elseif gui.pick_node(self.siguiente_nivel, action.x, action.y) and gui.is_enabled(self.siguiente_nivel)then
 			msg.post("", "release_input_focus")
 			datos.animar_click(self, self.siguiente_nivel)
-			sound.play("/sonidos#siguiente_nivel_1", {gain = datos.gain_sfx * 1.25})
+			sound.play("/sonidos#siguiente_nivel_1", {gain = datos.gain_sfx * 1.35})
 
 			gui.animate(self.siguiente_nivel, "rotation.z", -360, gui.EASING_INBACK, 1.25, 0, 
 			function()
-				sound.play("/sonidos#siguiente_nivel_3", {gain = datos.gain_sfx})
+				sound.play("/sonidos#siguiente_nivel_3", {gain = datos.gain_sfx * 1.25})
 					finalizar_nivel_superado(self)
 			end)
 

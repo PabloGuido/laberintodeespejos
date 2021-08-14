@@ -899,7 +899,7 @@ function on_input(self, action_id, action)
 					self.moviendo_obj = false
 					mover_relevo(self, vmath.vector3())
 					mensaje_para_ui (self)
-					sound.play("/sonidos#adorno_2", {gain = datos.gain_sfx})
+					sound.play("/sonidos#adorno_2", {gain = datos.gain_sfx * 1.25})
 					print("Colocando obj en casillero número (" .. self.ultima_casilla .. ") " .. tostring(self.casillas[self.ultima_casilla ]["ocupado"]))
 				end
 				gui.set_enabled(self.cruz, false)
