@@ -68,6 +68,7 @@ function on_message(self, message_id, message, sender)
 		gui.set_enabled(self.cuadro, true)
 		gui.set_enabled(self.sonido, true)
 		sonido_inicio(self)
+		sound.play("/sonidos#nivel_superado")
 		if datos.jugar_nivel < 10 then
 			gui.set_enabled(self.volver_atras, true)
 			gui.set_position(self.volver_atras, vmath.vector3(1118,699,0))
