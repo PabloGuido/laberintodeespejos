@@ -748,12 +748,11 @@ function on_input(self, action_id, action)
 				
 			elseif gui.pick_node(self.sonido_nodo, action.x, action.y) then
 				datos.animar_click(self, self.sonido_nodo, 0.7, 0.6)
+				datos.sonido_on_off()
 				if datos.sonido == true then
-					datos.sonido = false
-					gui.play_flipbook(self.sonido_nodo, "sonido off")
-				else
-					datos.sonido = true
 					gui.play_flipbook(self.sonido_nodo, "sonido on")
+				else
+					gui.play_flipbook(self.sonido_nodo, "sonido off")
 				end
 			elseif gui.pick_node(self.lupa, action.x, action.y) then
 				datos.animar_click(self, self.lupa)

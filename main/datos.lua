@@ -38,6 +38,23 @@ M.sonido = true
 M.gain_sfx = 1
 M.gain_musica =  0.5
 
+M.sonido_on_off = function()
+	print("esta funcion")
+	if M.sonido == true then
+		M.sonido = false
+		M.gain_sfx = 0
+		M.gain_musica =  0
+		sound.pause("loader:/loader#proto_cancion_1", true)
+	else
+		M.sonido = true
+		M.gain_sfx = 1
+		M.gain_musica =  0.5
+		sound.pause("loader:/loader#proto_cancion_1", false)
+	end
+
+end
+
+
 M.animar_click = function(self, nodo, aumento, escala)
 	if escala == nil then
 		escala = 1

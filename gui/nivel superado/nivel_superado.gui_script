@@ -1,15 +1,5 @@
 local datos = require("main.datos")
 
-local function sonido_on_off(self)
-	if datos.sonido == false then
-		gui.play_flipbook(self.sonido, "sonido on")
-		datos.sonido = true
-	else
-		gui.play_flipbook(self.sonido, "sonido off")
-		datos.sonido = false
-	end
-end
-
 local function sonido_inicio(self)
 	if datos.sonido == false then
 		gui.play_flipbook(self.sonido, "sonido off")
@@ -106,8 +96,9 @@ function on_input(self, action_id, action)
 			self.volver_a_seleccion_de_nivel = true
 			finalizar_nivel_superado(self)
 		elseif gui.pick_node(self.sonido, action.x, action.y) then
-			sonido_on_off(self)
 			datos.animar_click(self, self.sonido, 0.7, 0.6)
+			datos.sonido_on_off()
+			sonido_inicio(self)
 		elseif gui.pick_node(self.siguiente_nivel, action.x, action.y) and gui.is_enabled(self.siguiente_nivel)then
 			msg.post("", "release_input_focus")
 			datos.animar_click(self, self.siguiente_nivel)
@@ -115,6 +106,7 @@ function on_input(self, action_id, action)
 
 			gui.animate(self.siguiente_nivel, "rotation.z", -360, gui.EASING_INBACK, 1.25, 0, 
 			function()
+				sound.play("/sonidos#siguiente_nivel_3", {gain = datos.gain_sfx})
 					finalizar_nivel_superado(self)
 			end)
 

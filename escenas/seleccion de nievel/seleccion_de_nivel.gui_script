@@ -6,7 +6,7 @@ local function abrir_candado(self)
 	if niveles[datos.ultimo_nivel_desbloqueado]["habilitado"] ~= nil then
 		if niveles[datos.ultimo_nivel_desbloqueado]["habilitado"]  == false then
 			gui.animate(boton_ac[hash("aro")], "rotation.z", 20, gui.EASING_INBOUNCE, 0.75, 0.25)
-			sound.play("#candado_abierto", {delay = 0.25})
+			sound.play("#candado_abierto", {gain = datos.gain_sfx, delay = 0.25})
 			gui.animate(boton_ac[hash("cuerpo")], "rotation.z", -10, gui.EASING_INBOUNCE, 0.75, 0.25,
 			function()
 				gui.animate(boton_ac[hash("aro")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 0.35)
@@ -14,7 +14,7 @@ local function abrir_candado(self)
 				function()
 					gui.set_enabled(boton_ac[hash("aro")], false)
 					gui.set_enabled(boton_ac[hash("cuerpo")], false)
-					sound.play("#nivel_desbloqueado")
+					sound.play("#nivel_desbloqueado", {gain = datos.gain_sfx})
 					gui.set_enabled(boton_ac[hash("numero_de_nivel")], true)
 					niveles[datos.ultimo_nivel_desbloqueado]["habilitado"] = true
 					msg.post("", "acquire_input_focus")
@@ -46,7 +46,7 @@ local function primera_vez_de_seleccion_de_pantalla(self)
 			for k, boton in pairs(self.tabla_de_botones) do
 				if k == 1 then
 					gui.animate(boton[hash("aro")], "rotation.z", 20, gui.EASING_INBOUNCE, 0.75, 0.25)
-					sound.play("#candado_abierto", {delay = 0.25})
+					sound.play("#candado_abierto", {gain = datos.gain_sfx, delay = 0.25})
 					gui.animate(boton[hash("cuerpo")], "rotation.z", -10, gui.EASING_INBOUNCE, 0.75, 0.25,
 					function()
 						gui.animate(boton[hash("aro")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 0.35)
@@ -54,7 +54,7 @@ local function primera_vez_de_seleccion_de_pantalla(self)
 						function()
 							gui.set_enabled(boton[hash("aro")], false)
 							gui.set_enabled(boton[hash("cuerpo")], false)
-							sound.play("#nivel_desbloqueado")
+							sound.play("#nivel_desbloqueado", {gain = datos.gain_sfx})
 							gui.set_enabled(boton[hash("numero_de_nivel")], true)
 							gui.animate(self.pantalla_negra, "color", vmath.vector4(1,1,1,0), gui.EASING_OUTCUBIC, 1, 0,
 							function()
@@ -115,7 +115,7 @@ function init(self)
 	--pprint(self.tabla_botones)
 	gui.set_enabled(self.boton_celeste, false)
 	gui.animate(self.boton_volver, "position.y", 656, gui.EASING_OUTCUBIC, 1)
-	sound.play("/go#seleccion_1", {gain = 1, delay = 0.0})
+	sound.play("/go#seleccion_1", {gain = datos.gain_sfx})
 	gui.animate(self.cuadro_azul, "position.x", 640, gui.EASING_OUTCUBIC, 1, 0,
 	function()
 		
