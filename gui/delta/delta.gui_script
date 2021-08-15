@@ -48,7 +48,7 @@ local function respiracion(self)
 	gui.animate(self.delta, "position.y", pos.y + 10, gui.EASING_LINEAR, 5, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 end
 local function tutorial(self)
-	gui.set_color(self.caja, vmath.vector4(0.25,0.25,1,0.75))
+	gui.set_color(self.caja, vmath.vector4(1,1,1,0.85))
 	gui.set_text(self.text, tuto[self.nivel][self.cuenta])
 	gui.set_color(self.text, vmath.vector4(1,1,1,0))
 	gui.animate(self.siguiente, "color.w", 0, gui.EASING_LINEAR, 0)

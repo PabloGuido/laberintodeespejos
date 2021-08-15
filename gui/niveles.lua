@@ -2,7 +2,7 @@ local arriba = vmath.vector3(0,0,90)
 local abajo = vmath.vector3(0,0,270)
 local izquierda = vmath.vector3(0,0,180)
 local derecha = vmath.vector3(0,0,0)
-local niveles = true
+local niveles = false
 local M = {}
 --[[ Objetos 
 1) Obstáculos

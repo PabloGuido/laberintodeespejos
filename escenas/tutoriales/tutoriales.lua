@@ -14,7 +14,7 @@ M["1"]["sonido_3"] = "tutoriales#tuto_1_3"
 M["1"][4] = "Nuestra meta es hacer llegar el laser hasta el\nobjetivo celeste que ves en el centro. Para eso\nvamos a usar los espejos que ves arriba de mí."
 M["1"]["sonido_4"] = "tutoriales#tuto_1_4"
 
-M["1"][5] = "Solo arrastralos hasta uno de los casilleros\ny soltalos para que se queden en el lugar. Podes\nusar el mouse o el dedo si tu pantalla es táctil."
+M["1"][5] = "Solo arrastralos hasta uno de los casilleros y\nsoltalos para que se queden en el lugar. Podes\nusar el mouse o el dedo si tu pantalla es táctil."
 M["1"]["sonido_5"] = "tutoriales#tuto_1_5"
 M["1"]["animacion_5"] = "mover espejo"
 
@@ -43,7 +43,7 @@ M["1"]["animacion_10"] = "rotar espejo 2"
 M["2"] = {}
 M["2"]["hacer_tuto"] = true
 
-M["2"][1] = "Muy bien, usemos lo que aprendimos en el nivel\nanterior para resolver este.\nVamos a necesitar mas de un espejo."
+M["2"][1] = "Muy bien, usemos lo que aprendimos en el\nnivel anterior para resolver este.\nVamos a necesitar mas de un espejo."
 M["2"]["sonido_1"] = "tutoriales#tuto_2_1"
 
 -------
@@ -52,7 +52,7 @@ M["3"]["hacer_tuto"] = true
 
 M["3"][1] = "Mirá, hay algo nuevo en los casilleros.\nEsos son obstátculos, como podés ver\nel laser no rebota en ellos."
 M["3"]["sonido_1"] = "tutoriales#tuto_3_1"
-M["3"][2] = "¡Encontremos el camino hasta nuestro objetivo!"
+M["3"][2] = "¡Encontremos el camino hasta nuestro\nobjetivo!"
 M["3"]["sonido_2"] = "tutoriales#tuto_3_2"
 -------
 
@@ -74,7 +74,7 @@ M["6"]["sonido_2"] = "tutoriales#tuto_6_2"
 M["6"][3] = "Tenemos que pasar el laser por todos\nlos interruptores para desactivar la barrera."
 M["6"]["sonido_3"] = "tutoriales#tuto_6_3"
 
-M["6"][4] = "Vamos, activemos todos los interruptores\ny hagamos llegar el laser hasta nuestro objetivo."
+M["6"][4] = "Vamos, activemos todos los interruptores\ny hagamos llegar el laser hasta nuestro\nobjetivo."
 M["6"]["sonido_4"] = "tutoriales#tuto_6_4"
 
 -------
