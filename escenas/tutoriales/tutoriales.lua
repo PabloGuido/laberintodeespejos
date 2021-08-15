@@ -41,10 +41,9 @@ M["1"]["animacion_10"] = "rotar espejo 2"
 
 -------
 M["2"] = {}
-M["2"]["hacer_tuto"] = false
-M["2"][1] = "hola mundo tuto 2!"
-M["2"][2] = "hola mundo tuto 2.2!"
-M["2"][3] = "hola mundo tuto2.3!"
+M["2"]["hacer_tuto"] = true
+M["2"][1] = "Muy bien, usemos lo que aprendimos en el nivel\nanterior para resolver este.\nVamos a necesitar mas de un espejo."
+M["2"]["sonido_1"] = "tutoriales#tuto_2_1"
 
 M["3"] = {}
 M["3"]["hacer_tuto"] = false
@@ -107,7 +106,7 @@ voy a iluminar lugares para que econtremos una solución.
 
 1.10) Listo, eso es todo por ahora. Empecemos a jugar, arrastrá los epejos y hacelos girar.
 
-
+2.1) Muy bien, usemos lo que aprendimos en el nivel anterior para resolver este. Vamos a necesitar mas de un espejo.
 
 1)
 a) Lo primero que pasa es que Delta se presenta brevemente y explica de que trata el juego.
