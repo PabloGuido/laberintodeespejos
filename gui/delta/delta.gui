@@ -1,7 +1,7 @@
 script: "/gui/delta/delta.gui_script"
 fonts {
-  name: "system_font"
-  font: "/builtins/fonts/system_font.font"
+  name: "tuto_font"
+  font: "/escenas/tutoriales/tuto_font.font"
 }
 background_color {
   x: 0.0
@@ -115,7 +115,7 @@ nodes {
 }
 nodes {
   position {
-    x: -348.0
+    x: -386.0
     y: 69.0
     z: 0.0
     w: 1.0
@@ -147,7 +147,7 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "<text>"
-  font: "system_font"
+  font: "tuto_font"
   id: "text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE

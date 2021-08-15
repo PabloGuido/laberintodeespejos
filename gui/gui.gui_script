@@ -274,9 +274,9 @@ function init(self)
 	self.laser_prendido = false
 	self.cannon = gui.get_node("cannon")
 	gui.set_color(self.cannon , vmath.vector4(1,1,1,0))
-	print("rotacion cannon")
+	--print("rotacion cannon")
 	gui.set_rotation(self.cannon, niveles[self.nivel]["rotacion"])
-	print(gui.get_rotation(self.cannon))
+	--print(gui.get_rotation(self.cannon))
 	self.cannon_adorno = gui.get_node("cannon_adorno")
 	-- clonacion de beams
 	self.laser_tabla = {}

@@ -1,13 +1,52 @@
+local tuto = require("escenas.tutoriales.tutoriales")
+local datos = require("main.datos")
+--print(tuto["1"][4])
 local function respiracion(self)
 	local pos = gui.get_position(self.delta)
 	gui.animate(self.delta, "position.y", pos.y + 10, gui.EASING_LINEAR, 5, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 end
+local function tutorial(self)
+	gui.set_color(self.caja, vmath.vector4(0.25,0.25,1,0.75))
+	gui.set_text(self.text, tuto[self.nivel][self.cuenta])
+	gui.set_color(self.text, vmath.vector4(1,1,1,0))
+	gui.animate(self.text, "color.w", 1, gui.EASING_LINEAR, 1)
+	sound.play(tuto[self.nivel ]["sonido_" .. self.nivel], {gain = 0.5, speed = 1.5},
+	function()
+		self.cuenta = self.cuenta + 1
+		if tuto[self.nivel][self.cuenta] ~= nil then
+			tutorial(self)
+		else
+			
+			gui.animate(self.text, "color.w", 0, gui.EASING_LINEAR, 1)
+			gui.animate(self.caja, "color.w", 0, gui.EASING_LINEAR, 1, 0,
+			function()
+				gui.set_enabled(self.caja, false)
+				gui.set_enabled(self.text, false)
+				print("fin de tutorial")
+			end)
+			
+		end
+	end)
+
+end
 function init(self)
+	self.nivel = tostring(datos.jugar_nivel)
+	self.cuenta = 1
 	gui.set_render_order(4)
+	self.caja = gui.get_node("caja")
+	gui.set_color(self.caja, vmath.vector4(1,1,1,0))
+	self.text = gui.get_node("text")
+	gui.set_color(self.text, vmath.vector4(1,1,1,0))
 	self.delta = gui.get_node("delta")
 	gui.animate(self.delta, "position.y", -148, gui.EASING_OUTCUBIC, 1, 0,
 	function()
 		respiracion(self)
+		local nivel = tostring(datos.jugar_nivel)
+		if tuto[nivel]["hacer_tuto"] == true then -- chequea si hay que hacer tutorial en el nivel o decir algo al comienzo
+			print("hacer tutorial " .. nivel)
+			tutorial(self)
+			
+		end
 	end)
 	
 

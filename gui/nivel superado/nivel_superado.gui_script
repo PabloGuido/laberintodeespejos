@@ -39,7 +39,7 @@ function init(self)
 	gui.set_enabled(self.sonido, false)
 	
 	self.volver_a_seleccion_de_nivel = false
-	print("moveñ" .. datos.jugar_nivel)
+	--print("Nivel" .. datos.jugar_nivel)
 end
 
 function final(self)
