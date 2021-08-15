@@ -17,6 +17,12 @@ M["1"]["sonido_4"] = "tutoriales#tuto_1_1"
 M["1"][5] = "Solo arrastralos hasta uno de los casilleros\ny soltalos para que se queden en el lugar. Podes\nusar el mouse o el dedo si tu pantalla es táctil."
 M["1"]["sonido_5"] = "tutoriales#tuto_1_1"
 M["1"]["animacion_5"] = "mover espejo"
+
+M["1"][6] = "El siguiente paso es girar el espejo para que apunte en la dirección correcta."
+M["1"]["sonido_6"] = "tutoriales#tuto_1_1"
+M["1"]["animacion_6"] = "rotar espejo"
+
+
 -------
 M["2"] = {}
 M["2"][1] = "hola mundo tuto 2!"
@@ -44,6 +50,9 @@ que rebotar en los espjos que ves acá arriba.
 1.5) Solo arrastralos hasta uno de los casilleros y soltalo para que se quede en el lugar.
 Podes usar el mouse o el dedo si tu pantalla es tactil.
 
+1.6) El siguiente paso es girar el espejo para que apunte en la dirección correcta.
+Usá las flechas que ves acá arriba, apareceran siempre que tengas seleccionado un espejo.
+
 Podés usar toda la cantidad de espejos que quieras y moverlos, si necesitas borrar alguno solo
 arrastralo por fuera de los casilleros.
 Una última cosa, si necesitas que te de un pista solo tocá en la lupa que ves a la derecha y te 
@@ -51,8 +60,7 @@ voy a iluminar lugares para que econtremos una solución.
 Listo, empecemos, arrastrá los epejos y hacelos girar. Juegmos.
 
 
-Muy bien, ahora el siguiente punto es girar el espejo para que apunte en la dirección correcta.
-Usá las flechas que ves acá arriba, apareceran siempre que tengas seleccionado un espejo.
+
 1)
 a) Lo primero que pasa es que Delta se presenta brevemente y explica de que trata el juego.
 El juego trata de hacer rebotar el laser en los espejos para hacerlo llegar al objetivo.

@@ -1,6 +1,27 @@
 local tuto = require("escenas.tutoriales.tutoriales")
 local datos = require("main.datos")
 --print(tuto["1"][4])
+local function animaciones(self)
+	if self.que_animacion_reproducir == "mover espejo" then
+		gui.set_enabled(self.espejo, true)
+		self.nodo_anim = self.espejo
+		self.nodo_prop = "position"
+		local espejo_pos_inicial = vmath.vector3(155,600,0)
+		self.animacion_en_reproduccion = gui.animate(self.nodo_anim, self.nodo_prop, vmath.vector3(684,234,0), gui.EASING_OUTCUBIC, 2, 0, nil, gui.PLAYBACK_LOOP_FORWARD)
+	elseif self.que_animacion_reproducir == "rotar espejo" then
+		gui.set_enabled(self.espejo, true)
+		gui.set_position(self.espejo, vmath.vector3(684,234,0))
+		self.nodo_anim = self.espejo
+		gui.set_rotation(self.nodo_anim, vmath.vector3(0,0,0))
+		self.nodo_prop = "rotation.z"
+		self.animacion_en_reproduccion = gui.animate(self.nodo_anim, self.nodo_prop, 90, gui.EASING_INBACK, 1, 0,
+		function()
+			timer.delay(0.5, false, animaciones)
+
+		end)
+	end
+
+end
 local function respiracion(self)
 	local pos = gui.get_position(self.delta)
 	gui.animate(self.delta, "position.y", pos.y + 10, gui.EASING_LINEAR, 5, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
@@ -16,10 +37,30 @@ local function tutorial(self)
 		self.cuenta = self.cuenta + 1
 			msg.post("", "acquire_input_focus")
 			gui.animate(self.siguiente, "color.w", 1, gui.EASING_LINEAR, 2, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
-	end)
+		end)
 
+	if self.nodo_anim ~= nil then
+		gui.cancel_animation(self.nodo_anim, self.nodo_prop)
+		gui.set_enabled(self.nodo_anim, false)
+		self.nodo_anim = nil
+		self.nodo_prop = nil
+		
+	end
+
+	if tuto["1"]["animacion_" .. self.cuenta ] ~= nil then
+		print(tuto["1"]["animacion_" .. self.cuenta ])
+		self.que_animacion_reproducir = tuto["1"]["animacion_" .. self.cuenta ]
+		animaciones(self)
+	end
 end
 function init(self)
+	-- animables --
+	self.nodo_anim = nil
+	self.nodo_prop = nil
+	self.que_animacion_reproducir = ""
+	self.espejo = gui.get_node("espejo")
+	gui.set_enabled(self.espejo, false)
+	---------------
 	self.nivel = tostring(datos.jugar_nivel)
 	self.cuenta = 1
 	self.tutorial_finalizado = false

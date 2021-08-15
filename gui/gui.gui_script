@@ -336,6 +336,7 @@ function init(self)
 			elseif constatador == 4 then -- Coloca el cannon
 				ocupado = true
 				gui.set_position(self.cannon, self.pos)
+				print(self.pos)
 				msg.post("laser#laser", "posicion_inicial", {pos = self.pos})
 			elseif constatador == 5 then
 				local nueva_pista = clonar_nodo(self, self.pista, hash("pista"), self.pos, self.pistas, false)
