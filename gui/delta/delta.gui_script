@@ -53,11 +53,11 @@ local function tutorial(self)
 	gui.set_color(self.text, vmath.vector4(1,1,1,0))
 	gui.animate(self.siguiente, "color.w", 0, gui.EASING_LINEAR, 0)
 	gui.animate(self.text, "color.w", 1, gui.EASING_LINEAR, 1)
-	sound.play(tuto[self.nivel ]["sonido_" .. self.nivel], {gain = 0.5, speed = 2},
+	sound.play(tuto[self.nivel ]["sonido_" .. self.cuenta], {gain = 1},
 	function()
-		self.cuenta = self.cuenta + 1
+			self.cuenta = self.cuenta + 1
 			msg.post("", "acquire_input_focus")
-			gui.animate(self.siguiente, "color.w", 1, gui.EASING_LINEAR, 2, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+			gui.animate(self.siguiente, "color.w", 1, gui.EASING_LINEAR, 1.5, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 		end)
 
 	if self.nodo_anim ~= nil then
