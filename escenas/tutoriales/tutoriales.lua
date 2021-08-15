@@ -18,11 +18,17 @@ M["1"][5] = "Solo arrastralos hasta uno de los casilleros\ny soltalos para que s
 M["1"]["sonido_5"] = "tutoriales#tuto_1_1"
 M["1"]["animacion_5"] = "mover espejo"
 
-M["1"][6] = "El siguiente paso es girar el espejo para que apunte en la dirección correcta."
+M["1"][6] = "El siguiente paso es girar el espejo para que\napunte en la dirección correcta."
 M["1"]["sonido_6"] = "tutoriales#tuto_1_1"
-M["1"]["animacion_6"] = "rotar espejo"
+M["1"]["animacion_6"] = "mover espejo 2"
 
+M["1"][7] = "Usá las flechas que ves acá arriba, aparecen\nsiempre que tengas seleccionado un espejo."
+M["1"]["sonido_7"] = "tutoriales#tuto_1_1"
+M["1"]["animacion_7"] = "rotar espejo"
 
+M["1"][8] = "8"
+M["1"]["sonido_8"] = "tutoriales#tuto_1_1"
+--M["1"]["animacion_8"] = "rotar espejo"
 -------
 M["2"] = {}
 M["2"][1] = "hola mundo tuto 2!"

@@ -109,6 +109,12 @@ function on_message(self, message_id, message, sender)
 		go.set_position(message.pos, "")
 		self.to = go.get_position()
 		--print(go.get_position())
+	elseif message_id == hash("mover_relevo_tutorial") then
+		go.set_position(message.pos, "")
+		self.to = go.get_position()
+	elseif message_id == hash("rotar_relevo_tutorial") then
+		go.set("/espejo_relevo", "euler.z", message.rot)
+		self.to = go.get_position()
 	end
 	if message_id == hash("accion_gui") then
 		self.pos_rotacion  = self.pos_rotacion  + message.valor

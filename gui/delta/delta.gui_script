@@ -8,16 +8,26 @@ local function animaciones(self)
 		self.nodo_prop = "position"
 		local espejo_pos_inicial = vmath.vector3(155,600,0)
 		self.animacion_en_reproduccion = gui.animate(self.nodo_anim, self.nodo_prop, vmath.vector3(684,234,0), gui.EASING_OUTCUBIC, 2, 0, nil, gui.PLAYBACK_LOOP_FORWARD)
+	elseif self.que_animacion_reproducir == "mover espejo 2" then
+		gui.set_enabled(self.espejo, true)
+		self.nodo_anim = self.espejo
+		self.nodo_prop = "position"
+		gui.set_position(self.espejo, vmath.vector3(684,234,0))
+		msg.post("/espejo_relevo", "mover_relevo_tutorial", {pos = vmath.vector3(684,234,0)})
 	elseif self.que_animacion_reproducir == "rotar espejo" then
+		gui.set_enabled(self.ui_objeto, true)
 		gui.set_enabled(self.espejo, true)
 		gui.set_position(self.espejo, vmath.vector3(684,234,0))
 		self.nodo_anim = self.espejo
 		gui.set_rotation(self.nodo_anim, vmath.vector3(0,0,0))
 		self.nodo_prop = "rotation.z"
+		msg.post("/espejo_relevo", "mover_relevo_tutorial", {pos = vmath.vector3(684,234,0)})
+		msg.post("/espejo_relevo", "rotar_relevo_tutorial", {rot = 0}) -- reiniciar este valor cuando va a arrancar el juego.
 		self.animacion_en_reproduccion = gui.animate(self.nodo_anim, self.nodo_prop, 90, gui.EASING_INBACK, 1, 0,
 		function()
-			timer.delay(0.5, false, animaciones)
-
+			msg.post("/espejo_relevo", "rotar_relevo_tutorial", {rot = 90})
+			self.timer = timer.delay(1, false, animaciones)
+			
 		end)
 	end
 
@@ -44,7 +54,10 @@ local function tutorial(self)
 		gui.set_enabled(self.nodo_anim, false)
 		self.nodo_anim = nil
 		self.nodo_prop = nil
-		
+		if self.timer ~= nil then
+			timer.cancel(self.timer)
+			self.timer = nil
+		end
 	end
 
 	if tuto["1"]["animacion_" .. self.cuenta ] ~= nil then
@@ -57,9 +70,12 @@ function init(self)
 	-- animables --
 	self.nodo_anim = nil
 	self.nodo_prop = nil
+	self.timer = nil
 	self.que_animacion_reproducir = ""
 	self.espejo = gui.get_node("espejo")
 	gui.set_enabled(self.espejo, false)
+	self.ui_objeto = gui.get_node("ui_objeto")
+	gui.set_enabled(self.ui_objeto, false)
 	---------------
 	self.nivel = tostring(datos.jugar_nivel)
 	self.cuenta = 1
@@ -119,6 +135,9 @@ function on_input(self, action_id, action)
 				gui.set_enabled(self.text, false)
 				self.tutorial_finalizado = true
 				print("fin de tutorial, mandar input al gui gameplay")
+				-- Restaruar valores que sean necesarios.
+				msg.post("/espejo_relevo", "rotar_relevo_tutorial", {rot = 0})
+				msg.post("/espejo_relevo", "mover_relevo_tutorial", {pos = vmath.vector3(0,0,0)})
 			end)
 		end
 	end
