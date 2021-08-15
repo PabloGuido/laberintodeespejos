@@ -9,10 +9,12 @@ local function animaciones(self)
 		local espejo_pos_inicial = vmath.vector3(155,600,0)
 		self.animacion_en_reproduccion = gui.animate(self.nodo_anim, self.nodo_prop, vmath.vector3(684,234,0), gui.EASING_OUTCUBIC, 2, 0, nil, gui.PLAYBACK_LOOP_FORWARD)
 	elseif self.que_animacion_reproducir == "mover espejo 2" then
+		gui.set_enabled(self.adorno, true)
 		gui.set_enabled(self.espejo, true)
 		self.nodo_anim = self.espejo
 		self.nodo_prop = "position"
 		gui.set_position(self.espejo, vmath.vector3(684,234,0))
+		gui.set_position(self.adorno, vmath.vector3(684,234,0))
 		msg.post("/espejo_relevo", "mover_relevo_tutorial", {pos = vmath.vector3(684,234,0)})
 	elseif self.que_animacion_reproducir == "rotar espejo" then
 		gui.set_enabled(self.ui_objeto, true)
@@ -29,6 +31,15 @@ local function animaciones(self)
 			self.timer = timer.delay(1, false, animaciones)
 			
 		end)
+	elseif self.que_animacion_reproducir == "rotar espejo 2" then
+		gui.set_enabled(self.ui_objeto, true)
+		gui.set_enabled(self.espejo, true)
+		gui.set_position(self.espejo, vmath.vector3(684,234,0))
+		self.nodo_anim = self.espejo
+		gui.set_rotation(self.nodo_anim, vmath.vector3(0,0,90))
+		self.nodo_prop = "rotation.z"
+		msg.post("/espejo_relevo", "mover_relevo_tutorial", {pos = vmath.vector3(684,234,0)})
+		msg.post("/espejo_relevo", "rotar_relevo_tutorial", {rot = 90}) 
 	end
 
 end
@@ -74,8 +85,13 @@ function init(self)
 	self.que_animacion_reproducir = ""
 	self.espejo = gui.get_node("espejo")
 	gui.set_enabled(self.espejo, false)
+	
 	self.ui_objeto = gui.get_node("ui_objeto")
 	gui.set_enabled(self.ui_objeto, false)
+	
+	self.adorno = gui.get_node("adorno")
+	gui.animate(self.adorno, "rotation.z", 360, gui.EASING_LINEAR, 25, 0, nil, gui.PLAYBACK_LOOP_FORWARD)
+	gui.set_enabled(self.adorno, false)
 	---------------
 	self.nivel = tostring(datos.jugar_nivel)
 	self.cuenta = 1
@@ -138,6 +154,18 @@ function on_input(self, action_id, action)
 				-- Restaruar valores que sean necesarios.
 				msg.post("/espejo_relevo", "rotar_relevo_tutorial", {rot = 0})
 				msg.post("/espejo_relevo", "mover_relevo_tutorial", {pos = vmath.vector3(0,0,0)})
+				gui.set_enabled(self.adorno, false)
+				gui.set_enabled(self.ui_objeto, false)
+				if self.nodo_anim ~= nil then
+					gui.cancel_animation(self.nodo_anim, self.nodo_prop)
+					gui.set_enabled(self.nodo_anim, false)
+					self.nodo_anim = nil
+					self.nodo_prop = nil
+					if self.timer ~= nil then
+						timer.cancel(self.timer)
+						self.timer = nil
+					end
+				end
 			end)
 		end
 	end

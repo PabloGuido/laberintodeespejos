@@ -26,9 +26,19 @@ M["1"][7] = "Usá las flechas que ves acá arriba, aparecen\nsiempre que tengas 
 M["1"]["sonido_7"] = "tutoriales#tuto_1_1"
 M["1"]["animacion_7"] = "rotar espejo"
 
-M["1"][8] = "8"
+M["1"][8] = "Podés mover y usar la cantidad de espejos que\nquieras, si necesitas borrar alguno solo\narrastralo por fuera de los casilleros."
 M["1"]["sonido_8"] = "tutoriales#tuto_1_1"
---M["1"]["animacion_8"] = "rotar espejo"
+M["1"]["animacion_8"] = "rotar espejo 2"
+
+M["1"][9] = "Una última cosa, si necesitas ayuda solo\ntocá en la lupa que ves a la derecha y te daré\npistas para que resolvamos el nivel."
+M["1"]["sonido_9"] = "tutoriales#tuto_1_1"
+M["1"]["animacion_9"] = "rotar espejo 2"
+
+M["1"][10] = "Listo, eso es todo por ahora.\nEmpecemos a jugar, arrastrá los epejos\ny hacelos girar."
+M["1"]["sonido_10"] = "tutoriales#tuto_1_1"
+M["1"]["animacion_10"] = "rotar espejo 2"
+
+
 -------
 M["2"] = {}
 M["2"][1] = "hola mundo tuto 2!"
@@ -57,13 +67,16 @@ que rebotar en los espjos que ves acá arriba.
 Podes usar el mouse o el dedo si tu pantalla es tactil.
 
 1.6) El siguiente paso es girar el espejo para que apunte en la dirección correcta.
-Usá las flechas que ves acá arriba, apareceran siempre que tengas seleccionado un espejo.
 
-Podés usar toda la cantidad de espejos que quieras y moverlos, si necesitas borrar alguno solo
+1.7)Usá las flechas que ves acá arriba, apareceran siempre que tengas seleccionado un espejo.
+
+1.8) Podés usar toda la cantidad de espejos que quieras y moverlos, si necesitas borrar alguno solo
 arrastralo por fuera de los casilleros.
-Una última cosa, si necesitas que te de un pista solo tocá en la lupa que ves a la derecha y te 
+
+1.9) Una última cosa, si necesitas que te de un pista solo tocá en la lupa que ves a la derecha y te 
 voy a iluminar lugares para que econtremos una solución.
-Listo, empecemos, arrastrá los epejos y hacelos girar. Juegmos.
+
+1.10) Listo, eso es todo por ahora. Empecemos a jugar, arrastrá los epejos y hacelos girar.
 
 
 
