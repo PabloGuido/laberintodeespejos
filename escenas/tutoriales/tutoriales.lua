@@ -54,29 +54,42 @@ M["3"][1] = "Mirá, hay algo nuevo en los casilleros.\nEsos son obstátculos, co
 M["3"]["sonido_1"] = "tutoriales#tuto_3_1"
 M["3"][2] = "¡Encontremos el camino hasta nuestro objetivo!"
 M["3"]["sonido_2"] = "tutoriales#tuto_3_2"
-
+-------
 
 M["4"] = {}
 M["4"]["hacer_tuto"] = false
-
+-------
 M["5"] = {}
 M["5"]["hacer_tuto"] = false
-
+-------
 M["6"] = {}
-M["6"]["hacer_tuto"] = false
+M["6"]["hacer_tuto"] = true
 
+M["6"][1] = "Mirá hay un objeto nuevo en los casilleros.\nEsos son interruptores."
+M["6"]["sonido_1"] = "tutoriales#tuto_test"
+
+M["6"][2] = "Y como podés ver el objetivo tiene\nuna barrera que que no permite al laser\nllegar hasta él."
+M["6"]["sonido_2"] = "tutoriales#tuto_test"
+
+M["6"][3] = "Tenemos que pasar el laser por todos\nlos interruptores para desactivar la barrera."
+M["6"]["sonido_3"] = "tutoriales#tuto_test"
+
+M["6"][4] = "Vamos, activemos todos los interruptores\ny hagamos llegar el laser hasta nuestro objetivo."
+M["6"]["sonido_4"] = "tutoriales#tuto_test"
+
+-------
 M["7"] = {}
 M["7"]["hacer_tuto"] = false
-
+-------
 M["8"] = {}
 M["8"]["hacer_tuto"] = false
-
+-------
 M["9"] = {}
 M["9"]["hacer_tuto"] = false
-
+-------
 M["10"] = {}
 M["10"]["hacer_tuto"] = false
-
+-------
 
 
 
@@ -115,6 +128,14 @@ voy a iluminar lugares para que econtremos una solución.
 1.10) Listo, eso es todo por ahora. Empecemos a jugar, arrastrá los epejos y hacelos girar.
 
 2.1) Muy bien, usemos lo que aprendimos en el nivel anterior para resolver este. Vamos a necesitar mas de un espejo.
+
+3.1)
+3.2)
+
+6.1) Mirá hay un objeto nuevo en los casilleros. Esos son interruptores. Y como podés ver el objetivo tiene una barrera que que no permite al laser
+llegar hasta él.
+Tenemos que pasar el laser por todos los interruptores para desactivar la barrera.
+Vamos, activemos todos los interruptores y hagamos llegar el laser hasta nuestro objetivo.
 
 1)
 a) Lo primero que pasa es que Delta se presenta brevemente y explica de que trata el juego.
