@@ -66,16 +66,16 @@ M["6"] = {}
 M["6"]["hacer_tuto"] = true
 
 M["6"][1] = "Mirá hay un objeto nuevo en los casilleros.\nEsos son interruptores."
-M["6"]["sonido_1"] = "tutoriales#tuto_test"
+M["6"]["sonido_1"] = "tutoriales#tuto_6_1"
 
 M["6"][2] = "Y como podés ver el objetivo tiene\nuna barrera que que no permite al laser\nllegar hasta él."
-M["6"]["sonido_2"] = "tutoriales#tuto_test"
+M["6"]["sonido_2"] = "tutoriales#tuto_6_2"
 
 M["6"][3] = "Tenemos que pasar el laser por todos\nlos interruptores para desactivar la barrera."
-M["6"]["sonido_3"] = "tutoriales#tuto_test"
+M["6"]["sonido_3"] = "tutoriales#tuto_6_3"
 
 M["6"][4] = "Vamos, activemos todos los interruptores\ny hagamos llegar el laser hasta nuestro objetivo."
-M["6"]["sonido_4"] = "tutoriales#tuto_test"
+M["6"]["sonido_4"] = "tutoriales#tuto_6_4"
 
 -------
 M["7"] = {}
