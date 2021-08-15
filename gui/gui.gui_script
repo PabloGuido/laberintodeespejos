@@ -109,7 +109,7 @@ local function inicializacion_objetos_alpha(self) -- Da el input focus inicial.
 	function()
 		-- Mandar tutorariales
 		print("mandar tutos, no hay input")
-		msg.post("", "acquire_input_focus")
+		--msg.post("", "acquire_input_focus")
 	end)
 end
 

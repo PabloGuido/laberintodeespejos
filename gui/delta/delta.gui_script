@@ -9,34 +9,27 @@ local function tutorial(self)
 	gui.set_color(self.caja, vmath.vector4(0.25,0.25,1,0.75))
 	gui.set_text(self.text, tuto[self.nivel][self.cuenta])
 	gui.set_color(self.text, vmath.vector4(1,1,1,0))
+	gui.animate(self.siguiente, "color.w", 0, gui.EASING_LINEAR, 0)
 	gui.animate(self.text, "color.w", 1, gui.EASING_LINEAR, 1)
-	sound.play(tuto[self.nivel ]["sonido_" .. self.nivel], {gain = 0.5, speed = 1.5},
+	sound.play(tuto[self.nivel ]["sonido_" .. self.nivel], {gain = 0.5, speed = 2},
 	function()
 		self.cuenta = self.cuenta + 1
-		if tuto[self.nivel][self.cuenta] ~= nil then
-			tutorial(self)
-		else
-			
-			gui.animate(self.text, "color.w", 0, gui.EASING_LINEAR, 1)
-			gui.animate(self.caja, "color.w", 0, gui.EASING_LINEAR, 1, 0,
-			function()
-				gui.set_enabled(self.caja, false)
-				gui.set_enabled(self.text, false)
-				print("fin de tutorial")
-			end)
-			
-		end
+			msg.post("", "acquire_input_focus")
+			gui.animate(self.siguiente, "color.w", 1, gui.EASING_LINEAR, 2, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 	end)
 
 end
 function init(self)
 	self.nivel = tostring(datos.jugar_nivel)
 	self.cuenta = 1
-	gui.set_render_order(4)
+	self.tutorial_finalizado = false
+	gui.set_render_order(10)
 	self.caja = gui.get_node("caja")
 	gui.set_color(self.caja, vmath.vector4(1,1,1,0))
 	self.text = gui.get_node("text")
 	gui.set_color(self.text, vmath.vector4(1,1,1,0))
+	self.siguiente = gui.get_node("siguiente")
+	gui.set_color(self.siguiente, vmath.vector4(1,1,1,0))
 	self.delta = gui.get_node("delta")
 	gui.animate(self.delta, "position.y", -148, gui.EASING_OUTCUBIC, 1, 0,
 	function()
@@ -45,7 +38,6 @@ function init(self)
 		if tuto[nivel]["hacer_tuto"] == true then -- chequea si hay que hacer tutorial en el nivel o decir algo al comienzo
 			print("hacer tutorial " .. nivel)
 			tutorial(self)
-			
 		end
 	end)
 	
@@ -72,15 +64,23 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	-- Add input-handling code here. The game object this script is attached to
-	-- must have acquired input focus:
-	--
-	--    msg.post(".", "acquire_input_focus")
-	--
-	-- All mapped input bindings will be received. Mouse and touch input will
-	-- be received regardless of where on the screen it happened.
-	-- Learn more: https://defold.com/manuals/input/
-	-- Remove this function if not needed
+
+	if action_id == hash("touch") and action.pressed then
+		if tuto[self.nivel][self.cuenta] ~= nil then
+			msg.post("", "release_input_focus")
+			tutorial(self)
+		else
+			gui.animate(self.text, "color.w", 0, gui.EASING_LINEAR, 1)
+			gui.animate(self.siguiente, "color.w", 0, gui.EASING_LINEAR, 1)
+			gui.animate(self.caja, "color.w", 0, gui.EASING_LINEAR, 1, 0,
+			function()
+				gui.set_enabled(self.caja, false)
+				gui.set_enabled(self.text, false)
+				self.tutorial_finalizado = true
+				print("fin de tutorial, mandar input al gui gameplay")
+			end)
+		end
+	end
 end
 
 function on_reload(self)

@@ -1,15 +1,22 @@
 local M = {}
 M["1"] = {}
 M["1"]["hacer_tuto"] = true
+
 M["1"][1] = "¡Hola! Mi nombre es Delta, y lo que más\nme gusta en el mundo es crear mis propios\ninventos y jugar con mis amigos."
 M["1"]["sonido_1"] = "tutoriales#tuto_1_1"
-M["1"][2] = "hola mundo 2!"
+
+M["1"][2] = "Estuve armando este juego para compartirlo\ncon vos, dejame que te explique como\nfunciona."
 M["1"]["sonido_2"] = "tutoriales#tuto_1_1"
-M["1"][3] = "hola mundo 3!"
+
+M["1"][3] = "Sabías que si apuntás un laser a un espejo\neste rebota y sigue su camino?"
 M["1"]["sonido_3"] = "tutoriales#tuto_1_1"
 
+M["1"][4] = "El objetivo es hacer llegar el laser hasta el\nobjetivo celeste que ves en el centro. Para eso\nvamos a usar los espejos que ves arriba de mí."
+M["1"]["sonido_4"] = "tutoriales#tuto_1_1"
 
-
+M["1"][5] = "Solo arrastralos hasta uno de los casilleros\ny soltalos para que se queden en el lugar. Podes\nusar el mouse o el dedo si tu pantalla es táctil."
+M["1"]["sonido_5"] = "tutoriales#tuto_1_1"
+M["1"]["animacion_5"] = "mover espejo"
 -------
 M["2"] = {}
 M["2"][1] = "hola mundo tuto 2!"
@@ -27,12 +34,16 @@ Crear mis propios inventos y jugar con mis amigos.
 1.1) ¡Hola! Mi nombre es Delta, y lo que más me gusta en el mundo es crear mis propios inventos
 y jugar con mis amigos.
 
-Sabías que si apuntás un laser a un espejo este reobota y sigue su camino?
-Con esa idea en mente hice este juego, dejame explicarte como funciona.
-El objetivo es hacer llegar el laser al objetivo que ves en el centro. Para eso el laser tiene
+1.2) Estuve armando este juego para compartirlo con vos, dejame que te explique como funciona.
+
+1.3) Sabías que si apuntás un laser a un espejo este reobota y sigue su camino?
+
+1.4) El objetivo es hacer llegar el laser al objetivo que ves en el centro. Para eso el laser tiene
 que rebotar en los espjos que ves acá arriba.
-Solo arrastralos hasta uno de los casilleros y soltalo para que se quede en el lugar.
+
+1.5) Solo arrastralos hasta uno de los casilleros y soltalo para que se quede en el lugar.
 Podes usar el mouse o el dedo si tu pantalla es tactil.
+
 Podés usar toda la cantidad de espejos que quieras y moverlos, si necesitas borrar alguno solo
 arrastralo por fuera de los casilleros.
 Una última cosa, si necesitas que te de un pista solo tocá en la lupa que ves a la derecha y te 
