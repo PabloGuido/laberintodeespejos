@@ -108,10 +108,13 @@ function init(self)
 	function()
 		respiracion(self)
 		local nivel = tostring(datos.jugar_nivel)
-		if tuto[nivel]["hacer_tuto"] == true then -- chequea si hay que hacer tutorial en el nivel o decir algo al comienzo
-			print("hacer tutorial " .. nivel)
-			tutorial(self)
-		end
+			print(tuto[nivel]["hacer_tuto"])
+			if tuto[nivel]["hacer_tuto"] == true then -- chequea si hay que hacer tutorial en el nivel o decir algo al comienzo
+				print("hacer tutorial " .. nivel)
+				tutorial(self)
+			else
+				msg.post("/gui#gui", "tomar_input")
+			end
 	end)
 	
 
@@ -166,6 +169,7 @@ function on_input(self, action_id, action)
 						self.timer = nil
 					end
 				end
+				msg.post("/gui#gui", "tomar_input")
 			end)
 		end
 	end

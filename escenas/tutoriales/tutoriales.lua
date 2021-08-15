@@ -5,7 +5,7 @@ M["1"]["hacer_tuto"] = true
 M["1"][1] = "¡Hola! Mi nombre es Delta, y lo que más\nme gusta en el mundo es crear mis propios\ninventos y jugar con mis amigos."
 M["1"]["sonido_1"] = "tutoriales#tuto_1_1"
 
-M["1"][2] = "Estuve armando este juego para compartirlo\ncon vos, dejame que te explique como\nfunciona."
+M["1"][2] = "Estuve armando este juego para compartirlo\ncon vos, dejáme que te explique como\nfunciona."
 M["1"]["sonido_2"] = "tutoriales#tuto_1_1"
 
 M["1"][3] = "Sabías que si apuntás un laser a un espejo\neste rebota y sigue su camino?"
@@ -41,9 +41,38 @@ M["1"]["animacion_10"] = "rotar espejo 2"
 
 -------
 M["2"] = {}
+M["2"]["hacer_tuto"] = false
 M["2"][1] = "hola mundo tuto 2!"
 M["2"][2] = "hola mundo tuto 2.2!"
 M["2"][3] = "hola mundo tuto2.3!"
+
+M["3"] = {}
+M["3"]["hacer_tuto"] = false
+
+M["4"] = {}
+M["4"]["hacer_tuto"] = false
+
+M["5"] = {}
+M["5"]["hacer_tuto"] = false
+
+M["6"] = {}
+M["6"]["hacer_tuto"] = false
+
+M["7"] = {}
+M["7"]["hacer_tuto"] = false
+
+M["8"] = {}
+M["8"]["hacer_tuto"] = false
+
+M["9"] = {}
+M["9"]["hacer_tuto"] = false
+
+M["10"] = {}
+M["10"]["hacer_tuto"] = false
+
+
+
+
 return M
 
 

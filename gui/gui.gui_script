@@ -640,6 +640,8 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("avanzar_de_nivel") then
 		print("avanzar_de_nivel")
 		terminar_escena_gameplay(self)
+	elseif message_id == hash("tomar_input") then
+		msg.post("", "acquire_input_focus")
 	end
 end
 
