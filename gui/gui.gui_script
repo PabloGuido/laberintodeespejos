@@ -22,21 +22,6 @@ local function finalizar_botones(self)
 end
 
 local function terminar_escena_gameplay(self)
---[[
-	if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultimo_nivel_desbloqueado < 11 then
-		datos.jugar_nivel = datos.jugar_nivel + 1
-		datos.ultimo_nivel_desbloqueado = datos.ultimo_nivel_desbloqueado + 1
-		print(datos.ultimo_nivel_desbloqueado)
-	end
-	]]
---	if datos.ultimo_nivel_desbloqueado < 11 then
---		datos.jugar_nivel = datos.jugar_nivel + 1
---		datos.ultimo_nivel_desbloqueado = datos.jugar_nivel
-	--	if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado then
-	--		datos.ultimo_nivel_desbloqueado = datos.ultimo_nivel_desbloqueado + 1
-	--		print("ultimo nivel desbloqueado " .. datos.ultimo_nivel_desbloqueado)
-	--	end
-	--	end
 	if datos.jugar_nivel < 10 then
 		datos.jugar_nivel = datos.jugar_nivel + 1
 	
@@ -115,10 +100,17 @@ local function inicializacion_objetos_alpha(self) -- Da el input focus inicial.
 	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
 	gui.animate(self.barrera, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
 	gui.animate(self.cannon, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
-	gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1, 0, function() msg.post("", "acquire_input_focus") end)
+	--gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1, 0, function() msg.post("", "acquire_input_focus") end)
 	gui.move_below(self.sonido_nodo, self.tacho)
 	gui.move_below(self.retroceder, self.tacho)
 	gui.move_below(self.lupa, self.tacho)
+	-- Acá vamos a poner la inicialización de los tutoriales.
+	gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1, 0,
+	function()
+		-- Mandar tutorariales
+		print("mandar tutos, no hay input")
+		--msg.post("", "acquire_input_focus")
+	end)
 end
 
 local function on_off_sonido(self, sonido)
@@ -215,7 +207,6 @@ end
 
 function init(self)
 	--msg.post("@render:", "clear_color", { color = vmath.vector4(0.15, 0.25, 0.15, 0) } )
-	--msg.post("@render:", "clear_color", { color = vmath.vector4(1, 1, 1, 0) } )
 	-- Valores para inicios ---------------------------
 	datos.primera_vez_que_abre_gameplay = false
 
@@ -263,7 +254,7 @@ function init(self)
 	self.pista = gui.get_node("pista")
 	self.pistas_activadas = false
 	self.fondo_gris = gui.get_node("fondo_gris")
-	self.numero_de_nivel = gui.get_node("numero_de_nivel") -- esto no se si hizo saltar un bug, pero raro, no debería. Solo pasó una vez por ahora. Problema en la carga y usado de nodos pareciera.
+	self.numero_de_nivel = gui.get_node("numero_de_nivel") 
 	self.numero_de_nivel_t = gui.get_node("numero_de_nivel_t") 
 	gui.set_text(self.numero_de_nivel_t, "Nivel " .. datos.jugar_nivel)
 	-- tacho ----------------------------------------------
@@ -287,7 +278,6 @@ function init(self)
 	gui.set_rotation(self.cannon, niveles[self.nivel]["rotacion"])
 	print(gui.get_rotation(self.cannon))
 	self.cannon_adorno = gui.get_node("cannon_adorno")
-	--gui.animate(self.cannon_adorno, "rotation.z", 360, gui.EASING_LINEAR, 50, 0, nil, gui.PLAYBACK_LOOP_FORWARD)
 	-- clonacion de beams
 	self.laser_tabla = {}
 	
@@ -399,8 +389,7 @@ function init(self)
 	-- Inicialización --
 	gui.animate(self.fondo_gris, "position.y", 376, gui.EASING_OUTCUBIC, 1, 0,
 	function()
-		inicializacion_objetos_alpha(self)
-		
+		inicializacion_objetos_alpha(self) -- Esta función es la que arrancaría el juego digamos.
 	end)
 	sound.play("/sonidos#gameplay",{gain = datos.gain_sfx})
 	gui.animate(self.retroceder, "position.y", 699, gui.EASING_OUTCUBIC, 1)
@@ -641,8 +630,6 @@ function on_message(self, message_id, message, sender)
 		gui.set_position(self.adorno, message.pos)
 		if self.ultimo_pressed == true then
 			sound.play("/sonidos#adorno_1", {gain = datos.gain_sfx})
-		elseif self.ultimo_pressed == false then
-			--sound.play("/sonidos#adorno_2", {gain = datos.gain_sfx})
 		end
 	elseif message_id == hash("sacar_adorno") then
 		gui.set_enabled(self.adorno, false)
@@ -712,10 +699,7 @@ function on_input(self, action_id, action)
 					self.ultimo_obj_clickeado = self.ultimo_nodo_creado
 					self.moviendo_obj = false
 					datos.animar_click(self, self.toolbar)
-					
-					--print("test")
-
-					
+				
 			elseif gui.pick_node(self.espejo_doble, action.x, action.y) then
 					self.ultimo_obj_clickeado = nil
 					self.ultimo_nodo_creado = clonar_nodo(self, self.espejo, hash("espejo"), vmath.vector3(action.x, action.y, 0), self.espejos, true)
@@ -737,11 +721,7 @@ function on_input(self, action_id, action)
 			elseif gui.pick_node(self.retroceder, action.x, action.y) then
 				sound.play("/sonidos#sonido_volver", {gain = datos.gain_sfx})
 				datos.animar_click(self, self.retroceder, 0.7, 0.6)
-			--	if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultimo_nivel_desbloqueado < 11 then
-			--		datos.jugar_nivel = datos.jugar_nivel + 1
-			--		datos.ultimo_nivel_desbloqueado = datos.ultimo_nivel_desbloqueado + 1
-			--		print(datos.ultimo_nivel_desbloqueado)
-			--	end -- esto se metió en la fucion terminar_escena_gameplay, parece que no hay problema, borrar.
+
 				msg.post("", "release_input_focus")
 				self.volver_a_seleccion_de_nivel = true
 				terminar_escena_gameplay(self)
@@ -842,7 +822,6 @@ function on_input(self, action_id, action)
 				elseif self.casillas[self.ultima_casilla]["ocupado"] == false and datos.obj_en_mouse ~= nil then
 					datos.obj_en_mouse = nil
 					self.casillas[self.ultima_casilla]["ocupado"] = true
-					--self.ultimo_obj_clickeado = self.ultimo_nodo_creado -- esto?
 					-- crear physics obj
 					if self.moviendo_obj == true then
 					--print(self.ultima_casilla)
@@ -937,7 +916,6 @@ function on_input(self, action_id, action)
 							-- Esto no termino de entender porque hace erroe si no hago este chequeo pero parece arreglar el problema.
 							-- ASI VACIO PARECE FUNCIONAR, RARO.
 							--print(casillero[self.ultima_casilla][1])
-							--print("algo")
 							--gui.move_above(self.cruz, casillero[self.ultima_casilla][1])
 						else
 							--print("alguito")
