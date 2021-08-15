@@ -42,11 +42,19 @@ M["1"]["animacion_10"] = "rotar espejo 2"
 -------
 M["2"] = {}
 M["2"]["hacer_tuto"] = true
+
 M["2"][1] = "Muy bien, usemos lo que aprendimos en el nivel\nanterior para resolver este.\nVamos a necesitar mas de un espejo."
 M["2"]["sonido_1"] = "tutoriales#tuto_2_1"
 
+-------
 M["3"] = {}
-M["3"]["hacer_tuto"] = false
+M["3"]["hacer_tuto"] = true
+
+M["3"][1] = "Mirá, hay algo nuevo en los casilleros.\nEsos son obstátculos, como podés ver\nel laser no rebota en ellos."
+M["3"]["sonido_1"] = "tutoriales#tuto_3_1"
+M["3"][2] = "¡Encontremos el camino hasta nuestro objetivo!"
+M["3"]["sonido_2"] = "tutoriales#tuto_3_2"
+
 
 M["4"] = {}
 M["4"]["hacer_tuto"] = false
