@@ -66,6 +66,7 @@ local function terminar_escena_gameplay(self)
 	end
 
 	finalizar_botones(self)
+	msg.post("/delta#delta", "finalizar_escena")
 	gui.animate(self.espejo, "position.x", -150, gui.EASING_INBACK, 1)
 	gui.animate(self.numero_de_nivel, "position.x", -280, gui.EASING_INBACK, 1)
 	gui.animate(self.toolbar, "position.x", -150, gui.EASING_INBACK, 1, 0, function()
@@ -586,6 +587,7 @@ function on_message(self, message_id, message, sender)
 		datos.nivel_completado = true
 		finalizar_botones(self)
 		msg.post("/ui_objetos#ui_objetos", "nivel_completado")
+		msg.post("/delta#delta", "nivel_superado")
 		msg.post("/nivel_superado#nivel_superado", "nivel_superado")
 		msg.post("", "release_input_focus")
 		
@@ -726,7 +728,7 @@ function on_input(self, action_id, action)
 			elseif gui.pick_node(self.retroceder, action.x, action.y) then
 				sound.play("/sonidos#sonido_volver", {gain = datos.gain_sfx})
 				datos.animar_click(self, self.retroceder, 0.7, 0.6)
-
+				
 				msg.post("", "release_input_focus")
 				self.volver_a_seleccion_de_nivel = true
 				terminar_escena_gameplay(self)
