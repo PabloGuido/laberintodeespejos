@@ -31,8 +31,8 @@ M.skins_delta = {"cara nomal", "cara sonrisa",  "cara o", "cara sonrisa 2", "car
 
 -- Cosas generales
 M.primera_vez_que_abre_gameplay = false -- esto hay que dejarlo en true después.
-M.jugar_nivel = 1 -- esto tiene que ser 1
-M.ultimo_nivel_desbloqueado = 1 -- esto tiene que ser 1
+M.jugar_nivel = 10 -- esto tiene que ser 1
+M.ultimo_nivel_desbloqueado = 10 -- esto tiene que ser 1
 M.ultima_escena = ""
 M.sonido = true
 M.gain_sfx = 0 --1
