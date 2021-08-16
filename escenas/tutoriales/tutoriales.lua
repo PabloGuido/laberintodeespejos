@@ -14,7 +14,7 @@ M["1"]["sonido_3"] = "tutoriales#tuto_1_3"
 M["1"][4] = "Nuestra meta es hacer llegar el laser hasta el\nobjetivo celeste que ves en el centro. Para eso\nvamos a usar los espejos que ves arriba de mí."
 M["1"]["sonido_4"] = "tutoriales#tuto_1_4"
 
-M["1"][5] = "Solo arrastralos hasta uno de los casilleros y\nsoltalos para que se queden en el lugar. Podes\nusar el mouse o el dedo si tu pantalla es táctil."
+M["1"][5] = "Solo arrastralos hasta uno de los casilleros y\nsoltalos para que se queden en el lugar. Podés\nusar el mouse o el dedo si tu pantalla es táctil."
 M["1"]["sonido_5"] = "tutoriales#tuto_1_5"
 M["1"]["animacion_5"] = "mover espejo"
 

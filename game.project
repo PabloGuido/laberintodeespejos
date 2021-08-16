@@ -18,3 +18,6 @@ title = crearProto1
 [physics]
 debug = 0
 
+[sound]
+max_component_count = 64
+

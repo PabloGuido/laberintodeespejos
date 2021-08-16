@@ -590,7 +590,6 @@ function on_message(self, message_id, message, sender)
 		msg.post("/delta#delta", "nivel_superado")
 		msg.post("/nivel_superado#nivel_superado", "nivel_superado")
 		msg.post("", "release_input_focus")
-		
 		gui.move_above(self.objetivo, self.laser)
 		gui.play_flipbook(self.objetivo, "objetivo_on")
 		local pos = gui.get_position(self.objetivo) -- por qué está esto acá? Ver después si hay tiempo.

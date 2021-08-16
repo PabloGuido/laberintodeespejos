@@ -3,7 +3,7 @@ local datos = require("main.datos")
 --print(tuto["1"][4])
 
 local function animaciones_delta(self)
-	if datos.jugar_nivel == 1 and self.cuenta == 4 then
+	if datos.jugar_nivel == 1 and self.cuenta == 5 then
 		gui.play_spine_anim(self.delta, "idle_1_apunta_arriba", gui.PLAYBACK_ONCE_FORWARD)
 	elseif datos.jugar_nivel == 1 and self.cuenta == 9 then
 		gui.play_spine_anim(self.delta, "idle_1_apunta_arriba", gui.PLAYBACK_ONCE_BACKWARD)
@@ -65,7 +65,7 @@ local function tutorial(self)
 	gui.set_color(self.text, vmath.vector4(1,1,1,0))
 	gui.animate(self.siguiente, "color.w", 0, gui.EASING_LINEAR, 0)
 	gui.animate(self.text, "color.w", 1, gui.EASING_LINEAR, 1)
-	sound.play(tuto[self.nivel ]["sonido_" .. self.cuenta], {gain = 1, speed = 2},
+	sound.play(tuto[self.nivel ]["sonido_" .. self.cuenta], {gain = 1, speed = 1},
 	function()
 			self.cuenta = self.cuenta + 1
 			msg.post("", "acquire_input_focus")
@@ -154,6 +154,7 @@ function on_message(self, message_id, message, sender)
 		gui.set_spine_skin(self.delta, "cara sonrisa")
 		gui.play_spine_anim(self.delta, "victoria", gui.PLAYBACK_ONCE_FORWARD, {},
 		function()
+			sound.play("/sonidos#victoria", {gain = datos.gain_sfx})
 			gui.set_spine_skin(self.delta, "cara sonrisa")
 			gui.play_spine_anim(self.delta, "victoria2", gui.PLAYBACK_LOOP_PINGPONG)
 		end)
