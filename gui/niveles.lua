@@ -2,7 +2,7 @@ local arriba = vmath.vector3(0,0,90)
 local abajo = vmath.vector3(0,0,270)
 local izquierda = vmath.vector3(0,0,180)
 local derecha = vmath.vector3(0,0,0)
-local niveles = true
+local niveles = false
 local M = {}
 --[[ Objetos 
 1) Obstáculos
@@ -40,7 +40,7 @@ M["2"] = {
 M[2] = {}
 M[2]["cuanto_por_cuanto"] = 5
 M[2]["switches"] = 0
-M[2]["habilitado"] = niveles
+M[2]["habilitado"] = true
 M[2]["direccion"] = vmath.vector3(0, -1, 0)
 M[2]["rotacion"] = abajo
 
@@ -55,7 +55,7 @@ M["3"] = {
 M[3] = {}
 M[3]["cuanto_por_cuanto"] = 5
 M[3]["switches"] = 0
-M[3]["habilitado"] = niveles
+M[3]["habilitado"] = true
 M[3]["direccion"] = vmath.vector3(1, 0, 0)
 M[3]["rotacion"] = derecha
 
@@ -70,7 +70,7 @@ M["4"] = {
 M[4] = {}
 M[4]["cuanto_por_cuanto"] = 5
 M[4]["switches"] = 0
-M[4]["habilitado"] = niveles
+M[4]["habilitado"] = true
 M[4]["direccion"] = vmath.vector3(0, 1, 0)
 M[4]["rotacion"] = arriba
 
