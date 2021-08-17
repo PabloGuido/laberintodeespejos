@@ -21,3 +21,6 @@ debug = 0
 [sound]
 max_component_count = 64
 
+[html5]
+splash_image = /main/splash/splash.png
+
