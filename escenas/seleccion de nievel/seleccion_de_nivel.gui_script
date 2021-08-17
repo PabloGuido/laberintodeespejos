@@ -33,6 +33,9 @@ local function desbloquear_niveles(self)
 			gui.set_enabled(boton[hash("aro")], false)
 			gui.set_enabled(boton[hash("cuerpo")], false)
 			gui.set_enabled(boton[hash("numero_de_nivel")], true)
+			if niveles[k]["superado"] == true then
+				gui.set_enabled(boton[hash("estrella")], true)
+			end
 		end
 	end
 end
@@ -75,6 +78,7 @@ function init(self)
 	self.aro = gui.get_node("aro")
 	self.cuerpo = gui.get_node("cuerpo")
 	self.numero_de_nivel = gui.get_node("numero_de_nivel")
+	self.estrella = gui.get_node("estrella")
 	self.pantalla_negra = gui.get_node("pantalla_negra")
 	gui.set_color(self.pantalla_negra, vmath.vector4(1,1,1,0))
 	gui.set_enabled(self.pantalla_negra, false)
@@ -94,6 +98,7 @@ function init(self)
 			table.insert(self.tabla_de_botones, nuevo_nodo)
 			gui.set_text(nuevo_nodo[hash("numero_de_nivel")], self.numero_para_texto)
 			gui.set_enabled(nuevo_nodo[hash("numero_de_nivel")], false)
+			gui.set_enabled(nuevo_nodo[hash("estrella")], false)
 			gui.set_parent(nuevo_nodo[hash("boton_celeste")], self.cuadro_azul, true)
 			gui.set_position(ncel, self.pos_inicial_botones)
 			self.pos_inicial_botones.x = self.pos_inicial_botones.x + self.dif_entre_botones

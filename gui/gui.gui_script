@@ -401,6 +401,9 @@ function init(self)
 	gui.animate(self.numero_de_nivel, "position.x", 156, gui.EASING_OUTCUBIC, 1)
 	gui.animate(self.toolbar, "position.x", 155, gui.EASING_OUTCUBIC, 1)
 	desactivar_activar_barrera(self)
+	print("Nivel " .. self.nivel .. " superado: ")
+	print(niveles[self.nivel]["superado"] )
+	print("----------")
 end
 
 --function update(self, dt)
@@ -596,7 +599,7 @@ function on_message(self, message_id, message, sender)
 		pos.x = pos.x +10
 		gui.animate(self.objetivo, "scale",1.1, gui.EASING_INCIRC, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 		print("Objetivo encontrado - nivel superado")
-		
+		niveles[self.nivel]["superado"] = true
 	elseif message_id == hash("switch_activado") then
 		self.cantidad_de_switches_activados = self.cantidad_de_switches_activados + 1
 		--print("activando " .. self.cantidad_de_switches_activados)
