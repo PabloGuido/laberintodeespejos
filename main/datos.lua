@@ -12,13 +12,13 @@ M.disparar_rayo = function (self, hacia_donde, desde_donde)
 	end
 	local from = go.get_position()
 	local to = hacia_donde
-	local result = physics.raycast(desde_donde, to, { hash("espejo"), hash("pared") }) -- <4>
+	local result = physics.raycast(desde_donde, to, { hash("espejo"), hash("pared") })
 	if result then
-		draw_line(from, result.position) -- <5>
+		draw_line(from, result.position) 
 		msg.post(result.id, "rayo", {normal = result.normal, grupo = result.group})
 		--pprint(result)
 	else
-		draw_line(from, to) -- <6>
+		draw_line(from, to)
 
 	end
 	return result
@@ -39,7 +39,7 @@ M.gain_sfx = 0 --1
 M.gain_musica =  0 --0.5 
 
 M.sonido_on_off = function()
-	print("esta funcion")
+	
 	if M.sonido == true then
 		M.sonido = false
 		M.gain_sfx = 0
@@ -51,7 +51,7 @@ M.sonido_on_off = function()
 		M.gain_musica =  0.5
 		sound.pause("loader:/loader#proto_cancion_1", false)
 	end
-
+	--print("Sonido: " .. M.sonido)
 end
 
 
@@ -64,8 +64,6 @@ M.animar_click = function(self, nodo, aumento, escala)
 	end
 	gui.animate(nodo, "scale", aumento, gui.EASING_INBACK, 0.15, 0, function() gui.set_scale(nodo, vmath.vector3(escala, escala,1)) end)
 end
-
-
 
 
 

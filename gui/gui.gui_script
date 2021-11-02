@@ -101,17 +101,11 @@ local function inicializacion_objetos_alpha(self) -- Da el input focus inicial.
 	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
 	gui.animate(self.barrera, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
 	gui.animate(self.cannon, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
-	--gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1, 0, function() msg.post("", "acquire_input_focus") end)
 	gui.move_below(self.sonido_nodo, self.tacho)
 	gui.move_below(self.retroceder, self.tacho)
 	gui.move_below(self.lupa, self.tacho)
 	-- Acá vamos a poner la inicialización de los tutoriales.
-	gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1, 0,
-	function()
-		-- Mandar tutorariales
-		print("mandar tutos, no hay input")
-		--msg.post("", "acquire_input_focus")
-	end)
+	gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1, 0)
 end
 
 local function on_off_sonido(self, sonido)
