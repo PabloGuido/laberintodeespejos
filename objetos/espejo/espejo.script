@@ -54,20 +54,11 @@ function init(self)
 	self.borrando = false
 end
 
-function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
-end
 
 function update(self, dt)
 	if self.disparar_rayo == false and self.borrando == false then
 		msg.post("/gui#gui", "borrar_laser", {instancia = go.get_id()})
-
 	end
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
 end
 
 function on_message(self, message_id, message, sender)
@@ -81,13 +72,9 @@ function on_message(self, message_id, message, sender)
 			-- Acá hay que mandar el mensaje de dibujar el laser
 			msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position(), instancia = go.get_id()})
 		else
-			--self.disparar_rayo = false
-			--msg.post("/gui#gui", "borrar_laser")
-			--print(self.disparar_rayo)
-			--Acá el dibujo del laser se apagaría
+			-- ¿?
 		end
 
-		--self.to = go.get_position()
 	elseif message_id == hash("disparar_ray") then
 		--print("disparar ray")
 		--pprint(message)
@@ -96,12 +83,9 @@ function on_message(self, message_id, message, sender)
 			--print("pared")
 			return
 		else
-			--self.disparar_rayo = true
-			--local datos_laser = disparar_raycast(self)
-				--pprint(datos_laser)
-			--msg.post("/gui#gui", "dibujar_laser", {datos = datos_laser, pos_inicial_laser = go.get_position()})
+			-- ¿?
 		end
-		--self.to = go.get_position() -- no se que haría esto acá, borrar si no pasa nada raro.
+
 	elseif message_id == hash("borrar_obj") then
 		self.borrando = true
 		--print("borrar obj físico")

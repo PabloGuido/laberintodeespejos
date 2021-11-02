@@ -42,17 +42,6 @@ function init(self)
 	--print("Nivel" .. datos.jugar_nivel)
 end
 
-function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
-end
-
-function update(self, dt)
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
-end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("nivel_superado") then
@@ -112,10 +101,4 @@ function on_input(self, action_id, action)
 
 		end
 	end
-end
-
-function on_reload(self)
-	-- Add reload-handling code here
-	-- Learn more: https://defold.com/manuals/hot-reload/
-	-- Remove this function if not needed
 end

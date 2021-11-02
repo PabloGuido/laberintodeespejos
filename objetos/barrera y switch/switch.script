@@ -44,34 +44,20 @@ function init(self)
 
 	self.cuenta = 0
 	self.cuenta2 = 0
-	--msg.post("/gui#gui", "guardar_obj_fisico_nodo", {obj = go.get_id()}) -- esto lo está resolviendo el swtich factory
+
 end
 
-function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
-end
 
 function update(self, dt)
 	if self.disparar_rayo == false then
 		self.cuenta = self.cuenta + 1
-		--if self.cuenta >= 2 then
-			--print("desactivar")
-			msg.post("/gui#gui", "borrar_laser", {instancia = go.get_id()})
-		--	if self.switch_activo == true then
-		--		msg.post("/gui#gui", "switch_desactivado", {switch = self.pos_en_tabla_casillas, nodo = self.nodo})
-		--		self.switch_activo = false
-		--	end
-		--end
+		msg.post("/gui#gui", "borrar_laser", {instancia = go.get_id()})
+
 	end
 	if self.disparar_rayo2 == false then
 		self.cuenta2 = self.cuenta2 + 1
-		--if self.cuenta2 >= 2 then
-			--print("desactivar")
-			msg.post("/gui#gui", "borrar_laser2", {instancia = go.get_id()})
+		msg.post("/gui#gui", "borrar_laser2", {instancia = go.get_id()})
 
-		--end
 	end
 	if self.cuenta >= 2 and self.cuenta2 >= 2 then
 		if self.switch_activo == true then
@@ -79,12 +65,7 @@ function update(self, dt)
 			self.switch_activo = false
 		end
 	end
-	--[[
-	if self.switch_activo == true then
-		msg.post("/gui#gui", "switch_desactivado", {switch = self.pos_en_tabla_casillas, nodo = self.nodo})
-		self.switch_activo = false
-	end
-	]]
+
 end
 
 function on_message(self, message_id, message, sender)
@@ -112,8 +93,6 @@ function on_message(self, message_id, message, sender)
 			msg.post("/gui#gui", "switch_activado", {switch = self.pos_en_tabla_casillas, nodo = self.nodo})
 			self.switch_activo = true
 		end
-	--	self.cuenta = 0
-	--	self.cuenta2 = 0
 	end
 	self.cuenta = 0
 	self.cuenta2 = 0
