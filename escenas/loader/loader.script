@@ -1,6 +1,7 @@
 local datos = require("main.datos")
 
 function init(self)
+	msg.post("@render:", "use_stretch_projection", { near = -1, far = 1 })
 	msg.post("", "acquire_input_focus")
 	
 	self.colecciones = {"#pantalla_inicial", "#seleccion_de_nivel", "#gameplay"}

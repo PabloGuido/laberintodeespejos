@@ -8,6 +8,7 @@ shared_state = 1
 [display]
 width = 1280
 height = 760
+high_dpi = 1
 
 [android]
 input_method = HiddenInputField
@@ -23,4 +24,6 @@ max_component_count = 64
 
 [html5]
 splash_image = /main/splash/splash.png
+show_made_with_defold = 0
+htmlfile = /main/engine_template2.html
 
