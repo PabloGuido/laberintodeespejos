@@ -29,7 +29,8 @@ function on_message(self, message_id, message, sender)
 		msg.post("", "acquire_input_focus")
 		msg.post("/gui#gui", "mover_adorno", {pos = self.posicion})
 		--posicion_de_menu(self, message.pos)
-		gui.set_position(self.ui_objetos, message.pos)
+		local pos_offset = vmath.vector3(150,0,0)
+		gui.set_position(self.ui_objetos, message.pos + pos_offset)
 	elseif message_id == hash("restablecer_input") then
 		msg.post("", "acquire_input_focus")
 	elseif message_id == hash("desactivar_ui_objetos") then

@@ -27,14 +27,14 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 0.9
-    y: 0.9
+    x: 1.0
+    y: 1.0
     z: 1.0
     w: 1.0
   }
   size {
-    x: 300.0
-    y: 300.0
+    x: 245.0
+    y: 105.0
     z: 0.0
     w: 1.0
   }
@@ -46,7 +46,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: ""
+  texture: "gui/recuadro botones"
   id: "ui_objeto"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -63,14 +63,14 @@ nodes {
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
-  alpha: 0.0
+  alpha: 1.0
   template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
-    x: -108.111
-    y: 101.111
+    x: -13.0
+    y: 2.0
     z: 0.0
     w: 1.0
   }
@@ -81,14 +81,14 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 0.5
-    y: 0.5
+    x: 1.0
+    y: 1.0
     z: 1.0
     w: 1.0
   }
   size {
-    x: 168.0
-    y: 201.0
+    x: 86.0
+    y: 87.0
     z: 0.0
     w: 1.0
   }
@@ -100,7 +100,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gui/boton rotar"
+  texture: "gui/boton izq"
   id: "izq"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -124,26 +124,26 @@ nodes {
 }
 nodes {
   position {
-    x: 112.0
-    y: 101.111
+    x: 72.0
+    y: 2.0
     z: 0.0
     w: 1.0
   }
   rotation {
     x: 0.0
-    y: 180.0
+    y: 0.0
     z: 0.0
     w: 1.0
   }
   scale {
-    x: 0.5
-    y: 0.5
+    x: 1.0
+    y: 1.0
     z: 1.0
     w: 1.0
   }
   size {
-    x: 168.0
-    y: 201.0
+    x: 86.0
+    y: 87.0
     z: 0.0
     w: 1.0
   }
@@ -155,7 +155,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gui/boton rotar"
+  texture: "gui/boton der"
   id: "der"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
