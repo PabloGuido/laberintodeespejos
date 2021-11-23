@@ -1,6 +1,6 @@
 local M = {}
 M["1"] = {}
-M["1"]["hacer_tuto"] = false
+M["1"]["hacer_tuto"] = true
 
 M["1"][1] = "¡Hola! Mi nombre es María, y lo que más\nme gusta en el mundo es crear mis propios\ninventos y jugar con mis amigos."
 M["1"]["sonido_1"] = "tutoriales#tuto_1_1"
