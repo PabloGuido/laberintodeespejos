@@ -35,8 +35,8 @@ M.jugar_nivel = 1 -- esto tiene que ser 1
 M.ultimo_nivel_desbloqueado = 1 -- esto tiene que ser 1
 M.ultima_escena = ""
 M.sonido = true
-M.gain_sfx = 0 --1
-M.gain_musica =  0.0 --0.5 
+M.gain_sfx = 1 --1
+M.gain_musica =  0.0--0.5 
 
 M.sonido_on_off = function()
 	
@@ -62,7 +62,7 @@ M.animar_click = function(self, nodo, aumento, escala)
 	if aumento == nil then
 		aumento = 1.1
 	end
-	gui.animate(nodo, "scale", aumento, gui.EASING_INBACK, 0.15, 0, function() gui.set_scale(nodo, vmath.vector3(escala, escala,1)) end)
+	gui.animate(nodo, "scale", aumento, gui.EASING_INBACK, 0.20, 0, function() gui.set_scale(nodo, vmath.vector3(escala, escala,1)) end)
 end
 
 
