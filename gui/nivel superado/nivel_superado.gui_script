@@ -54,6 +54,7 @@ function on_message(self, message_id, message, sender)
 			gui.set_enabled(self.volver_atras, true)
 			gui.set_position(self.volver_atras, vmath.vector3(1118,699,0))
 			gui.set_enabled(self.siguiente_nivel, true)
+			gui.set_scale(self.siguiente_nivel, vmath.vector3(1.1,1.1,0))
 			gui.animate(self.siguiente_nivel, "rotation.z", -1, gui.EASING_LINEAR, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 		elseif datos.jugar_nivel >= 10 then
 			gui.set_enabled(self.siguiente_nivel, false)
