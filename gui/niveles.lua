@@ -13,7 +13,7 @@ local M = {}
 5) Pista
 ]]
 
---test2
+--test3
 -- El número del plano del nivel se lee en string.
 --1 Ta bueno este
 M["1"] = {
