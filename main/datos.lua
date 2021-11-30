@@ -37,7 +37,7 @@ M.ultima_escena = ""
 M.sonido = true
 M.gain_sfx = 0 --1
 M.gain_musica =  0 --0.5 
---test5
+
 M.sonido_on_off = function()
 	
 	if M.sonido == true then
