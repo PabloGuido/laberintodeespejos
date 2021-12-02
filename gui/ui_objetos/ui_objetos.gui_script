@@ -30,13 +30,13 @@ function on_message(self, message_id, message, sender)
 		msg.post("", "acquire_input_focus")
 		msg.post("/gui#gui", "mover_adorno", {pos = self.posicion})
 		--posicion_de_menu(self, message.pos)
-		local pos_offset = vmath.vector3(150,0,0)
+		local pos_offset = vmath.vector3(0,0,0)
 		gui.set_position(self.ui_objetos, message.pos + pos_offset)
 		-- anim y sonido del ui_objetos
 		sound.play("/sonidos#adorno_3", {gain = datos.gain_sfx * 1.3})
 		gui.set_scale(self.ui_objetos, vmath.vector3(0.25,1,0))
-		gui.animate(self.ui_objetos, "scale.x", 1, gui.EASING_LINEAR, 0.1)
-		
+		gui.animate(self.ui_objetos, "scale.x", 0.7, gui.EASING_LINEAR, 0.1)
+		gui.animate(self.ui_objetos, "scale.y", 0.7, gui.EASING_LINEAR, 0.1)
 	elseif message_id == hash("restablecer_input") then
 		msg.post("", "acquire_input_focus")
 	elseif message_id == hash("desactivar_ui_objetos") then
@@ -54,12 +54,12 @@ function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		if gui.is_enabled(self.ui_objetos) and datos.nivel_completado == false then
 			if gui.pick_node(self.izq, action.x, action.y) then
-				sound.play("/sonidos#girar_izq", {gain = datos.gain_sfx})
+				sound.play("/sonidos#girar_izq", {gain = datos.gain_sfx - 0.15, speed = 2})
 					datos.animar_click(self, self.izq, 1.25)
 					msg.post("", "release_input_focus")
 					msg.post("/gui#gui", "accion_ui_obj", {accion = "izquierda"})
 				elseif gui.pick_node(self.der, action.x, action.y) then
-					sound.play("/sonidos#girar_der", {gain = datos.gain_sfx})
+					sound.play("/sonidos#girar_der", {gain = datos.gain_sfx - 0.15, speed = 2})
 					datos.animar_click(self, self.der, 1.25)
 					msg.post("", "release_input_focus")
 					msg.post("/gui#gui", "accion_ui_obj", {accion = "derecha"})
