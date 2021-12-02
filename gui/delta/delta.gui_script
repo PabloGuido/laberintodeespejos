@@ -87,6 +87,7 @@ local function tutorial(self)
 	animaciones_delta(self)
 end
 function init(self)
+	self.tiempo_t = 0.65
 	-- animables --
 	self.nodo_anim = nil
 	self.nodo_prop = nil
@@ -116,7 +117,7 @@ function init(self)
 	if datos.jugar_nivel == 1 then
 		gui.play_spine_anim(self.delta, "saludo", gui.PLAYBACK_LOOP_PINGPONG)
 	end
-	gui.animate(self.delta, "position.y", -148, gui.EASING_OUTCUBIC, 1, 0,
+	gui.animate(self.delta, "position.y", -148, gui.EASING_OUTCUBIC, self.tiempo_t, 0,
 	function()
 		respiracion(self)
 		local nivel = tostring(datos.jugar_nivel)
@@ -147,7 +148,7 @@ function on_message(self, message_id, message, sender)
 		end)
 	elseif message_id == hash("finalizar_escena") then
 		--print("Delta sale de escena")
-		gui.animate(self.delta, "position.y", -417, gui.EASING_INBACK, 1)
+		gui.animate(self.delta, "position.y", -417, gui.EASING_INBACK, self.tiempo_t)
 	end
 end
 

@@ -4,16 +4,16 @@ local dif_entre_casillas = 142
 
 local function finalizar_botones(self)
 	if datos.nivel_completado == false then
-		gui.animate(self.retroceder, "position.y", 835, gui.EASING_INBACK, 1)
-		gui.animate(self.sonido_nodo, "position.x", 1354, gui.EASING_INBACK, 1)
+		gui.animate(self.retroceder, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
+		gui.animate(self.sonido_nodo, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
 		if self.pistas_activadas == false then
-			gui.animate(self.lupa, "position.x", 1391, gui.EASING_INBACK, 1)
+			gui.animate(self.lupa, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
 		end
 	else
 		gui.set_enabled(self.retroceder, false)
 		gui.set_enabled(self.sonido_nodo, false)
 		if self.pistas_activadas == false then
-			gui.animate(self.lupa, "position.x", 1391, gui.EASING_INBACK, 1, 0,
+			gui.animate(self.lupa, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t, 0,
 			function()
 				gui.set_enabled(self.lupa, false)
 			end)
@@ -32,44 +32,44 @@ local function terminar_escena_gameplay(self)
 	
 	for c = 1, table.maxn(self.casillas) do
 		local anim_casilla = self.casillas[c][1][hash("casilla")]
-		gui.animate(anim_casilla, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+		gui.animate(anim_casilla, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
 	end
 	for o = 1 ,table.maxn(self.obstaculos_tabla) do
 		local anim_obs = self.obstaculos_tabla[o][hash("obstaculo")]
-		gui.animate(anim_obs, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+		gui.animate(anim_obs, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
 	end
 	for s = 1 ,table.maxn(self.switches) do
-		gui.animate(self.switches[s], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+		gui.animate(self.switches[s], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
 	end
 	for l = 1,table.maxn(self.laser_tabla) do
-		gui.animate(self.laser_tabla[l][hash("laser_beam")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+		gui.animate(self.laser_tabla[l][hash("laser_beam")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
 	end
 	for e = 1 ,table.maxn(self.espejos) do		
-		gui.animate(self.espejos[e][hash("espejo")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+		gui.animate(self.espejos[e][hash("espejo")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
 		if self.espejos[e]["laser"] ~= nil then
-			gui.animate(self.espejos[e]["laser"], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+			gui.animate(self.espejos[e]["laser"], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
 		end
-		gui.animate(self.laser_relevo, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+		gui.animate(self.laser_relevo, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
 	end
 	for p = 1,table.maxn(self.pistas) do
-		gui.animate(self.pistas[p][hash("pista")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+		gui.animate(self.pistas[p][hash("pista")], "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
 	end
-	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
-	gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
-	gui.animate(self.fondo_gris, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
-	gui.animate(self.cannon, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
+	gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
+	gui.animate(self.fondo_gris, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
+	gui.animate(self.cannon, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
 	if gui.is_enabled(self.adorno) then
-		gui.animate(self.adorno, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+		gui.animate(self.adorno, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
 	end
 	if gui.is_enabled(self.barrera) then
-		gui.animate(self.barrera, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, 1)
+		gui.animate(self.barrera, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
 	end
 
 	finalizar_botones(self)
 	msg.post("/delta#delta", "finalizar_escena")
-	gui.animate(self.espejo, "position.x", -150, gui.EASING_INBACK, 1)
-	gui.animate(self.numero_de_nivel, "position.x", -280, gui.EASING_INBACK, 1)
-	gui.animate(self.toolbar, "position.x", -150, gui.EASING_INBACK, 1, 0, function()
+	gui.animate(self.espejo, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
+	gui.animate(self.numero_de_nivel, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t)
+	gui.animate(self.toolbar, "color", vmath.vector4(1,1,1,0), gui.EASING_LINEAR, self.tiempo_t, 0, function()
 		datos.obj_en_mouse = nil
 		if self.volver_a_seleccion_de_nivel == true then
 			msg.post("loader:/loader#loader", "retroceder_escena")
@@ -85,27 +85,27 @@ local function inicializacion_objetos_alpha(self) -- Da el input focus inicial.
 	for c = 1, table.maxn(self.casillas) do
 		local anim_casilla = self.casillas[c][1][hash("casilla")]
 		--pprint(self.casillas[c][1][hash("casilla")])
-		gui.animate(anim_casilla, "color", vmath.vector4(1,1,1,0.75), gui.EASING_LINEAR, 1)
+		gui.animate(anim_casilla, "color", vmath.vector4(1,1,1,0.75), gui.EASING_LINEAR, self.tiempo_t)
 		--pprint(self.obstaculos_tabla)
 	end
 	for o = 1 ,table.maxn(self.obstaculos_tabla) do
 		local anim_obs = self.obstaculos_tabla[o][hash("obstaculo")]
-		gui.animate(anim_obs, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
+		gui.animate(anim_obs, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, self.tiempo_t)
 	end
 	for s = 1 ,table.maxn(self.switches) do
-		gui.animate(self.switches[s], "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
+		gui.animate(self.switches[s], "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, self.tiempo_t)
 	end
 	for l = 1,table.maxn(self.laser_tabla) do
-		gui.animate(self.laser_tabla[l][hash("laser_beam")], "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
+		gui.animate(self.laser_tabla[l][hash("laser_beam")], "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, self.tiempo_t)
 	end
-	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
-	gui.animate(self.barrera, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
-	gui.animate(self.cannon, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1)
+	gui.animate(self.laser_beam, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, self.tiempo_t)
+	gui.animate(self.barrera, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, self.tiempo_t)
+	gui.animate(self.cannon, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, self.tiempo_t)
 	gui.move_below(self.sonido_nodo, self.tacho)
 	gui.move_below(self.retroceder, self.tacho)
 	gui.move_below(self.lupa, self.tacho)
 	-- Acá vamos a poner la inicialización de los tutoriales.
-	gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 1, 0)
+	gui.animate(self.objetivo, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, self.tiempo_t, 0)
 end
 
 local function on_off_sonido(self, sonido)
@@ -205,7 +205,7 @@ function init(self)
 	-- Valores para inicios ---------------------------
 	datos.primera_vez_que_abre_gameplay = false
 
-
+	self.tiempo_t = 0.65
 	gui.set_render_order(2)
 	-- niveles ----------------------------------------
 	self.nivel = datos.jugar_nivel
@@ -383,17 +383,17 @@ function init(self)
 	gui.set_enabled(self.pista, false)
 	---------------------------------------------------
 	-- Inicialización --
-	gui.animate(self.fondo_gris, "position.y", 376, gui.EASING_OUTCUBIC, 1, 0,
+	gui.animate(self.fondo_gris, "position.y", 376, gui.EASING_OUTCUBIC, 0, 0,
 	function()
 		inicializacion_objetos_alpha(self) -- Esta función es la que arrancaría el juego digamos.
 	end)
 	sound.play("/sonidos#gameplay",{gain = datos.gain_sfx})
-	gui.animate(self.retroceder, "position.y", 699, gui.EASING_OUTCUBIC, 1)
-	gui.animate(self.sonido_nodo, "position.x", 1218, gui.EASING_OUTCUBIC, 1)
-	gui.animate(self.lupa, "position.x", 1173, gui.EASING_OUTCUBIC, 1)
-	gui.animate(self.espejo, "position.x", 155, gui.EASING_OUTCUBIC, 1)
-	gui.animate(self.numero_de_nivel, "position.x", 152, gui.EASING_OUTCUBIC, 1)
-	gui.animate(self.toolbar, "position.x", 155, gui.EASING_OUTCUBIC, 1)
+	gui.animate(self.retroceder, "position.y", 699, gui.EASING_OUTCUBIC, self.tiempo_t)
+	gui.animate(self.sonido_nodo, "position.x", 1218, gui.EASING_OUTCUBIC, self.tiempo_t)
+	gui.animate(self.lupa, "position.x", 1173, gui.EASING_OUTCUBIC, self.tiempo_t)
+	gui.animate(self.espejo, "position.x", 155, gui.EASING_OUTCUBIC, self.tiempo_t)
+	gui.animate(self.numero_de_nivel, "position.x", 152, gui.EASING_OUTCUBIC, self.tiempo_t)
+	gui.animate(self.toolbar, "position.x", 155, gui.EASING_OUTCUBIC, self.tiempo_t)
 	desactivar_activar_barrera(self)
 	--print("Nivel " .. self.nivel .. " superado: ")
 	--print(niveles[self.nivel]["superado"] )

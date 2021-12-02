@@ -7,6 +7,7 @@ local function posicion_de_menu(self, pos)
 end
 
 function init(self)
+
 	gui.set_render_order(3)
 	-- ui objetos -------------------------------------
 	self.ui_objetos = gui.get_node("ui_objeto")
