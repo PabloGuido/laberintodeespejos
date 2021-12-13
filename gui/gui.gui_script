@@ -20,9 +20,9 @@ local function finalizar_botones(self)
 		end
 	end
 end
-
+local max_lvl = 15
 local function terminar_escena_gameplay(self)
-	if datos.jugar_nivel < 10 then
+	if datos.jugar_nivel < max_lvl then
 		datos.jugar_nivel = datos.jugar_nivel + 1
 	
 		if datos.ultimo_nivel_desbloqueado == datos.jugar_nivel - 1 then

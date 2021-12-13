@@ -90,7 +90,21 @@ M["9"]["hacer_tuto"] = false
 M["10"] = {}
 M["10"]["hacer_tuto"] = false
 -------
-
+M["11"] = {}
+M["11"]["hacer_tuto"] = false
+-------
+M["12"] = {}
+M["12"]["hacer_tuto"] = false
+-------
+M["13"] = {}
+M["13"]["hacer_tuto"] = false
+-------
+M["14"] = {}
+M["14"]["hacer_tuto"] = false
+-------
+M["15"] = {}
+M["15"]["hacer_tuto"] = false
+-------
 
 
 return M

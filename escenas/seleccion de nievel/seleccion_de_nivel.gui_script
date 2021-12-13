@@ -1,5 +1,6 @@
 local datos = require("main.datos")
 local niveles = require("gui.niveles")
+local max_lvl = 15
 
 local function abrir_candado(self)
 	local boton_ac = self.tabla_de_botones[datos.ultimo_nivel_desbloqueado]
@@ -89,14 +90,14 @@ function init(self)
 	end
 	
 	self.tabla_de_botones = {}
-	self.pos_inicial_botones = vmath.vector3(-400, 40, 0)
+	self.pos_inicial_botones = vmath.vector3(-400, 120, 0)
 	self.pos_pantalla_negra_primera_vez = vmath.vector3(241, 380, 0)
 	self.dif_entre_botones = 200
-	self.dif_de_bajada = 200
+	self.dif_de_bajada = 175
 	self.numero_para_texto = 1
 	
 	
-	for i = 1, 2 do
+	for i = 1, 3 do
 		for i = 1, 5 do
 			local nuevo_nodo = gui.clone_tree(self.boton_celeste)
 			local ncel = nuevo_nodo[hash("boton_celeste")]
@@ -114,7 +115,12 @@ function init(self)
 			end
 			self.numero_para_texto = self.numero_para_texto + 1
 		end
-		self.pos_inicial_botones = vmath.vector3(-400, 40, 0)
+		self.pos_inicial_botones = vmath.vector3(-400, 120, 0)
+		if i == 3 then 
+			self.pos_inicial_botones = vmath.vector3(-400, 120, 0)
+		elseif i == 2 then
+			self.pos_inicial_botones = vmath.vector3(-400, -55, 0)
+		end
 		self.pos_inicial_botones.y = self.pos_inicial_botones.y - self.dif_de_bajada
 	end
 
@@ -132,7 +138,7 @@ function init(self)
 		if datos.primera_vez_que_abre_gameplay == true then
 			primera_vez_de_seleccion_de_pantalla(self)
 		elseif datos.primera_vez_que_abre_gameplay == false then
-			if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultima_escena ~= "#pantalla_inicial" and datos.ultimo_nivel_desbloqueado <= 10 then
+			if datos.jugar_nivel == datos.ultimo_nivel_desbloqueado and datos.ultima_escena ~= "#pantalla_inicial" and datos.ultimo_nivel_desbloqueado <= max_lvl then
 				abrir_candado(self)
 			else
 				msg.post("", "acquire_input_focus") -- ?

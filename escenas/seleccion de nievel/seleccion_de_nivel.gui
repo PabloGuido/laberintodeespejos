@@ -28,7 +28,7 @@ background_color {
 nodes {
   position {
     x: 1790.0
-    y: 340.0
+    y: 357.0
     z: 0.0
     w: 1.0
   }
@@ -45,8 +45,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 1085.0
-    y: 627.0
+    x: 1035.0
+    y: 674.0
     z: 0.0
     w: 1.0
   }
@@ -310,7 +310,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: -77.0
+    y: -69.0
     z: 0.0
     w: 1.0
   }
@@ -321,8 +321,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 0.45
-    y: 0.45
+    x: 0.4
+    y: 0.4
     z: 1.0
     w: 1.0
   }
@@ -365,7 +365,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: 223.0
+    y: 273.0
     z: 0.0
     w: 1.0
   }
@@ -499,8 +499,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 2400.0
-    y: 1500.0
+    x: 208.0
+    y: 209.0
     z: 0.0
     w: 1.0
   }
@@ -512,7 +512,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "pantalla_negra/pantalla negra"
+  texture: "gui/barrera"
   id: "pantalla_negra"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
