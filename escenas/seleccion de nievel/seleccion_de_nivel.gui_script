@@ -6,7 +6,7 @@ local function abrir_candado(self)
 	local boton_ac = self.tabla_de_botones[datos.ultimo_nivel_desbloqueado]
 	if niveles[datos.ultimo_nivel_desbloqueado]["habilitado"] ~= nil then
 		if niveles[datos.ultimo_nivel_desbloqueado]["habilitado"]  == false then
-			gui.animate(boton_ac[hash("aro")], "rotation.z", 20, gui.EASING_INBOUNCE, 0.75, 0.25)
+			gui.animate(boton_ac[hash("aro")], "rotation.z", 9, gui.EASING_INBOUNCE, 0.75, 0.25)
 			sound.play("#candado_abierto", {gain = datos.gain_sfx, delay = 0.25})
 			gui.animate(boton_ac[hash("cuerpo")], "rotation.z", -10, gui.EASING_INBOUNCE, 0.75, 0.25,
 			function()
