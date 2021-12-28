@@ -85,7 +85,7 @@ local function inicializacion_objetos_alpha(self) -- Da el input focus inicial.
 	for c = 1, table.maxn(self.casillas) do
 		local anim_casilla = self.casillas[c][1][hash("casilla")]
 		--pprint(self.casillas[c][1][hash("casilla")])
-		gui.animate(anim_casilla, "color", vmath.vector4(1,1,1,0.75), gui.EASING_LINEAR, self.tiempo_t)
+		gui.animate(anim_casilla, "color", vmath.vector4(0/255, 88/255, 246/255,1), gui.EASING_LINEAR, self.tiempo_t)
 		--pprint(self.obstaculos_tabla)
 	end
 	for o = 1 ,table.maxn(self.obstaculos_tabla) do
