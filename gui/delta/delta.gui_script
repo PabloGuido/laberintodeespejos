@@ -60,10 +60,10 @@ local function respiracion(self)
 	gui.animate(self.delta, "position.y", pos.y + 10, gui.EASING_LINEAR, 5, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 end
 local function tutorial(self)
-	gui.set_color(self.caja, vmath.vector4(1,1,1,0.85))
+	gui.set_color(self.caja, vmath.vector4(1,1,1,1))
 	gui.set_text(self.text, tuto[self.nivel][self.cuenta])
 	gui.set_color(self.text, vmath.vector4(1,1,1,0))
-	gui.set_color(self.siguiente, vmath.vector4(1,1,1,0.85))
+	gui.set_color(self.siguiente, vmath.vector4(1,1,1,1))
 	gui.animate(self.text, "color.w", 1, gui.EASING_LINEAR, 1)
 	sound.play(tuto[self.nivel ]["sonido_" .. self.cuenta], {gain = datos.gain_sfx, speed = 1})
 	
