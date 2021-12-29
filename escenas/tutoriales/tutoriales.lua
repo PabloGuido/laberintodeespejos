@@ -22,7 +22,7 @@ M["1"][6] = "El siguiente paso es girar el espejo para que\napunte en la direcci
 M["1"]["sonido_6"] = "tutoriales#tuto_1_6"
 M["1"]["animacion_6"] = "mover espejo 2"
 
-M["1"][7] = "Usá las flechas que ves acá arriba, aparecen\nsiempre que tengas seleccionado un espejo."
+M["1"][7] = "Tocá sobre el espejo y usá las flechas que\nsalen de él."
 M["1"]["sonido_7"] = "tutoriales#tuto_1_7"
 M["1"]["animacion_7"] = "rotar espejo"
 

@@ -4,9 +4,9 @@ local datos = require("main.datos")
 
 local function animaciones_delta(self)
 	if datos.jugar_nivel == 1 and self.cuenta == 5 then
-		gui.play_spine_anim(self.delta, "idle_1_apunta_arriba", gui.PLAYBACK_ONCE_FORWARD)
+		--gui.play_spine_anim(self.delta, "idle_1_salida", gui.PLAYBACK_ONCE_FORWARD)
 	elseif datos.jugar_nivel == 1 and self.cuenta == 9 then
-		gui.play_spine_anim(self.delta, "idle_1_apunta_arriba", gui.PLAYBACK_ONCE_BACKWARD)
+		--gui.play_spine_anim(self.delta, "idle_1_apunta_arriba", gui.PLAYBACK_ONCE_BACKWARD)
 	elseif datos.jugar_nivel == 1 and self.cuenta == 3 then
 		gui.play_spine_anim(self.delta, "idle_1", gui.PLAYBACK_ONCE_FORWARD)
 	end
@@ -44,7 +44,7 @@ local function animaciones(self)
 			
 		end)
 	elseif self.que_animacion_reproducir == "rotar espejo 2" then
-		gui.set_enabled(self.ui_objeto, true)
+		gui.set_enabled(self.ui_objeto, false)
 		gui.set_enabled(self.espejo, true)
 		gui.set_position(self.espejo, vmath.vector3(684,234,0))
 		self.nodo_anim = self.espejo
