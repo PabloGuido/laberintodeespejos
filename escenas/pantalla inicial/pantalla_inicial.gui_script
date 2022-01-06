@@ -24,8 +24,8 @@ function init(self)
 	gui.animate(self.paka, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 0.5)
 	gui.animate(self.secretaria, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 0.5)
 	gui.animate(self.sonido_nodo, "color", vmath.vector4(1,1,1,1), gui.EASING_LINEAR, 0.5)
-	
-	gui.animate(self.play, "scale", 1.035, gui.EASING_INBOUNCE, 5, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+	local play_scale = gui.get_scale(self.play)
+	gui.animate(self.play, "scale", play_scale * 1.035, gui.EASING_INBOUNCE, 5, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 	gui.animate(self.proto, "rotation.z", -2, gui.EASING_LINEAR, 8, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 	gui.animate(self.laser, "rotation.z", 2, gui.EASING_LINEAR, 8, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 end
