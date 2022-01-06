@@ -65,6 +65,9 @@ M.animar_click = function(self, nodo, aumento, escala)
 	gui.animate(nodo, "scale", aumento, gui.EASING_INBACK, 0.20, 0, function() gui.set_scale(nodo, vmath.vector3(escala, escala,1)) end)
 end
 
+-- Display
+M.width = 1280
+M.height = 760
 
 
 

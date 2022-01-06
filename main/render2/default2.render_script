@@ -1,3 +1,5 @@
+local datos = require("main.datos")
+
 --
 -- projection that centers content with maintained aspect ratio and optional zoom
 --
@@ -61,7 +63,8 @@ function update(self)
 
     render.set_viewport(0, 0, render.get_window_width(), render.get_window_height())
     render.set_view(self.view)
-
+    datos.width = render.get_window_width()
+    datos.height = render.get_window_height()
     render.set_depth_mask(false)
     render.disable_state(render.STATE_DEPTH_TEST)
     render.disable_state(render.STATE_STENCIL_TEST)

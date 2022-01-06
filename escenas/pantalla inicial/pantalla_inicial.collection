@@ -134,3 +134,53 @@ embedded_instances {
     z: 1.0
   }
 }
+embedded_instances {
+  id: "go"
+  data: "components {\n"
+  "  id: \"fac_obj_pantalla_inicial\"\n"
+  "  component: \"/escenas/pantalla inicial/adornos pantalla inicial/fac_obj_pantalla_inicial.factory\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "components {\n"
+  "  id: \"objetos_voladores\"\n"
+  "  component: \"/escenas/pantalla inicial/adornos pantalla inicial/objetos_voladores.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 190.0
+    y: 255.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
