@@ -244,9 +244,8 @@ function init(self)
 	gui.animate(self.adorno, "rotation.z", 360, gui.EASING_LINEAR, 25, 0, nil, gui.PLAYBACK_LOOP_FORWARD)
 	gui.set_enabled(self.adorno, false)
 	self.sonido_nodo = gui.get_node("sonido")
-	if datos.sonido == false then
-		gui.play_flipbook(self.sonido_nodo, "sonido off")
-	end
+	gui.set_enabled(self.sonido_nodo, false)
+	
 	self.lupa = gui.get_node("lupa")
 	self.pista = gui.get_node("pista")
 	self.pistas_activadas = false
@@ -391,7 +390,7 @@ function init(self)
 	end)
 	sound.play("/sonidos#gameplay",{gain = datos.gain_sfx})
 	gui.animate(self.retroceder, "position.y", 690, gui.EASING_OUTCUBIC, self.tiempo_t)
-	gui.animate(self.sonido_nodo, "position.x", 1218, gui.EASING_OUTCUBIC, self.tiempo_t)
+	--gui.animate(self.sonido_nodo, "position.x", 1218, gui.EASING_OUTCUBIC, self.tiempo_t)
 	gui.animate(self.lupa, "position.x", 1173, gui.EASING_OUTCUBIC, self.tiempo_t)
 	gui.animate(self.espejo, "position.x", 155, gui.EASING_OUTCUBIC, self.tiempo_t)
 	gui.animate(self.numero_de_nivel, "position.x", 152, gui.EASING_OUTCUBIC, self.tiempo_t)
@@ -652,6 +651,14 @@ function on_message(self, message_id, message, sender)
 		gui.animate(self.objetivo, "scale",1.15, gui.EASING_LINEAR, 1, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 	elseif message_id == hash("detener_animar_objetivo") then
 		gui.animate(self.objetivo, "scale",1, gui.EASING_LINEAR, 0)
+	elseif message_id == hash("pasar_boton_sonido") then
+		print("recibiendo boton")
+		gui.set_enabled(self.sonido_nodo, true)
+		if datos.sonido == true then
+			gui.play_flipbook(self.sonido_nodo, "sonido on")
+		else
+			gui.play_flipbook(self.sonido_nodo, "sonido off")
+		end
 	end
 end
 
