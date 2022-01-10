@@ -26,7 +26,7 @@ M["1"][7] = "Tocá sobre el espejo y usá las flechas que\nsalen de él."
 M["1"]["sonido_7"] = "tutoriales#tuto_1_7"
 M["1"]["animacion_7"] = "rotar espejo"
 
-M["1"][8] = "Podés mover y usar la cantidad de espejos que\nquieras, si necesitás borrar alguno solo\narrastralo por fuera de los casilleros."
+M["1"][8] = "Podés mover y usar la cantidad de espejos\nque quieras, si necesitás borrar alguno solo\narrastralo por fuera de los casilleros."
 M["1"]["sonido_8"] = "tutoriales#tuto_1_8"
 M["1"]["animacion_8"] = "rotar espejo 2"
 

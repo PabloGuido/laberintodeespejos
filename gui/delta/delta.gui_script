@@ -3,19 +3,31 @@ local datos = require("main.datos")
 --print(tuto["1"][4])
 
 local function animaciones_delta(self)
-	if datos.jugar_nivel == 1 and self.cuenta == 5 then
-		--gui.play_spine_anim(self.delta, "idle_1_salida", gui.PLAYBACK_ONCE_FORWARD)
-	elseif datos.jugar_nivel == 1 and self.cuenta == 9 then
+	if  datos.jugar_nivel == 1 and self.cuenta == 9 then
 		--gui.play_spine_anim(self.delta, "idle_1_apunta_arriba", gui.PLAYBACK_ONCE_BACKWARD)
+		self.lupa_scale = gui.get_scale(self.lupa)
+		gui.animate(self.lupa, "scale",self.lupa_scale * 1.25, gui.EASING_LINEAR, 1, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 	elseif datos.jugar_nivel == 1 and self.cuenta == 3 then
 		gui.play_spine_anim(self.delta, "idle_1", gui.PLAYBACK_ONCE_FORWARD)
+	elseif datos.jugar_nivel == 1 and self.cuenta == 4 then
+		print("APSODKASPDK")
+		gui.set_enabled(self.espejo, true)
+		gui.animate(self.espejo, "scale", 1.25, gui.EASING_LINEAR, 1, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+	elseif datos.jugar_nivel == 1 and self.cuenta == 5 then
+		gui.animate(self.espejo, "scale", 1, gui.EASING_LINEAR, 0)
+	elseif datos.jugar_nivel == 1 and self.cuenta == 7 then
+		gui.set_enabled(self.lupa, true)
+		self.ui_objeto_scale = gui.get_scale(self.ui_objeto)
+		gui.animate(self.ui_objeto, "scale",self.ui_objeto_scale * 1.25, gui.EASING_LINEAR, 1, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+	elseif datos.jugar_nivel == 1 and self.cuenta == 10 then
+		gui.set_enabled(self.lupa, false)
 	end
 
 end
 
 local function animaciones(self)
 	if self.que_animacion_reproducir == "mover espejo" then
-		gui.set_enabled(self.espejo, true)
+		--gui.set_enabled(self.espejo, true)
 		self.nodo_anim = self.espejo
 		self.nodo_prop = "position"
 		local espejo_pos_inicial = vmath.vector3(155,600,0)
@@ -30,6 +42,7 @@ local function animaciones(self)
 		msg.post("/espejo_relevo", "mover_relevo_tutorial", {pos = vmath.vector3(684,234,0)})
 	elseif self.que_animacion_reproducir == "rotar espejo" then
 		gui.set_enabled(self.ui_objeto, true)
+		self.ui_objeto_scale = gui.get_scale(self.ui_objeto)
 		gui.set_enabled(self.espejo, true)
 		gui.set_position(self.espejo, vmath.vector3(684,234,0))
 		self.nodo_anim = self.espejo
@@ -95,7 +108,8 @@ function init(self)
 	self.que_animacion_reproducir = ""
 	self.espejo = gui.get_node("espejo")
 	gui.set_enabled(self.espejo, false)
-	
+	self.lupa = gui.get_node("lupa")
+	gui.set_enabled(self.lupa, false)
 	self.ui_objeto = gui.get_node("ui_objeto")
 	gui.set_enabled(self.ui_objeto, false)
 	
