@@ -21,6 +21,16 @@ local function animaciones_delta(self)
 		gui.animate(self.ui_objeto, "scale",self.ui_objeto_scale * 1.25, gui.EASING_LINEAR, 1, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 	elseif datos.jugar_nivel == 1 and self.cuenta == 10 then
 		gui.set_enabled(self.lupa, false)
+	elseif datos.jugar_nivel == 3 and self.cuenta == 1 then
+		msg.post("/gui#gui", "animar_obstaculos")
+	elseif datos.jugar_nivel == 3 and self.cuenta == 2 then
+		msg.post("/gui#gui", "detener_animar_obstaculos")
+	elseif datos.jugar_nivel == 6 and self.cuenta == 1 then
+		msg.post("/gui#gui", "animar_switches")
+	elseif datos.jugar_nivel == 6 and self.cuenta == 2 then
+		msg.post("/gui#gui", "detener_animar_switches")
+	elseif datos.jugar_nivel == 6 and self.cuenta == 3 then
+		msg.post("/gui#gui", "detener_animar_objetivo")
 	end
 
 end

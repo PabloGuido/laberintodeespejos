@@ -627,6 +627,31 @@ function on_message(self, message_id, message, sender)
 		terminar_escena_gameplay(self)
 	elseif message_id == hash("tomar_input") then
 		msg.post("", "acquire_input_focus")
+	elseif message_id == hash("animar_obstaculos") then
+		--print("animar obstaculos")
+		--pprint(self.obstaculos_tabla)
+		for i = 1, table.maxn(self.obstaculos_tabla) do
+			gui.animate(self.obstaculos_tabla[i][hash("obstaculo")], "scale",1.15, gui.EASING_LINEAR, 1, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+			--print(self.obstaculos_tabla[i][hash("obstaculo")])
+		end
+	elseif message_id == hash("detener_animar_obstaculos") then
+		for i = 1, table.maxn(self.obstaculos_tabla) do
+			gui.animate(self.obstaculos_tabla[i][hash("obstaculo")], "scale",1, gui.EASING_LINEAR, 0)
+			--print(self.obstaculos_tabla[i][hash("obstaculo")])
+		end
+	elseif message_id == hash("animar_switches") then
+		--print("animar switches")
+		--pprint(self.switches)
+		for i = 1, table.maxn(self.switches) do
+			gui.animate(self.switches[i], "scale",1.17, gui.EASING_LINEAR, 1, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+		end
+	elseif message_id == hash("detener_animar_switches") then
+		for i = 1, table.maxn(self.switches) do
+			gui.animate(self.switches[i], "scale",1, gui.EASING_LINEAR, 0)
+		end
+		gui.animate(self.objetivo, "scale",1.15, gui.EASING_LINEAR, 1, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+	elseif message_id == hash("detener_animar_objetivo") then
+		gui.animate(self.objetivo, "scale",1, gui.EASING_LINEAR, 0)
 	end
 end
 
