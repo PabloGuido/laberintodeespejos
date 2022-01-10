@@ -54,7 +54,7 @@ function on_message(self, message_id, message, sender)
 		sound.play("/sonidos#nivel_superado", {gain = datos.gain_sfx})
 		if datos.jugar_nivel < max_lvl then
 			gui.set_enabled(self.volver_atras, true)
-			gui.set_position(self.volver_atras, vmath.vector3(1118,699,0))
+			gui.set_position(self.volver_atras, vmath.vector3(1129,690,0))
 			gui.set_enabled(self.siguiente_nivel, true)
 			gui.set_scale(self.siguiente_nivel, vmath.vector3(1.1,1.1,0))
 			gui.animate(self.siguiente_nivel, "rotation.z", -1, gui.EASING_LINEAR, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
@@ -66,7 +66,7 @@ function on_message(self, message_id, message, sender)
 			gui.animate(self.volver_atras, "position.y", 350, gui.EASING_OUTCUBIC, 1.1)
 		end
 		
-		gui.set_position(self.sonido, vmath.vector3(1218,584,0))
+		gui.set_position(self.sonido, vmath.vector3(1218,548,0))
 		gui.animate(self.nivel_superado, "scale", 0.36, gui.EASING_LINEAR, 2, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 		gui.animate(self.cuadro, "position.y", 380, gui.EASING_OUTCUBIC, 1.1, 0,
 		function()

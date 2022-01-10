@@ -390,7 +390,7 @@ function init(self)
 		inicializacion_objetos_alpha(self) -- Esta función es la que arrancaría el juego digamos.
 	end)
 	sound.play("/sonidos#gameplay",{gain = datos.gain_sfx})
-	gui.animate(self.retroceder, "position.y", 699, gui.EASING_OUTCUBIC, self.tiempo_t)
+	gui.animate(self.retroceder, "position.y", 690, gui.EASING_OUTCUBIC, self.tiempo_t)
 	gui.animate(self.sonido_nodo, "position.x", 1218, gui.EASING_OUTCUBIC, self.tiempo_t)
 	gui.animate(self.lupa, "position.x", 1173, gui.EASING_OUTCUBIC, self.tiempo_t)
 	gui.animate(self.espejo, "position.x", 155, gui.EASING_OUTCUBIC, self.tiempo_t)
