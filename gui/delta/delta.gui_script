@@ -129,6 +129,9 @@ function init(self)
 		gui.play_flipbook(self.sonido, "sonido off")
 	end
 	gui.animate(self.sonido, "position.x", 1218, gui.EASING_OUTCUBIC, 0.65)
+
+	self.voz = gui.get_node("voz")
+	gui.set_enabled(self.voz, false)
 	
 	
 	self.adorno = gui.get_node("adorno")
@@ -159,6 +162,8 @@ function init(self)
 				tutorial(self)
 				msg.post("", "acquire_input_focus") -- Da input cuando haya tutoriales
 				tuto[nivel]["hacer_tuto"] = false -- Hace que no se vuelvan a repetir los tutoriales en los niveles
+				gui.set_enabled(self.voz, true)
+				gui.animate(self.voz, "position.x", 64, gui.EASING_OUTCUBIC, self.tiempo_t)
 			else
 				msg.post("/gui#gui", "tomar_input")
 				msg.post("/gui#gui", "pasar_boton_sonido")
@@ -197,7 +202,9 @@ function on_input(self, action_id, action)
 			else
 				gui.play_flipbook(self.sonido, "sonido off")
 			end
-			print("sonido")
+		elseif gui.pick_node(self.voz, action.x, action.y) then
+			datos.animar_click(self, self.voz, 0.7, 0.6)
+			gui.play_flipbook(self.voz, "voz off")
 		else
 				
 			sound.stop(tuto[self.nivel ]["sonido_" .. self.cuenta])

@@ -687,7 +687,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Sonido"
+  text: "M\303\272sica"
   font: "descripccion"
   id: "text1"
   xanchor: XANCHOR_NONE

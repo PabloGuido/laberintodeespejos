@@ -1126,7 +1126,7 @@ nodes {
 nodes {
   position {
     x: 1218.0
-    y: 548.0
+    y: 522.0
     z: 0.0
     w: 1.0
   }
@@ -1180,7 +1180,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: -103.333
+    y: -108.333
     z: 0.0
     w: 1.0
   }
@@ -1210,7 +1210,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Sonido"
+  text: "M\303\272sica"
   font: "tuto_font"
   id: "text2"
   xanchor: XANCHOR_NONE
