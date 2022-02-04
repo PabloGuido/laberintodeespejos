@@ -90,7 +90,7 @@ function init(self)
 		
 		timer.delay(1.5, false, bajarYaparecerPorLaDerecha)
 	end)
-
+	
 end
 
 function on_message(self, message_id, message, sender)
@@ -104,6 +104,10 @@ function on_message(self, message_id, message, sender)
 		elseif rot == -90 then
 			go.animate("delta", "position.x", go.PLAYBACK_ONCE_FORWARD, -600, go.EASING_INBACK, 0.75)
 		end
+	elseif message_id == hash("desaparecer") then
+		go.animate("/delta#delta", "tint.w", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_LINEAR, 0.65)
+	elseif message_id == hash("aparecer") then
+		go.animate("/delta#delta", "tint.w", go.PLAYBACK_ONCE_FORWARD, 1, go.EASING_LINEAR, 0.65)
 	end
 end
 

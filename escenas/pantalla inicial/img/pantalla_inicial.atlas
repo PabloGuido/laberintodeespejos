@@ -30,6 +30,14 @@ images {
   image: "/escenas/pantalla inicial/img/paka logo solo.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
+images {
+  image: "/escenas/pantalla inicial/img/boton vacio.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/escenas/seleccion de nievel/img/boton volver.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 margin: 0
 extrude_borders: 2
 inner_padding: 0
