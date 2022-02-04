@@ -22,6 +22,14 @@ images {
   image: "/escenas/pantalla inicial/img/secretaria.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
+images {
+  image: "/escenas/pantalla inicial/img/crear logo solo.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/escenas/pantalla inicial/img/paka logo solo.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 margin: 0
 extrude_borders: 2
 inner_padding: 0

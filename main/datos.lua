@@ -37,7 +37,7 @@ M.ultima_escena = ""
 M.sonido = true
 M.gain_sfx = 0 --1
 M.gain_musica =  0 --0.5
-M.gain_voz = 0.25
+M.gain_voz = 0
 M.voz_pausada = false
 
 M.sonido_on_off = function()

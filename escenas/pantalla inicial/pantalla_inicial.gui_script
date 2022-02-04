@@ -1,4 +1,20 @@
 local datos = require("main.datos")
+local crear_t = [[Crear Juegos en Argentina, desde su creación a principios de 2020, promueve, fomenta 
+y produce contenidos lúdicos para todas las edades. Tanto mediante la elaboración con un equipo 
+de contenidistas lúdicos propios como a través de convocatorias masivas con las que estimulamos el 
+desarrollo de videojuegos, juegos de mesa e imprimibles que tengan contenidos con temáticas educativas, 
+inclusivas y federales, generamos una ludoteca de acceso libre y gratuito para todos, todas y todes.
+Entrá a www.crearjuegos.ar para conocer todos nuestros juegos.
+
+Crear es una política publica de la SMYCP.
+]]
+local paka_t = [[ PakaPaka es el primer canal infantil público de la Argentina.
+Quienes hemos formado parte del canal desde sus inicios, en el año 2010, lo pensamos 
+como un espacio de juego e imaginación, de curiosidad y conocimiento, de innovación y
+desafío y, sobre todo, de descubriemiento y diversión.
+
+
+]]
 
 function init(self)
 	-- nodos
@@ -11,6 +27,12 @@ function init(self)
 	if datos.sonido == false then
 		gui.play_flipbook(self.sonido_nodo, "sonido off")
 	end
+
+	self.crear_txt = gui.get_node("crear_txt")
+	gui.set_text(self.crear_txt, crear_t)
+
+	self.paka_txt = gui.get_node("paka_txt")
+	gui.set_text(self.paka_txt, paka_t)
 
 	gui.set_color(self.play, vmath.vector4(1,1,1,0))
 	gui.set_color(self.proto, vmath.vector4(1,1,1,0))
