@@ -12,6 +12,26 @@ high_dpi = 1
 
 [android]
 input_method = HiddenInputField
+app_icon_192x192 = /objetos/espejo/espejo.png
+app_icon_144x144 = /objetos/espejo/espejo.png
+app_icon_96x96 = /objetos/espejo/espejo.png
+app_icon_72x72 = /objetos/espejo/espejo.png
+app_icon_48x48 = /objetos/espejo/espejo.png
+app_icon_36x36 = /objetos/espejo/espejo.png
+push_icon_small = /objetos/espejo/espejo.png
+push_icon_large = /objetos/espejo/espejo.png
+push_icon_small_ldpi = /objetos/espejo/espejo.png
+push_icon_small_mdpi = /objetos/espejo/espejo.png
+push_icon_small_hdpi = /objetos/espejo/espejo.png
+push_icon_small_xhdpi = /objetos/espejo/espejo.png
+push_icon_small_xxhdpi = /objetos/espejo/espejo.png
+push_icon_small_xxxhdpi = /objetos/espejo/espejo.png
+push_icon_large_ldpi = /objetos/espejo/espejo.png
+push_icon_large_mdpi = /objetos/espejo/espejo.png
+push_icon_large_hdpi = /objetos/espejo/espejo.png
+push_icon_large_xhdpi = /objetos/espejo/espejo.png
+push_icon_large_xxhdpi = /objetos/espejo/espejo.png
+push_icon_large_xxxhdpi = /objetos/espejo/espejo.png
 
 [project]
 title = crearProto1
@@ -26,4 +46,7 @@ max_component_count = 64
 splash_image = /main/splash/splash.png
 show_made_with_defold = 0
 htmlfile = /main/engine_template2.html
+
+[ios]
+app_icon_180x180 = /objetos/espejo/espejo.png
 

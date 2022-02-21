@@ -56,6 +56,9 @@ end
 
 
 function update(self, dt)
+	--if self.disparar_rayo == false and self.borrando == false then
+	--	msg.post("/gui#gui", "borrar_laser", {instancia = go.get_id()})
+	--end
 	if self.disparar_rayo == false and self.borrando == false then
 		msg.post("/gui#gui", "borrar_laser", {instancia = go.get_id()})
 	end

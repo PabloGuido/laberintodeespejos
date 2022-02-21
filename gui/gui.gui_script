@@ -439,7 +439,7 @@ function on_message(self, message_id, message, sender)
 			--print(message.instancia)
 			for i = 1, table.maxn(self.casillas) do
 				--print(message.instancia)
-				if self.casillas[i]["instancia"] == message.instancia then
+				if self.casillas[i]["instancia"] == message.instancia and self.casillas[i]["laser"] ~= nil then
 					--print("misma instancia " ..  message.instancia)
 					local distance = dist2d(message.pos_inicial_laser.x, message.pos_inicial_laser.y, message.datos.position.x, message.datos.position.y)
 					self.scale.x = distance
@@ -488,7 +488,7 @@ function on_message(self, message_id, message, sender)
 		--pprint(message)
 		for i = 1, table.maxn(self.casillas) do
 			if self.casillas[i]["instancia"] == message.instancia then
-				if self.casillas[i]["laser"] ~= nil then
+				if self.casillas[i]["laser"] ~= nil or self.casillas[i]["laser"] then
 					gui.set_scale(self.casillas[i]["laser"], vmath.vector3(1,1,0))
 				end
 			end
@@ -536,7 +536,9 @@ function on_message(self, message_id, message, sender)
 				if self.ultimo_obj_clickeado == self.espejos[i][hash("espejo")] then
 					-- borra nodo espejo y laser
 					gui.delete_node(self.espejos[i][hash("espejo")])
-					gui.delete_node(self.espejos[i]["laser"])
+					gui.set_position(self.espejos[i]["laser"], vmath.vector3(50000,50000,0))
+					print(gui.get_position(self.espejos[i]["laser"]))
+					--gui.delete_node(self.espejos[i]["laser"])
 					table.remove(self.espejos, i)
 					
 					--pprint(self.espejos)
@@ -548,10 +550,10 @@ function on_message(self, message_id, message, sender)
 							self.casillas[k]["ocupado"] = false
 							if self.casillas[self.ultima_casilla]["instancia"] == nil then
 								msg.post(self.casillas[self.casilla_delta]["instancia"], "borrar_obj")
-								self.casillas[self.casilla_delta]["laser"] = nil
+								--self.casillas[self.casilla_delta]["laser"] = nil
 							else
 								msg.post(self.casillas[self.ultima_casilla]["instancia"], "borrar_obj")
-								self.casillas[self.ultima_casilla]["laser"] = nil
+								--self.casillas[self.ultima_casilla]["laser"] = nil
 							end
 							
 							self.casillas[self.ultima_casilla]["instancia"] = nil -- esta pos de table es la instancia del objeto físico.
@@ -698,7 +700,7 @@ function on_input(self, action_id, action)
 				datos.obj_en_mouse = self.ultimo_obj_clickeado
 				sound.play("/sonidos#adorno_1", {gain = datos.gain_sfx * 1.25})
 				datos.animar_click(self, self.ultimo_obj_clickeado, 1.35)
-				print("esto?")
+				--print("esto?")
 				for k, v in pairs(self.casillas) do
 					-- desocupa la casilla y borra obj físico
 					if tostring(self.casillas[k][1][hash("casilla")]) == tostring(self.ultimo_obj_clickeado) then
@@ -806,7 +808,7 @@ function on_input(self, action_id, action)
 							--datos.obj_en_mouse = nil
 							if self.moviendo_obj == true then
 								msg.post(self.casillas[self.casilla_delta]["instancia"], "borrar_obj")
-								self.casillas[self.casilla_delta]["instancia"] = nil -- esta pos de table es la instancia del objeto físico.
+								--self.casillas[self.casilla_delta]["instancia"] = nil -- esta pos de table es la instancia del objeto físico.
 							end
 						end
 					end
