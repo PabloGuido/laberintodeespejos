@@ -34,7 +34,8 @@ push_icon_large_xxhdpi = /objetos/espejo/espejo.png
 push_icon_large_xxxhdpi = /objetos/espejo/espejo.png
 
 [project]
-title = crearProto1
+title = Laberinto de espejos
+version = 
 
 [physics]
 debug = 0
