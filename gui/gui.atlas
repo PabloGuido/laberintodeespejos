@@ -1,8 +1,4 @@
 images {
-  image: "/gui/gui_img/casilla_vacia.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
   image: "/objetos/espejo/espejo.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
@@ -27,19 +23,7 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/gui/gui_img/boton_play.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/gui/gui_img/boton_stop.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
   image: "/objetos/obstaculo/obstaculo.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/gui/gui_img/espejo_doble.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
@@ -52,10 +36,6 @@ images {
 }
 images {
   image: "/gui/gui_img/fondo gris.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/gui/gui_img/boton rotar.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
@@ -76,10 +56,6 @@ images {
 }
 images {
   image: "/gui/gui_img/barrera.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/objetos/cannon/cannon_adorno.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {

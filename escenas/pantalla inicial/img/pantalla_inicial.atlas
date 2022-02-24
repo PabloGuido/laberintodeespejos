@@ -3,18 +3,6 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/escenas/pantalla inicial/img/fondo inicio.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/escenas/pantalla inicial/img/laser_text.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/escenas/pantalla inicial/img/proto.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
   image: "/escenas/pantalla inicial/img/logo paka.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
@@ -39,7 +27,7 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/escenas/pantalla inicial/img/espejos txt.png"
+  image: "/escenas/pantalla inicial/img/laberinto.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 margin: 0

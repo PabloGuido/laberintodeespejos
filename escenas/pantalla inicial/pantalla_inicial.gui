@@ -261,8 +261,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 736.0
-    y: 111.0
+    x: 1073.0
+    y: 62.0
     z: 0.0
     w: 1.0
   }
@@ -274,7 +274,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "pantalla_inicial/espejos txt"
+  texture: "pantalla_inicial/laberinto"
   id: "espejos_txt"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -717,14 +717,14 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 0.3
-    y: 0.3
+    x: 0.45
+    y: 0.45
     z: 1.0
     w: 1.0
   }
   size {
-    x: 736.0
-    y: 111.0
+    x: 1073.0
+    y: 62.0
     z: 0.0
     w: 1.0
   }
@@ -736,7 +736,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "pantalla_inicial/espejos txt"
+  texture: "pantalla_inicial/laberinto"
   id: "box3"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -791,7 +791,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Espejos es un juego creado por Pablo Sonaglioni, cuyo desarrollo fue\n"
+  text: "Laberinto de espejos es un juego creado por Pablo Sonaglioni, cuyo desarrollo fue\n"
   "becado en el marco de la convocatoria \"Crear N4: Crear videojuegos para las infancias\"."
   font: "descripccion"
   id: "text1"

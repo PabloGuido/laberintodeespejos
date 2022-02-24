@@ -82,9 +82,6 @@ function init(self)
 	self.cuerpo = gui.get_node("cuerpo")
 	self.numero_de_nivel = gui.get_node("numero_de_nivel")
 	self.estrella = gui.get_node("estrella")
-	self.pantalla_negra = gui.get_node("pantalla_negra")
-	gui.set_color(self.pantalla_negra, vmath.vector4(1,1,1,0))
-	gui.set_enabled(self.pantalla_negra, false)
 	self.flecha_blanca = gui.get_node("flecha_blanca")
 	gui.set_color(self.flecha_blanca, vmath.vector4(1,1,1,0))
 	
@@ -95,7 +92,6 @@ function init(self)
 	
 	self.tabla_de_botones = {}
 	self.pos_inicial_botones = vmath.vector3(-400, 120, 0)
-	self.pos_pantalla_negra_primera_vez = vmath.vector3(241, 380, 0)
 	self.dif_entre_botones = 200
 	self.dif_de_bajada = 175
 	self.numero_para_texto = 1

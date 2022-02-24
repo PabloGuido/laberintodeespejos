@@ -173,19 +173,6 @@ local function desactivar_activar_barrera(self)
 	if self.cantidad_de_switches_activados == self.cantidad_de_switches_en_el_nivel then
 		msg.post("/barrera#barrera", "desactivar_barrera")
 		gui.set_enabled(self.barrera, false)
-		--[[ -- Animación que no estaría funciondo con el sistema. No creo que vaya a hacer el corte.
-		if gui.is_enabled(self.barrera) then
-			local escala_barrera = gui.get_scale(self.barrera)
-			gui.animate(self.barrera, "scale", escala_barrera*1.25, gui.EASING_INBOUNCE, 0.75, 0,
-			function()
-				gui.set_scale(self.barrera, escala_barrera)
-				if self.cantidad_de_switches_activados == self.cantidad_de_switches_en_el_nivel then
-					gui.set_enabled(self.barrera, false)
-				end
-				--msg.post("/barrera#barrera", "desactivar_barrera")
-			end)
-		end
-		]]
 	else
 		gui.set_enabled(self.barrera, true)
 		msg.post("/barrera#barrera", "activar_barrera")
@@ -270,14 +257,11 @@ function init(self)
 	self.position = gui.get_position(self.laser_beam )
 	self.target_position = gui.get_position(self.laser_beam )
 	self.scale = gui.get_scale(self.laser_beam )
-	self.play_stop = gui.get_node("play_stop")
-	gui.set_enabled(self.play_stop, false)
 	self.laser_prendido = false
 	self.cannon = gui.get_node("cannon")
 	gui.set_color(self.cannon , vmath.vector4(1,1,1,0))
 	gui.set_rotation(self.cannon, niveles[self.nivel]["rotacion"])
 	--print(gui.get_rotation(self.cannon))
-	self.cannon_adorno = gui.get_node("cannon_adorno")
 	-- clonacion de beams
 	self.laser_tabla = {}
 	
@@ -285,8 +269,6 @@ function init(self)
 	-- obj toolbar
 	self.toolbar = gui.get_node("toolbar")
 	self.espejo = gui.get_node("espejo")
-	self.espejo_doble = gui.get_node("espejo_doble")
-	gui.set_enabled(self.espejo_doble, false)
 	self.ui_objetos = false
 	self.retroceder = gui.get_node("retroceder")
 	-- tablas -----------------------------------------
@@ -733,24 +715,6 @@ function on_input(self, action_id, action)
 					self.moviendo_obj = false
 					datos.animar_click(self, self.toolbar)
 				
-			elseif gui.pick_node(self.espejo_doble, action.x, action.y) then
-					self.ultimo_obj_clickeado = nil
-					self.ultimo_nodo_creado = clonar_nodo(self, self.espejo, hash("espejo"), vmath.vector3(action.x, action.y, 0), self.espejos, true)
-					gui.play_flipbook(self.ultimo_nodo_creado, "espejo_doble")
-					self.ultimo_obj_clickeado = self.ultimo_nodo_creado
-					self.moviendo_obj = false
-			elseif gui.pick_node(self.play_stop, action.x, action.y) and gui.is_enabled(self.play_stop )then -- Enciende y apaga el laser.
-				if self.ui_objetos == false then -- play stop
-					gui.play_flipbook(self.play_stop, "boton_stop")
-					msg.post("/laser#laser", "disparar_ray_cast")
-					self.cantidad_de_switches_activados = 0
-					self.laser_en_barrera = false
-					gui.set_enabled(self.barrera, true)
-					msg.post("/barrera#barrera", "activar_barrera")
-					for i = 1, table.maxn(datos.switches) do
-						gui.animate(datos.switches[i], "color", vmath.vector4(0.8,0.17,0.17,1), gui.EASING_INBACK, 0.15)
-					end
-				end
 			elseif gui.pick_node(self.retroceder, action.x, action.y) then
 				sound.play("/sonidos#sonido_volver", {gain = datos.gain_sfx})
 				datos.animar_click(self, self.retroceder, 0.7, 0.6)
@@ -926,8 +890,7 @@ function on_input(self, action_id, action)
 							end
 						end
 						--print("creando laser beam")
-					elseif gui.get_flipbook(self.ultimo_nodo_creado) == hash("espejo_doble") and self.moviendo_obj == false then
-						msg.post("/espejos_dobles#espejosdoblesfactory", "crear_physics_obj",{x = self.pos_casilla.x , y = self.pos_casilla.y})
+
 					end
 					self.moviendo_obj = false
 					mover_relevo(self, vmath.vector3())
