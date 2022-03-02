@@ -518,7 +518,8 @@ function on_message(self, message_id, message, sender)
 				if self.ultimo_obj_clickeado == self.espejos[i][hash("espejo")] then
 					-- borra nodo espejo y laser
 					gui.delete_node(self.espejos[i][hash("espejo")])
-					gui.set_position(self.espejos[i]["laser"], vmath.vector3(50000,50000,0))
+					--gui.set_position(self.espejos[i]["laser"], vmath.vector3(50000,50000,0))
+					gui.set_enabled(self.espejos[i]["laser"], false)
 					print(gui.get_position(self.espejos[i]["laser"]))
 					--gui.delete_node(self.espejos[i]["laser"])
 					table.remove(self.espejos, i)
