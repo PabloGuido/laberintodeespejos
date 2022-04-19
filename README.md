@@ -1,5 +1,10 @@
-# Welcome to Defold
+# Laberinto de esperjos
 
+Versión entregada del proyecto. 
+No corre con las últimas versiones del engine, necesita el spine integrado en la versión.
+
+
+---
 This project was created from the "empty" project template.
 
 The settings in ["game.project"](defold://open?path=/game.project) are all the default. A bootstrap empty ["main.collection"](defold://open?path=/main/main.collection) is included.
