@@ -1,7 +1,6 @@
-# Laberinto de esperjos
-
-Versión entregada del proyecto. 
+# Laberinto de espejos
 No corre con las últimas versiones del engine, necesita el spine integrado en la versión.
+Ver 1.2.184 está ok para correrlo.
 
 
 ---
